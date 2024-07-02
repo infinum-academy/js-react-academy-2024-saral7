@@ -1,6 +1,7 @@
-let reviews = [];
+
 
 function renderPage() {
+   let reviews = getCurrentReviews();
    let reviewWrapper = document.getElementById('reviews');
    reviewWrapper.innerHTML = "";
 
@@ -19,11 +20,25 @@ function renderPage() {
    });
 }
 
+function getCurrentReviews() {
+   if (!localStorage.getItem('reviews')) {
+      localStorage.setItem('reviews', JSON.stringify([]));
+      return [];
+   }
+   return JSON.parse(localStorage.getItem('reviews'));
+}
+
+function addToLocalStorageReviews(reviewList) {
+   localStorage.setItem('reviews', JSON.stringify(reviewList));
+}
+
 function reviewPostHandler() {
    let reviewText = document.getElementById('review-post-text');
    let reviewRating = document.getElementById('review-post-rating');
    
    if (!reviewText.value || !reviewRating.value) return;
+
+   let reviews = getCurrentReviews();
 
    let newReview = {
       text: reviewText.value,
@@ -31,7 +46,8 @@ function reviewPostHandler() {
    };
 
    reviews.push(newReview);
-   console.log(reviews);
+   addToLocalStorageReviews(reviews);
+
    reviewText.value = "";
    reviewRating.value = "";
 
