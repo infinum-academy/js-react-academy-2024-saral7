@@ -14,7 +14,7 @@ function renderPage() {
 
 function createReviewDiv(review, reviews) { 
    // saljem reviews kao argument da se reference poklapaju za filter
-   
+
    let reviewDiv = document.createElement('div');
    reviewDiv.classList = ['review round'];
    let reviewText = document.createElement('p');
