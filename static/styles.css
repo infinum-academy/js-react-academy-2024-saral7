@@ -56,9 +56,6 @@ body {
    font-size: 1.5rem;
 }
 
-#review-post {
-
-}
 #review-post > * {
    margin-top: 1vw;
    margin-bottom: 1vw;
@@ -71,9 +68,18 @@ body {
    padding: 2%;
 }
 
-#review-post-rating {
-   width: 30%;
-   padding: 2%;
+#star-rating {
+   color: white;
+   display: flex;
+   flex-direction: row;
+   align-items: center;
+}
+
+#star-rating > span {
+   margin-left: 2%;
+   margin-right: 2%;
+   font-weight: bold;
+   font-size: 1.25rem;
 }
 
 input[type="button"] {
@@ -107,4 +113,8 @@ input[type="button"]:hover {
 
 .review > input {
    margin-top: 1vw;
+}
+
+.stars {
+   width: 5%;
 }
