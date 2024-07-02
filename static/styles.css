@@ -1,0 +1,99 @@
+* {
+   box-sizing: border-box;
+   margin: unset;
+   font-family: sans-serif;
+   font-size: 1.5vw;
+}
+
+html {
+   background-color: #0D065E;
+}
+
+h1 {
+   font-size: 1.5rem;
+   color: white;
+}
+
+body {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+}
+
+#all-wrapper {
+   display: flex;
+   flex-direction: column;
+   justify-content: center;
+   align-items: center;
+   width: 60vw;
+}
+
+#all-wrapper > * {
+   width: 100%;
+   margin-top: 3vw;
+}
+
+#show > img {
+   width: 100%;
+   border-radius: 3vw 3vw 0 0;
+}
+
+#show {
+   background-color: white;
+   border-radius: 3vw;
+}
+
+#show > p {
+   margin: 3vw;
+}
+
+#title {
+   font-size: 1.5rem;
+}
+
+#review-post {
+
+}
+#review-post > * {
+   margin-top: 1vw;
+   margin-bottom: 1vw;
+}
+
+#review-post-text {
+   min-width: 100%;
+   max-width: 100%;
+   min-height: 10vw;
+   padding: 2%;
+}
+
+#review-post-rating {
+   padding: 2%;
+}
+
+input[type="button"] {
+   width: 20%;
+   border-radius: 2vw;
+   padding: 3%;
+}
+
+input[type="button"]:hover {
+   cursor: pointer;
+   background-color: lightgrey;
+}
+
+.round {
+   border-radius: 3vw;
+   border: 0;
+}
+
+.review {
+   background-color: #271F7E;
+   padding: 3vw;
+   margin-bottom: 2vw;
+   color: white;
+}
+
+.review > p {
+   width: 100%;
+   margin-bottom: 1vw;
+}
