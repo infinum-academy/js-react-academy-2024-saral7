@@ -17,6 +17,7 @@
                Comedy series following the exploits of Det. Jake Peralta and his diverse, 
                lovable colleagues as they police the NYPD's 99th Precinct.
             </p>
+            <p id = "average-rating"></p>
          </p>
       </div>
       <div id = "review-post">
@@ -25,7 +26,7 @@
             <textarea placeholder="Add review" id = "review-post-text" class = "round"></textarea>
          </div>
          <div>
-            <input type = "number" placeholder="Add rating" id = "review-post-rating" class = "round"> 
+            <input type = "number" placeholder="Add rating" id = "review-post-rating" class = "round" min="1" max="5"> 
          </div>
          <div>
             <input type = "button" value = "Post" onclick="reviewPostHandler()" class = "round">

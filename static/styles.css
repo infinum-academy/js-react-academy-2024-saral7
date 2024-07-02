@@ -45,6 +45,11 @@ body {
 
 #show > p {
    margin: 3vw;
+   color: #0D065E;
+}
+
+#title {
+   font-weight: bold;
 }
 
 #title {
@@ -67,6 +72,7 @@ body {
 }
 
 #review-post-rating {
+   width: 30%;
    padding: 2%;
 }
 
@@ -74,6 +80,7 @@ input[type="button"] {
    width: 20%;
    border-radius: 2vw;
    padding: 3%;
+   border: 0;
 }
 
 input[type="button"]:hover {
@@ -96,4 +103,8 @@ input[type="button"]:hover {
 .review > p {
    width: 100%;
    margin-bottom: 1vw;
+}
+
+.review > input {
+   margin-top: 1vw;
 }
