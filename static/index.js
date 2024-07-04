@@ -9,6 +9,8 @@ function renderPage() {
 
    let averageRating = document.getElementById('average-rating');
    averageRating.textContent = `${getAverage().toFixed(1)} / 5`;
+
+   let show = document.getElementById('show'); // show selector
    show.appendChild(averageRating);
 
    setUpStars();
@@ -35,9 +37,8 @@ function createReviewDiv(review, reviews) {
       reviewStars.appendChild(star);
    }
 
-   let removeButton = document.createElement('input');
-   removeButton.type = 'button';
-   removeButton.value = "Remove";
+   let removeButton = document.createElement('button');
+   removeButton.textContent = "Remove";
 
    //let reviews = getCurrentReviews();
    removeButton.onclick = () => {
@@ -66,28 +67,22 @@ function setUpStars () {
 
    // prva po defaultu uvijek odabrana 
    let firstStar = stars[0];
-   firstStar.setAttribute('src', "images/star-yellow.png");
-   firstStar.onclick = () => {
-      for (let s of stars) {
-         s.setAttribute('src', "images/star-white.png");
-      }
-      firstStar.setAttribute('src', "images/star-yellow.png");
-   }
+   firstStar.src = "images/star-yellow.png";
+   firstStar.classList.add('selected');   // dodano da je odabrana
+   
    for (let star of stars) {
-      if (star === firstStar) continue;
       let ind = parseInt(star.id.substring(5));
 
       // na klik mijenjamo boju i svih onih prije
       star.onclick = () => {
          for (let s of stars) {
-            s.setAttribute('src', "images/star-white.png");
+            s.classList.remove('selected');
+
+            let starIndex = s.id.substring(5);
+
+            s.src = (starIndex <= ind) ? 'images/star-yellow.png' : 'images/star-white.png';
          }
-         let i = 0;
-         for (let s of stars) {
-            if (i == ind) break;
-            s.setAttribute('src', "images/star-yellow.png");
-            i++;
-         }
+         star.classList.add('selected');
       }
    }
 }
@@ -95,7 +90,7 @@ function setUpStars () {
 function getAverage() {
    let reviews = getCurrentReviews();
    if (!reviews.length) return 0;
-   return reviews.map((t) => t.rating).reduce((a, b) => {return parseInt(a)+parseInt(b);})/reviews.length;
+   return reviews.reduce((acc, b) => {return acc+parseInt(b.rating);}, 0)/reviews.length;
 }
 
 function getCurrentReviews() {
@@ -117,10 +112,9 @@ function reviewPostHandler() {
 
    let stars = [... document.getElementsByClassName('stars-ogs')]; // stars-ogs je klase zvjezdica koje klikcemo
    
-   // sada je rating broj zutih zvjezdica
-   let reviewRating = stars.filter((s) => {
-      return s.src[s.src.length - 5] == 'w'; // zadnje slovo src slike je 'w' (od yellow)
-   }).length;
+
+   // broj zutih zvjezdica - index one koja ima selected
+   let reviewRating = stars.findIndex((s) => {return s.classList.contains('selected');}) + 1;
 
    let reviews = getCurrentReviews();
 
@@ -134,11 +128,12 @@ function reviewPostHandler() {
    addToLocalStorageReviews(reviews);
 
    reviewText.value = "";
-   reviewRating.value = "";
 
    // reset boja
    let firstStar = stars[0];
    firstStar.setAttribute('src', "images/star-yellow.png");
+   firstStar.classList.add('selected');   // dodano da je odabrana
+   
    for (let star of stars) {
       if (star === firstStar) continue;
       star.setAttribute('src', "images/star-white.png");
