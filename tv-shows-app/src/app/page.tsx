@@ -2,6 +2,7 @@ import Image from "next/image";
 import styles from "./page.module.css";
 import { IShow } from "@/typings/show";
 import ShowDetails from "./components/feature/shows/ShowDetails/ShowDetails";
+import ShowReviewSection from "./components/feature/shows/ShowReviewSection/ShowReviewSection";
 
 const mockShow : IShow = {
   title: 'Brooklyn-99',
@@ -15,7 +16,7 @@ export default function Home() {
   return (
     <main className={styles.main}>
       <ShowDetails show={mockShow}/>
-
+      <ShowReviewSection />
     </main>
   );
 }

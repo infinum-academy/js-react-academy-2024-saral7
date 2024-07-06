@@ -1,3 +1,13 @@
 - placerholder ako nema slike
 
 - plava pozadina (jako spori render kad stavim, zasto?)
+
+- da se racuna average
+
+- renaming da se moze
+
+- media queries
+
+- prebaciti dodavanje i brisanje na pravo mjesto
+
+- prouciti hookove
