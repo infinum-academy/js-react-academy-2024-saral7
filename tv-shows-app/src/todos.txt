@@ -1,0 +1,3 @@
+- placerholder ako nema slike
+
+- plava pozadina (jako spori render kad stavim, zasto?)
