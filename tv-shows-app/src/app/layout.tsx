@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { background } from "@chakra-ui/react";
+import Header from "./components/shared/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,6 +22,7 @@ export default function RootLayout({
       <body className={inter.className} style={{backgroundColor: "#0D065E"}}> 
         {/* note: dodala sam tamnoplavu pozadinu, ali je rendering s tim jako spor (na refresh pogotovo) */}
         <Providers>
+          <Header />
           {children}
         </Providers>
       </body>

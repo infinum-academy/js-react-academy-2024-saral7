@@ -7,12 +7,12 @@ export interface IShowItem {
 }
 
 export default function ShowDetails({show}: IShowItem) {
-   return <Flex width='60vw'>
+   return <Flex width='60vw' marginTop={'32px'}>
       <Card borderTopRadius='20px' borderBottomRadius={0}>
          <Image borderTopRadius='20px' src = {show.imageUrl ? show.imageUrl : '/images/star-yellow.png'} />
             
          <CardBody color='#0D065E'>
-            <Text fontSize='24px' marginBottom='16px'> {show.title} </Text>
+            <Text fontWeight={'bold'} fontSize='24px' marginBottom='16px'> {show.title} </Text>
             <Text marginBottom='16px'> {show.description} </Text>
             <Text> {show.averageRating ? `${show.averageRating} / 5` : 'No ratings'}</Text>
          </CardBody>
