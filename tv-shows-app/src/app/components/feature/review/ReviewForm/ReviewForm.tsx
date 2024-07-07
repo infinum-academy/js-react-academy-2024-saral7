@@ -1,29 +1,51 @@
 import { IReview, IReviewItem } from "@/typings/review";
 import { Button, Flex, Input, NumberInput, Text, Textarea, useMediaQuery } from "@chakra-ui/react";
+import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
+import { useState } from "react";
+import { IStar } from "@/app/components/shared/Icons/StarIcon/StarIcon";
 
 export interface IOnPostFunction {
    addShowReview: (review : IReview) => void;
 }
 
 export default function ReviewForm({addShowReview} : IOnPostFunction) { 
+   // funkcija koja obraduje post iz forme
    const addNewReview = () => {
       let reviewInputText = document.getElementById('input-form-text') as HTMLTextAreaElement;
-      let reviewInputRating = document.getElementById('input-form-rating') as HTMLInputElement;
-
-      if (!reviewInputRating.value || !reviewInputText.value) return;
       
-      const rating = parseInt(reviewInputRating.value)
-      if (!(1 <= rating && rating <= 5)) return;
+      if (!reviewInputText.value) return;
+      
+      const rating = stars.filter((s) => {return s.selected == true;}).length;
 
       const newReview : IReview = {
          text: reviewInputText.value,
          rating: rating
       };
+      addShowReview(newReview); // 
 
-      reviewInputRating.value = "";
+      // cleanup
       reviewInputText.value = "";
+      const newStarList : IStar[] = [];
+      for (let i = 0; i < 5; i++) newStarList.push({selected: i == 0});
+      setStars(newStarList);
+   }
 
-      addShowReview(newReview);
+   const mockStars : IStar[] = [];
+   for (let i = 0; i < 5; i++) mockStars.push({selected: i == 0});
+
+   const [stars, setStars] = useState(mockStars);
+
+   // funkcija koja definira kako izgledaju zvjezdice na klik
+   const onStarClick = (star : IStar) => {
+      const newStarList : IStar[] = [];
+      let found = true;
+      let counter = 0;
+      for (let s of stars) {
+         if (found) counter++;
+         newStarList.push({selected: found}); // postavi selected svim zvjezdicama do kliknute
+         if (s === star) found = false;
+      }
+      setStars(newStarList);
    }
 
    return <Flex 
@@ -47,15 +69,7 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
                marginBottom={'16px'}>
             </Textarea>
 
-            <Input
-               id = 'input-form-rating'
-               min={1}
-               max={5}
-               backgroundColor={'white'} 
-               width='50%'
-               marginBottom={'16px'}
-               placeholder="Add rating">
-            </Input>
+            <ReviewStarsInput value={stars} onChange = {onStarClick}></ReviewStarsInput>
 
             <Button 
                width={'30%'} 

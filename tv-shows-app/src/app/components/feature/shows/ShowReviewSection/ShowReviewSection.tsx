@@ -17,7 +17,7 @@ export default function ShowReviewSection({updateAverage} : ShowReviewSectionPro
    // pitanje: je li ova komponenta ispravno mjesto za logiku s localStorageom?
    // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
    // ali ne znam bi li bilo semanticki bolje da bude u npr. ReviewForm (jedino ne znam kako exportati reviewList onda)
-
+   
    const [reviewList, setReviewList] = useState(mockReviewList); 
    
 

@@ -10,4 +10,6 @@
 
 - prebaciti dodavanje i brisanje na pravo mjesto
 
-- prouciti hookove
+- prouciti hookove, hydration?
+
+- koje funkcionalnosti direktno sadrzi komponenta, a sto se salje u nju
