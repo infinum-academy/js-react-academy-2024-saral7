@@ -8,8 +8,8 @@ export interface IReviewItemProps {
 }
 
 export default function ReviewItem({review, onDelete} : IReviewItemProps) {
-   return <Card padding={'16px'} backgroundColor={'#271F7E'} color={'white'}>
-      <Flex direction={'column'} gap = '16px'>
+   return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
+      <Flex direction={'column'} gap = {1}>
          <Text> {review.text} </Text>
          <Text> {`${review.rating} / 5`} </Text>
          <Show above='768px'>     

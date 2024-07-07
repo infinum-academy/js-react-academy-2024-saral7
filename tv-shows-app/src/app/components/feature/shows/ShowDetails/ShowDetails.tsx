@@ -10,13 +10,13 @@ export interface IShowItem {
 
 
 export default function ShowDetails({show}: IShowItem) {
-   return <Flex width='60vw' marginTop={'32px'}>
+   return <Flex width='60vw' marginTop={2}>
       <Card borderTopRadius='20px' borderBottomRadius={0}>
          <Image borderTopRadius='20px' src = {show.imageUrl ? show.imageUrl : '/images/placeholder.png'} />
             
-         <CardBody color='#0D065E'>
-            <Text fontWeight={'bold'} fontSize='24px' marginBottom='16px'> {show.title} </Text>
-            <Text marginBottom='16px'> {show.description} </Text>
+         <CardBody color={'darkblue'}>
+            <Text fontWeight={'bold'} fontSize={1.5} marginBottom={1}> {show.title} </Text>
+            <Text marginBottom={1}> {show.description} </Text>
             <Text> {show.averageRating ? `${show.averageRating} / 5` : 'No ratings'}</Text>
          </CardBody>
         

@@ -51,13 +51,13 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
    return <Flex 
             direction={'column'} 
             width={'100%'} 
-            marginTop={'32px'}
-            marginBottom={'32px'}>
+            marginTop={2}
+            marginBottom={2}>
 
             <Text 
                fontWeight={'bold'} 
                color={'white'} 
-               marginBottom={'16px'}>
+               marginBottom={1}>
                   Reviews
             </Text>
 
@@ -66,7 +66,9 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
                backgroundColor={'white'} 
                placeholder="Add review" 
                width='100%'
-               marginBottom={'16px'}>
+               marginBottom={1}
+               paddingTop={1}
+               >
             </Textarea>
 
             <ReviewStarsInput value={stars} onChange = {onStarClick}></ReviewStarsInput>

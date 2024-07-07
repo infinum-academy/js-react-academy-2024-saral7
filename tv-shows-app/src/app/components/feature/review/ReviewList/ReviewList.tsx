@@ -18,7 +18,7 @@ export default function ReviewList({reviewList, onDelete, updateAverage} : IRevi
    // ali voljela bih skuziti malo bolje useEffect
    useEffect(() => {updateAverage(reviewList.reduce((acc, b) => {return acc + b.rating;}, 0) / reviewList.length);}, [reviewList]); 
 
-   return <Flex direction={'column'} gap = '16px' marginBottom={'16px'}>
+   return <Flex direction={'column'} gap = {1} marginBottom={1}>
       {reviewList.map(
          (review, index) => {
             return <ReviewItem key={index} review={review} onDelete={onDelete}/>
