@@ -71,7 +71,10 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
                >
             </Textarea>
 
-            <ReviewStarsInput value={stars} onChange = {onStarClick}></ReviewStarsInput>
+            <Flex alignItems={'center'} marginBottom={1}>
+               <Text fontWeight={'bold'} fontSize={1} color={'white'} marginRight={0.5}>Rating</Text>
+               <ReviewStarsInput value={stars} onChange = {onStarClick}></ReviewStarsInput>
+            </Flex>
 
             <Button 
                width={'30%'} 
