@@ -1,10 +1,13 @@
 import { IShow } from "@/typings/show";
 import { Card, CardBody, Flex, Image, Text } from "@chakra-ui/react";
+import { mock } from "node:test";
+import { useState } from "react";
 
 // dodala sam "wrapper" za IShow, da se moze direktno objekt tipa IShow proslijedivati
 export interface IShowItem {
    show: IShow
 }
+
 
 export default function ShowDetails({show}: IShowItem) {
    return <Flex width='60vw' marginTop={'32px'}>

@@ -2,7 +2,7 @@
 
 - plava pozadina (jako spori render kad stavim, zasto?)
 
-- da se racuna average
+- da bude 1.0 umjesto 1 ako cjelobrojno
 
 - renaming da se moze
 

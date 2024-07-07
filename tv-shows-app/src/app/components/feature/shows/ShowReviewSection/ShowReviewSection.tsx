@@ -8,7 +8,11 @@ import ReviewList from "../../review/ReviewList/ReviewList";
 
 let mockReviewList = [] as IReview[]; // implicitni cast
 
-export default function ShowReviewSection() {
+export interface ShowReviewSectionProps {
+   updateAverage: (avg : number) => void;
+}
+
+export default function ShowReviewSection({updateAverage} : ShowReviewSectionProps) {
 
    // pitanje: je li ova komponenta ispravno mjesto za logiku s localStorageom?
    // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
@@ -16,7 +20,7 @@ export default function ShowReviewSection() {
 
    const [reviewList, setReviewList] = useState(mockReviewList); 
    
-   
+
    const loadFromLocalStorage =  () => {
       const listString = localStorage.getItem('reviewList');
       if (!listString) {
@@ -56,6 +60,6 @@ export default function ShowReviewSection() {
    typeof(reviewList);
    return <Flex direction={'column'} width={'60vw'}>
       <ReviewForm addShowReview={addToReviewList}/>
-      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList}/>
+      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList} updateAverage={updateAverage}/>
    </Flex>
 }
