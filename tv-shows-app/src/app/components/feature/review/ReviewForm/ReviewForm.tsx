@@ -1,12 +1,30 @@
-import { IReviewItem } from "@/typings/review";
+import { IReview, IReviewItem } from "@/typings/review";
 import { Button, Flex, Input, NumberInput, Text, Textarea, useMediaQuery } from "@chakra-ui/react";
 
 export interface IOnPostFunction {
-   addShowReview: () => void;
+   addShowReview: (review : IReview) => void;
 }
 
-export default function ReviewForm({addShowReview} : IOnPostFunction) {
-   const [phoneQuery] = useMediaQuery('(max-width: 400px)');
+export default function ReviewForm({addShowReview} : IOnPostFunction) { 
+   const addNewReview = () => {
+      let reviewInputText = document.getElementById('input-form-text') as HTMLTextAreaElement;
+      let reviewInputRating = document.getElementById('input-form-rating') as HTMLInputElement;
+
+      if (!reviewInputRating.value || !reviewInputText.value) return;
+      
+      const rating = parseInt(reviewInputRating.value)
+      if (!(1 <= rating && rating <= 5)) return;
+
+      const newReview : IReview = {
+         text: reviewInputText.value,
+         rating: rating
+      };
+
+      reviewInputRating.value = "";
+      reviewInputText.value = "";
+
+      addShowReview(newReview);
+   }
 
    return <Flex 
             direction={'column'} 
@@ -42,7 +60,7 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
             <Button 
                width={'30%'} 
                borderRadius={'10px'}
-               onClick={addShowReview}>
+               onClick={addNewReview}>
                   Post
             </Button>
          </Flex>

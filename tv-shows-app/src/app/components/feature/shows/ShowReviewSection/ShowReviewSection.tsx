@@ -5,9 +5,8 @@ import ReviewForm from "../../review/ReviewForm/ReviewForm";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IReview, IReviewItem, IReviewList } from "@/typings/review";
 import ReviewList from "../../review/ReviewList/ReviewList";
-import { isArrayBufferView } from "util/types";
 
-//let mockReviewList = [] as IReview[];
+let mockReviewList = [] as IReview[]; // implicitni cast
 
 export default function ShowReviewSection() {
 
@@ -15,12 +14,13 @@ export default function ShowReviewSection() {
    // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
    // ali ne znam bi li bilo semanticki bolje da bude u npr. ReviewForm (jedino ne znam kako exportati reviewList onda)
 
-   const [reviewList, setReviewList] = useState([] as IReview[]); // implicitni cast
+   const [reviewList, setReviewList] = useState(mockReviewList); 
+   
    
    const loadFromLocalStorage =  () => {
       const listString = localStorage.getItem('reviewList');
       if (!listString) {
-         setReviewList([] as IReview[]);
+         setReviewList(mockReviewList);
          return;
       }
       setReviewList(JSON.parse(listString));
@@ -43,29 +43,19 @@ export default function ShowReviewSection() {
 
    // VAZNO: prouciti hookove!
 
-   const addToReviewList = () => {
-      let reviewInputText = document.getElementById('input-form-text') as HTMLTextAreaElement;
-      let reviewInputRating = document.getElementById('input-form-rating') as HTMLInputElement;
-
-      if (!reviewInputRating.value || !reviewInputText.value) return;
-      
-      const rating = parseInt(reviewInputRating.value)
-      if (!(1 <= rating && rating <= 5)) return;
-
-      const newReview : IReview = {
-         text: reviewInputText.value,
-         rating: rating
-      };
-
-      const newList = [... reviewList, newReview] as IReview[];
-      
+   const addToReviewList = (newReview : IReview) => {
+      const newList = [... reviewList, newReview];
       setReviewList(newList);
    }
 
+   const removeFromReviewList = (review : IReview) => {
+      const newList = reviewList.filter((x) => {return x !== review});
+      setReviewList(newList);
+   }
 
-
+   typeof(reviewList);
    return <Flex direction={'column'} width={'60vw'}>
       <ReviewForm addShowReview={addToReviewList}/>
-      <ReviewList reviewList={reviewList} />
+      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList}/>
    </Flex>
 }
