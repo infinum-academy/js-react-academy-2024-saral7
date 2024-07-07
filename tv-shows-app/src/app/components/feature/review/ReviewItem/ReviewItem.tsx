@@ -1,5 +1,5 @@
 import { IReview, IReviewItem } from "@/typings/review";
-import { Button, Card, CardBody, Flex, Text } from "@chakra-ui/react";
+import { Button, Card, CardBody, Flex, Show, Text } from "@chakra-ui/react";
 import { Fragment } from "react";
 
 export interface IReviewItemProps {
@@ -12,7 +12,12 @@ export default function ReviewItem({review, onDelete} : IReviewItemProps) {
       <Flex direction={'column'} gap = '16px'>
          <Text> {review.text} </Text>
          <Text> {`${review.rating} / 5`} </Text>
-         <Button width={'30%'} onClick={() => {onDelete(review)}}>Remove</Button>
+         <Show above='768px'>     
+            <Button width={'30%'} onClick={() => {onDelete(review)}}>Remove</Button>
+         </Show>
+         <Show below='767px'>     
+            <Button width={'40%'} onClick={() => {onDelete(review)}}>Remove</Button>
+         </Show>
       </Flex>
    </Card>
 }

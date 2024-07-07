@@ -18,6 +18,6 @@ export default function StarIcon({star, onChange} : IStarProps) {
    const imgUrl = (star.selected) ? urls[1] : urls[0];
    
    return <div>
-         <img width={'32px'} src = {imgUrl} onClick={() => onChange(star)} />
+         <img width={'32px'} src = {imgUrl} onClick={() => onChange(star)}/>
       </div>
 }
