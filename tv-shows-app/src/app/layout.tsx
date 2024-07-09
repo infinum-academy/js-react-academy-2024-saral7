@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
 import { background } from "@chakra-ui/react";
-import Header from "./components/shared/Header/Header";
+import Header from "../components/shared/Header/Header";
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -2,8 +2,8 @@
 import Image from "next/image";
 import styles from "./page.module.css";
 import { IShow } from "@/typings/show";
-import ShowDetails from "./components/feature/shows/ShowDetails/ShowDetails";
-import ShowReviewSection from "./components/feature/shows/ShowReviewSection/ShowReviewSection";
+import ShowDetails from "../components/feature/shows/ShowDetails/ShowDetails";
+import ShowReviewSection from "../components/feature/shows/ShowReviewSection/ShowReviewSection";
 import { useEffect, useState } from "react";
 
 const mockShow : IShow = {
