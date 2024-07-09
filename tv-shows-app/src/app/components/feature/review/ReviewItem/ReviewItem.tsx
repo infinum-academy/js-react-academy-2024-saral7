@@ -10,14 +10,10 @@ export interface IReviewItemProps {
 }
 
 export default function ReviewItem({review, onDelete} : IReviewItemProps) {
-   const value : IStar[] = [];
-   for (let i = 0; i < 5; i++) value.push({selected: i < review.rating});
-
    return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
       <Flex direction={'column'} gap = {1}>
          <Text> {review.text} </Text>
-         <Text> {`${review.rating} / 5`} </Text>
-         <ReviewStarsInput value={value} onChange={() => {return;}}></ReviewStarsInput>
+         <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {return;}}></ReviewStarsInput>
          <Show above='768px'>     
             <Button width={'30%'} onClick={() => {onDelete(review)}}>Remove</Button>
          </Show>

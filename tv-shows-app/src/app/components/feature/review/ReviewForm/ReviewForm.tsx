@@ -14,38 +14,23 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
       let reviewInputText = document.getElementById('input-form-text') as HTMLTextAreaElement;
       
       if (!reviewInputText.value) return;
-      
-      const rating = stars.filter((s) => {return s.selected == true;}).length;
 
       const newReview : IReview = {
          text: reviewInputText.value,
-         rating: rating
+         rating: starsClicked
       };
       addShowReview(newReview); // 
 
       // cleanup
       reviewInputText.value = "";
-      const newStarList : IStar[] = [];
-      for (let i = 0; i < 5; i++) newStarList.push({selected: i == 0});
-      setStars(newStarList);
+      setStarsClicked(1);
    }
 
-   const mockStars : IStar[] = [];
-   for (let i = 0; i < 5; i++) mockStars.push({selected: i == 0});
-
-   const [stars, setStars] = useState(mockStars);
+   const [starsClicked, setStarsClicked] = useState(1);
 
    // funkcija koja definira kako izgledaju zvjezdice na klik
-   const onStarClick = (star : IStar) => {
-      const newStarList : IStar[] = [];
-      let found = true;
-      let counter = 0;
-      for (let s of stars) {
-         if (found) counter++;
-         newStarList.push({selected: found}); // postavi selected svim zvjezdicama do kliknute
-         if (s === star) found = false;
-      }
-      setStars(newStarList);
+   const onStarClick = (index : number) => {
+      setStarsClicked(index);
    }
 
    return <Flex 
@@ -72,8 +57,7 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
             </Textarea>
 
             <Flex alignItems={'center'} marginBottom={1}>
-               <Text fontWeight={'bold'} fontSize={1} color={'white'} marginRight={0.5}>Rating</Text>
-               <ReviewStarsInput value={stars} onChange = {onStarClick}></ReviewStarsInput>
+               <ReviewStarsInput label = 'Rating' value={starsClicked} onChange = {onStarClick}></ReviewStarsInput>
             </Flex>
 
             <Button 

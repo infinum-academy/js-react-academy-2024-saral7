@@ -1,19 +1,17 @@
-import StarIcon, { IStar } from "@/app/components/shared/Icons/StarIcon/StarIcon";
-import { PhoneIcon } from "@chakra-ui/icons";
+import { StarIcon } from "@chakra-ui/icons";
 import { Flex, Text } from "@chakra-ui/react";
-import { useState } from "react";
 
 export interface IReviewStarsInputProps {
-   value: IStar[],
-   onChange: (star : IStar) => void
+   label: string,
+   value: number,
+   onChange: (index : number) => void
 }
 
-export default function ReviewStarsInput({value, onChange} : IReviewStarsInputProps) {
-   const stars = value; // niz IStar elemenata, za svaki kaze je li zvjezdica selected ili ne
-
+export default function ReviewStarsInput({label, value, onChange} : IReviewStarsInputProps) {
    return <Flex alignItems={'center'}>
+      <Text fontWeight={'bold'} fontSize={1} color={'white'} marginRight={0.5}>{label}</Text>
       {
-         stars.map((s, index) => {return <StarIcon key={index} star={s} onChange={onChange}></StarIcon>})
+         Array(5).fill(0).map((x, index) => {return <StarIcon key={index} boxSize='24px' color={index < value ? 'gold' : 'white'} onClick={() => {onChange(index+1)}}/>})
       }
       </Flex>
 }
