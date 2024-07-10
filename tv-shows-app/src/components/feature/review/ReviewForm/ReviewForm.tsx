@@ -2,7 +2,6 @@ import { IReview, IReviewItem } from "@/typings/review";
 import { Button, Flex, Input, NumberInput, Text, Textarea, useMediaQuery } from "@chakra-ui/react";
 import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
 import { useState } from "react";
-import { IStar } from "@/app/components/shared/Icons/StarIcon/StarIcon";
 
 export interface IOnPostFunction {
    addShowReview: (review : IReview) => void;
