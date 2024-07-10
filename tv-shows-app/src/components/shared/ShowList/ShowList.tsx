@@ -9,7 +9,7 @@ export interface IShowList {
 }
 
 export default function ShowList({showList} : IShowList) {
-   return <Flex gap="5%" wrap="wrap" marginTop={2}>
+   return <Flex gap="5%" wrap="wrap" marginTop={2} data-testid="show-list">
       {showList.map((x, index) => {
          return <Flex key={index} maxW="20%" width="20%" marginBottom={2}>
                   <NextLink href={`/all-shows/${x.id}`}>

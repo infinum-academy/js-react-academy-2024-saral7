@@ -55,8 +55,8 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
                >
             </Textarea>
 
-            <Flex alignItems={'center'} marginBottom={1}>
-               <ReviewStarsInput label = 'Rating' value={starsClicked} onChange = {onStarClick}></ReviewStarsInput>
+            <Flex alignItems={'center'} marginBottom={1} data-testid="stars-input"> {/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
+               <ReviewStarsInput label = 'Rating' value={starsClicked} onChange = {onStarClick} />
             </Flex>
 
             <Button 

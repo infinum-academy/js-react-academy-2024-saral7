@@ -50,9 +50,12 @@ export default function ShowDetailsSection() {
       imageUrl: show.image_url
    }
 
-   return <Flex width="80vw" direction={'column'}>
+   return <Flex justifyContent="space-between">
       <SidebarNavigation route = {undefined} />
-      <ShowDetails show={showDetails}/>  
-      <ShowReviewSection index={id} updateAverage={updateAverage} />
+      <Flex width="80vw" direction={'column'}>
+         <ShowDetails show={showDetails}/>  
+         <ShowReviewSection index={id} updateAverage={updateAverage} />
+      </Flex>
+      
    </Flex>
 }
