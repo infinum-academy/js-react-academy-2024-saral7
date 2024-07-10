@@ -1,4 +1,10 @@
 'use client'
-export default function Home() {
-  return <></>
+import { useRouter } from 'next/navigation'
+ 
+export default function Page() {
+  const router = useRouter()
+ 
+  return (
+    router.push('/all-shows')
+  )
 }

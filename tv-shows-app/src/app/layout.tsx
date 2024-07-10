@@ -5,6 +5,9 @@ import { Providers } from "./providers";
 import { background, Flex } from "@chakra-ui/react";
 import Header from "../components/shared/Header/Header";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
+import { Router, Routes, useParams } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,13 +24,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className} style={{backgroundColor: "#0D065E"}}> 
-        {/* note: dodala sam tamnoplavu pozadinu, ali je rendering s tim jako spor (na refresh pogotovo) */}
         <Providers>
           <Header />
-          <Flex justifyContent="space-between">
-            <SidebarNavigation />
-            {children}
-          </Flex>
+          {children}
         </Providers>
       </body>
     </html>

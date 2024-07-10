@@ -10,6 +10,7 @@ import { useState } from "react";
 import ShowReviewSection from "@/components/feature/shows/ShowReviewSection/ShowReviewSection";
 import useSWR from "swr";
 import { getShow } from "@/fetchers/shows";
+import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 
 
 
@@ -50,6 +51,7 @@ export default function ShowDetailsSection() {
    }
 
    return <Flex width="80vw" direction={'column'}>
+      <SidebarNavigation route = {undefined} />
       <ShowDetails show={showDetails}/>  
       <ShowReviewSection index={id} updateAverage={updateAverage} />
    </Flex>

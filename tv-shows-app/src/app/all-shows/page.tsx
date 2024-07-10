@@ -1,8 +1,9 @@
 'use client'
 
 import ShowList, { IShowList } from "@/components/shared/ShowList/ShowList";
+import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import { getAllShows } from "@/fetchers/shows";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import useSWR from "swr";
 
 // privremeni mock, ne koristim kasnije
@@ -43,9 +44,13 @@ export default function AllShowsSection () {
   }
 
    return (
-      <Box width="80vw">
-         <ShowList showList={data.shows}/>
-      </Box>
+      <Flex justifyContent="space-between">
+        <SidebarNavigation route="/all-shows"/>
+        <Box width="80vw">
+          <ShowList showList={data.shows}/>
+        </Box>
+      </Flex>
+      
     );
 }
 

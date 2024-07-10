@@ -1,8 +1,9 @@
 'use client'
 
 import ShowList from "@/components/shared/ShowList/ShowList";
+import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import { getTopShows } from "@/fetchers/shows";
-import { Box } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import useSWR from "swr";
 
 export default function TopRatedSection() {
@@ -16,8 +17,11 @@ export default function TopRatedSection() {
    }
 
    return (
-      <Box width="80vw">
-         <ShowList showList={data.shows}/>
-      </Box>
+      <Flex justifyContent="space-between">
+        <SidebarNavigation route="/all-shows/top-rated"/>
+        <Box width="80vw">
+          <ShowList showList={data.shows}/>
+        </Box>
+      </Flex>
     );
 }
