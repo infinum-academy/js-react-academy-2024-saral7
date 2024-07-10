@@ -2,8 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { background } from "@chakra-ui/react";
-import Header from "./components/shared/Header/Header";
+import { background, Flex } from "@chakra-ui/react";
+import Header from "../components/shared/Header/Header";
+import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,7 +24,10 @@ export default function RootLayout({
         {/* note: dodala sam tamnoplavu pozadinu, ali je rendering s tim jako spor (na refresh pogotovo) */}
         <Providers>
           <Header />
-          {children}
+          <Flex justifyContent="space-between">
+            <SidebarNavigation />
+            {children}
+          </Flex>
         </Providers>
       </body>
     </html>
