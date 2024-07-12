@@ -17,11 +17,8 @@ export default function TopRatedSection() {
    }
 
    return (
-      <Flex justifyContent="space-between">
-        <SidebarNavigation route="/all-shows/top-rated"/>
         <Box width="80vw">
           <ShowList showList={data.shows}/>
         </Box>
-      </Flex>
     );
 }

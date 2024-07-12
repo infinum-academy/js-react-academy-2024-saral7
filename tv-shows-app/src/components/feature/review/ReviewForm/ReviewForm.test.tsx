@@ -5,22 +5,18 @@ describe('ReviewFrom', () => {
    it('should render input textarea', () => {
       render(<ReviewForm addShowReview={() => {}} />);
 
-      const inputTextArea = screen.getByRole('textbox');
-      expect(inputTextArea).toBeInTheDocument();
+      expect(screen.getByRole('textbox')).toBeInTheDocument();
    });
 
    it('should render input button', () => {
       render(<ReviewForm addShowReview={() => {}} />);
 
-      const button = screen.getByRole('button');
-      expect(button).toBeInTheDocument();
+      expect(screen.getByRole('button')).toBeInTheDocument();
    });
 
    it('should render input stars rating', () => {
       render(<ReviewForm addShowReview={() => {}} />);
 
-      const ratingStars = screen.getByTestId('stars-input');
-      //console.log(ratingStars);
-      expect(ratingStars).toBeInTheDocument();
+      expect(screen.getByTestId('stars-input')).toBeInTheDocument();
    });
 })

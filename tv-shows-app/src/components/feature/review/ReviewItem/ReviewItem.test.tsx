@@ -17,8 +17,7 @@ describe('ReviewItem', () => {
    it('should render a delete button', () => {
       render(<ReviewItem review={mockReviewItem} onDelete={()=>{}}/>);
 
-      const deleteButton = screen.getByRole("button");
-      expect(deleteButton).toBeInTheDocument();
+      expect(screen.getByRole("button")).toBeInTheDocument();
    })
 
    it('should see if onDelete callback has been called only once', () => {
@@ -28,5 +27,6 @@ describe('ReviewItem', () => {
       const deleteButton = screen.getByRole("button");
       deleteButton.click();
       expect(mockOnDelete).toHaveBeenCalledTimes(1);
+      expect(mockOnDelete).toHaveBeenCalledWith(mockReviewItem);
    })
 });

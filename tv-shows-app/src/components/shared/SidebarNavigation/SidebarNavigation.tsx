@@ -3,12 +3,11 @@
 import { Box, Flex, Tag } from "@chakra-ui/react";
 
 import NextLink from "next/link";
+import { usePathname } from "next/navigation";
 
-export interface ISidebarNavigation {
-   route?: string
-}
 
-export default function SidebarNavigation({route} : ISidebarNavigation) {
+export default function SidebarNavigation() {
+   const route = usePathname();
    // zasad hardkodirani podaci... promijenit cu
    return <Flex direction="column" justifyContent="space-between">
       <Flex direction="column" position="fixed">

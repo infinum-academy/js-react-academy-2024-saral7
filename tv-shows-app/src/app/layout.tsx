@@ -26,7 +26,10 @@ export default function RootLayout({
       <body className={inter.className} style={{backgroundColor: "#0D065E"}}> 
         <Providers>
           <Header />
-          {children}
+          <Flex justifyContent="space-between">
+            <SidebarNavigation />
+            {children}
+          </Flex>
         </Providers>
       </body>
     </html>

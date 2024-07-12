@@ -44,12 +44,9 @@ export default function AllShowsSection () {
   }
 
    return (
-      <Flex justifyContent="space-between">
-        <SidebarNavigation route="/all-shows"/>
         <Box width="80vw">
           <ShowList showList={data.shows}/>
         </Box>
-      </Flex>
       
     );
 }

@@ -34,6 +34,6 @@ describe('ShowList', () => {
       const showList = screen.getByTestId('show-list') as HTMLElement;
       //showList.childNodes.forEach(x => console.log(x));
       expect(showList.childNodes.length).toBe(mockShows.length); // TODO: proci po djeci i vidjeti pase li svaki
-      
+      //expect(showList).toBe(mockShows);
    });
 });
