@@ -1,5 +1,6 @@
 'use client'
 
+import AuthRedirect from "@/components/shared/AuthRedirect/AuthRedirect";
 import ShowList, { IShowList } from "@/components/shared/ShowList/ShowList";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import { getAllShows } from "@/fetchers/shows";
@@ -44,7 +45,10 @@ export default function AllShowsSection () {
   }
 
    return (
-        <ShowList showList={data.shows}/>
+        <>
+          <AuthRedirect to='/login' condition="isLoggedOut" />
+          <ShowList showList={data.shows}/>
+        </>
       
     );
 }

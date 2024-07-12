@@ -1,5 +1,6 @@
 'use client'
 
+import AuthRedirect from "@/components/shared/AuthRedirect/AuthRedirect";
 import ShowList from "@/components/shared/ShowList/ShowList";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import { getTopShows } from "@/fetchers/shows";
@@ -17,6 +18,9 @@ export default function TopRatedSection() {
    }
 
    return (
-         <ShowList showList={data.shows}/>
+         <>
+            <AuthRedirect to='/login' condition="isLoggedOut" />
+            <ShowList showList={data.shows}/>
+         </> 
     );
 }

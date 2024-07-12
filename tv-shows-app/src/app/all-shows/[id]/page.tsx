@@ -11,6 +11,7 @@ import ShowReviewSection from "@/components/feature/shows/ShowReviewSection/Show
 import useSWR from "swr";
 import { getShow } from "@/fetchers/shows";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
+import AuthRedirect from "@/components/shared/AuthRedirect/AuthRedirect";
 
 
 
@@ -51,9 +52,13 @@ export default function ShowDetailsSection() {
    }
 
    return (
-      <Flex direction={'column'}>
-         <ShowDetails show={showDetails}/>  
-         <ShowReviewSection index={id} updateAverage={updateAverage} />
-      </Flex>
+      <>
+         <AuthRedirect to='/login' condition="isLoggedOut" />
+         <Flex direction={'column'}>
+            <ShowDetails show={showDetails}/>  
+            <ShowReviewSection index={id} updateAverage={updateAverage} />
+         </Flex>
+      </>
+      
    );
 }

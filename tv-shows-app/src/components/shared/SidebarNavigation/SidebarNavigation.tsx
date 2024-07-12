@@ -3,12 +3,17 @@
 import { Box, Flex, Tag } from "@chakra-ui/react";
 
 import NextLink from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 
 export default function SidebarNavigation() {
    const route = usePathname();
-   // zasad hardkodirani podaci... promijenit cu
+   const to = useRouter();
+   
+   const logOut = () => {
+      localStorage.setItem('loginInfo', '');
+      to.push('/login');
+   }
    return <Flex direction="column" justifyContent="space-between">
       <Flex direction="column" position="fixed">
          <Tag as={NextLink} href={"/all-shows"} color="white" background={route == "/all-shows" ? "lightblue" : "transparent"}>All shows</Tag>
@@ -17,6 +22,6 @@ export default function SidebarNavigation() {
          <Tag color="white" background="transparent">My profile</Tag>
       </Flex>
       <Tag visibility="hidden">_________</Tag> {/* ovo mi je bezveze, ali ne znam kako da zadrzim ovakav fixed scrollbar u flowu inače bez da je neki dio static" */}
-      <Tag position="fixed" bottom="5vh" color="white" background="transparent">Log out</Tag>
+      <Tag position="fixed" bottom="5vh" color="white" background="transparent" onClick={logOut}>Log out</Tag>
    </Flex>
 }

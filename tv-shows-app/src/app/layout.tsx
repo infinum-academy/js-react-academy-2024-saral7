@@ -2,12 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
-import { background, Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import Header from "../components/shared/Header/Header";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
-import { Router, Routes, useParams } from "react-router-dom";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,7 +26,9 @@ export default function RootLayout({
           <Header />
           <Flex justifyContent="space-between">
             <SidebarNavigation />
-            {children}
+            <Box width="80vw">
+              {children}
+            </Box>
           </Flex>
         </Providers>
       </body>
