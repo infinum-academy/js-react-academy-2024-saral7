@@ -1,5 +1,3 @@
-import { error } from "console";
-
 export async function mutator<T>(url : string, { arg }: { arg: T }) {
    const response = await fetch(url, {
      method: 'POST',
@@ -10,10 +8,10 @@ export async function mutator<T>(url : string, { arg }: { arg: T }) {
      }
    })
 
-   if (!response.ok) {
-      throw new Error(`Error mutating on ${url} `);
+    if (!response.ok) {
+      const error = await response.json()
+      throw error;
     }
-    //console.log(response.headers.forEach((x) => console.log(x)));
     const obj = await response.json();
     return {
       ...obj,

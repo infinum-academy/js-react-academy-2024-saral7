@@ -3,7 +3,7 @@
 import { mutator } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
-import { Alert, Button, chakra, Flex, FormControl, FormHelperText, FormLabel, Input, InputAddon, InputGroup, InputLeftElement, Link, Text } from "@chakra-ui/react";
+import { Alert, Button, chakra, Flex, FormControl, FormErrorIcon, FormErrorMessage, FormHelperText, FormLabel, Input, InputAddon, InputGroup, InputLeftElement, Link, Text } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
@@ -18,29 +18,43 @@ interface IRegisterForm {
 export default function RegisterForm() {
    const router = useRouter();
    const [registered, setRegistered] = useState(false);
-   const {register, handleSubmit, formState: {isSubmitting}} = useForm<IRegisterForm>();
+   const {register, handleSubmit, watch, setError, formState: {isSubmitting, errors}} = useForm<IRegisterForm>();
 
    const {trigger} = useSWRMutation(swrKeys.register, mutator, {
-      onError: (error, key) => { //TODO: error handling
-         alert(error);
+      onError: (error,) => { 
+         setError("email", {message: error.errors[0]});
       },
       onSuccess: () => {
          setRegistered(true);
       }
-
    });
 
    const onRegister = async (data : IRegisterForm) => {
-      if (data.password !== data.password_confirmation) {
-         alert('Please provide equal passwords!');    //TODO: doradi
-         return;
+      try {
+         await trigger(data);
       }
-      if (data.password.length < 1) {
-         alert('Please provide a password with at least 8 characters!');    //TODO: doradi, da bude 8
-         return;
+      catch(error) {}
+   }
+
+   const emailRequirements = {
+      required: 'Email is required'
+   }
+
+   const passwordRequirements = {
+      required: 'Password is required', 
+      minLength: {
+         value: 8, 
+         message: 'At least 8 characters'
       }
-      //console.log(data);
-      await trigger(data);
+   }
+
+   const passwordConfirmationRequirements = {
+      ...passwordRequirements,
+      validate: {
+         equals: (value: string) => {
+            return watch("password") == value || 'Make sure passwords are equal';
+         }
+      }
    }
 
    return <>
@@ -49,26 +63,28 @@ export default function RegisterForm() {
       <Flex margin="auto" direction="column" padding={2} alignItems="center">
          <chakra.form width="80%" onSubmit={handleSubmit(onRegister)}>
             <FormControl as='fieldset' disabled={isSubmitting} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
-               <InputGroup marginBottom={2}>
+               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
                   <InputLeftElement>
                      <EmailIcon color="white" />
                   </InputLeftElement>
-                  <Input {...register("email")} type="email" color="white" placeholder="Email"/>
+                  <Input {...register("email", emailRequirements)} type="email" color="white" placeholder="Email"/>
+                  {errors.email && <FormHelperText margin={0} textAlign="left" color="white">{errors.email.message}</FormHelperText>} {/*mozda napraviti komponentu za ovo?*/}
                </InputGroup>
 
-               <InputGroup>
+               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
                   <InputLeftElement>
                      <LockIcon color="white" />
                   </InputLeftElement>
-                  <Input {...register("password")} type="password" color="white" placeholder="Password"/>
+                  <Input {...register("password", passwordRequirements)} type="password" color="white" placeholder="Password"/>
+                  {errors.password && <FormHelperText margin={0} textAlign="left" color="white">{errors.password.message}</FormHelperText>}
                </InputGroup>
-               <FormHelperText margin="8px 0 16px 8px" textAlign="left" color="white">At least 8 characters</FormHelperText>
                
-               <InputGroup marginBottom={1}>
+               <InputGroup marginBottom={1} display="flex" flexDirection="column" alignContent="left">
                   <InputLeftElement>
                      <LockIcon color="white" />
                   </InputLeftElement>
-                  <Input {...register("password_confirmation")} type="password" color="white" placeholder="Confirm password"/>
+                  <Input {...register("password_confirmation", passwordConfirmationRequirements)} type="password" color="white" placeholder="Confirm password"/>
+                  {errors.password_confirmation && <FormHelperText margin={0} textAlign="left" color="white">{errors.password_confirmation.message}</FormHelperText>}
                </InputGroup>
 
                <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">SIGN UP</Button>
