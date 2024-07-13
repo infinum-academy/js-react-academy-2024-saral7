@@ -18,7 +18,7 @@ interface IRegisterForm {
 export default function RegisterForm() {
    const router = useRouter();
    const [registered, setRegistered] = useState(false);
-   const {register, handleSubmit} = useForm<IRegisterForm>();
+   const {register, handleSubmit, formState: {isSubmitting}} = useForm<IRegisterForm>();
 
    const {trigger} = useSWRMutation(swrKeys.register, mutator, {
       onError: (error, key) => { //TODO: error handling
@@ -48,7 +48,7 @@ export default function RegisterForm() {
    {!registered && (
       <Flex margin="auto" direction="column" padding={2} alignItems="center">
          <chakra.form width="80%" onSubmit={handleSubmit(onRegister)}>
-            <FormControl as='fieldset' display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
+            <FormControl as='fieldset' disabled={isSubmitting} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
                <InputGroup marginBottom={2}>
                   <InputLeftElement>
                      <EmailIcon color="white" />
@@ -71,7 +71,7 @@ export default function RegisterForm() {
                   <Input {...register("password_confirmation")} type="password" color="white" placeholder="Confirm password"/>
                </InputGroup>
 
-               <Button width="60%" type="submit" color="darkblue" margin="auto">SIGN UP</Button>
+               <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">SIGN UP</Button>
 
                <FormHelperText textAlign="center" color="white">Already have an account? <Link fontWeight="bold" href="/login">Login</Link></FormHelperText>
             </FormControl>

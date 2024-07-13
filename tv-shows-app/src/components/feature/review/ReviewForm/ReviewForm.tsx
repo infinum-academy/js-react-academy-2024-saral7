@@ -6,6 +6,7 @@ import { Form, useForm } from "react-hook-form";
 import useSWR from "swr";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { authFetcher } from "@/fetchers/fetcher";
+import { waitFor } from "@testing-library/react";
 
 export interface IOnPostFunction {
    addShowReview: (review : IReview) => void;
@@ -17,11 +18,11 @@ interface IReviewFormInputProps {
 
 export default function ReviewForm({addShowReview} : IOnPostFunction) { 
    const {data} = useSWR<{user: {email: string}}>(swrKeys.me, authFetcher);
-   const {register, handleSubmit, reset} = useForm<IReviewFormInputProps>();
+   const {register, handleSubmit, reset, formState: {isSubmitting}} = useForm<IReviewFormInputProps>();
    const [starsClicked, setStarsClicked] = useState(1);
 
    // pitanje: bi li i broj kliknutih zvjezdica trebao biti dio form inputa, ili je okej ostaviti ovako sa stateom pa rucno?
-   const addNewReview = ({text} : IReviewFormInputProps) => {
+   const addNewReview = async ({text} : IReviewFormInputProps) => {
       if (!data) return;
       const newReview : IReview = {
          text: text,
@@ -40,16 +41,16 @@ export default function ReviewForm({addShowReview} : IOnPostFunction) {
 
    return (
       <chakra.form onSubmit={handleSubmit(addNewReview)}>
-         <FormControl display="flex" flexDirection="column" width="100%" marginTop={2} marginBottom={2}>
+         <FormControl display="flex" flexDirection="column" width="100%" marginTop={2} marginBottom={2} isDisabled={isSubmitting}>
             <Text fontWeight="bold" color="white" marginBottom={1}>Reviews</Text>
 
             <Textarea {...register("text")} backgroundColor="white"placeholder="Add review" width="100%" marginBottom={1} paddingTop={1} />
                
             <Flex alignItems="center" marginBottom={1} data-testid="stars-input"> {/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
-               <ReviewStarsInput label = "Rating" value={starsClicked} onChange = {onStarClick} />
+               <ReviewStarsInput label = "Rating" value={starsClicked} onChange = {isSubmitting ? () => {} : onStarClick} />
             </Flex>
 
-            <Button type="submit" width="30%" borderRadius="10px">Post</Button>
+            <Button isLoading={isSubmitting} type="submit" width="30%" borderRadius="10px">Post</Button>
          </FormControl>
       </chakra.form> 
    )

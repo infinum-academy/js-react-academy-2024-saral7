@@ -17,7 +17,7 @@ interface ILoginForm {
 
 export default function LoginForm() {
    const [loggedIn, setLoggedIn] = useState(false);
-   const {register, handleSubmit} = useForm<ILoginForm>();
+   const {register, handleSubmit, formState: {isSubmitting}} = useForm<ILoginForm>();
    const {mutate} = useSWR(swrKeys.me);
    
    const {trigger} = useSWRMutation(swrKeys.login, mutator, {
@@ -42,7 +42,7 @@ export default function LoginForm() {
    return (
       <Flex margin="auto" direction="column" padding={2} alignItems="center">
          <chakra.form width="80%" onSubmit={handleSubmit(onLogin)}>
-            <FormControl as='fieldset' display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
+            <FormControl as='fieldset' isDisabled={isSubmitting} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
                <InputGroup marginBottom={2}>
                   <InputLeftElement>
                      <EmailIcon color="white" />
@@ -58,7 +58,7 @@ export default function LoginForm() {
                </InputGroup>
                
 
-               <Button width="60%" type="submit" color="darkblue" margin="auto">LOGIN</Button>
+               <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">LOGIN</Button>
 
                <FormHelperText textAlign="center" color="white">Don't have an account? <Link fontWeight="bold" href="/register">Register</Link></FormHelperText>
             </FormControl>
