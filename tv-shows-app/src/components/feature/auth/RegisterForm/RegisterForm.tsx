@@ -8,6 +8,7 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation";
+import PasswordInput from "../PasswordInput/PasswordInput";
 
 interface IRegisterForm {
    email: string,
@@ -71,21 +72,9 @@ export default function RegisterForm() {
                   {errors.email && <FormHelperText margin={0} textAlign="left" color="white">{errors.email.message}</FormHelperText>} {/*mozda napraviti komponentu za ovo?*/}
                </InputGroup>
 
-               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
-                  <InputLeftElement>
-                     <LockIcon color="white" />
-                  </InputLeftElement>
-                  <Input {...register("password", passwordRequirements)} type="password" color="white" placeholder="Password"/>
-                  {errors.password && <FormHelperText margin={0} textAlign="left" color="white">{errors.password.message}</FormHelperText>}
-               </InputGroup>
+               <PasswordInput registerProps={{...register("password", passwordRequirements)}} errors={errors.password} />
                
-               <InputGroup marginBottom={1} display="flex" flexDirection="column" alignContent="left">
-                  <InputLeftElement>
-                     <LockIcon color="white" />
-                  </InputLeftElement>
-                  <Input {...register("password_confirmation", passwordConfirmationRequirements)} type="password" color="white" placeholder="Confirm password"/>
-                  {errors.password_confirmation && <FormHelperText margin={0} textAlign="left" color="white">{errors.password_confirmation.message}</FormHelperText>}
-               </InputGroup>
+               <PasswordInput registerProps={{...register("password_confirmation", passwordConfirmationRequirements)}} errors={errors.password_confirmation} />
 
                <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">SIGN UP</Button>
 

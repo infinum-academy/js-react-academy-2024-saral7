@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
 import { cache } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
+import PasswordInput from "../PasswordInput/PasswordInput";
 
 interface ILoginForm {
    email: string,
@@ -58,13 +59,7 @@ export default function LoginForm() {
                   {errors.email && <FormHelperText margin={0} textAlign="left" color="white">{errors.email.message}</FormHelperText>}
                </InputGroup>
 
-               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
-                  <InputLeftElement>
-                     <LockIcon color="white" />
-                  </InputLeftElement>
-                  <Input {...register("password", {required: 'Password is required'})} type="password" color="white" placeholder="Password"/>
-                  {errors.password && <FormHelperText margin={0} textAlign="left" color="white">{errors.password.message}</FormHelperText>}
-               </InputGroup>
+               <PasswordInput registerProps={{...register("password", {required: 'Password is required'})}} errors={errors} />
                <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">LOGIN</Button>
 
                <FormHelperText textAlign="center" color="white">Don't have an account? <Link fontWeight="bold" href="/register">Register</Link></FormHelperText>
