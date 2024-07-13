@@ -17,7 +17,7 @@ export default function ShowDetailsSection() {
 
    let id = params.id as string;
 
-   const {data, error, isLoading} = useSWR(swrKeys.shows(id), authFetcher<IShowCardProps>);
+   const {data, error, isLoading} = useSWR(swrKeys.shows(`/${id}`), authFetcher<IShowCardProps>);
    if (error) {
       return <Box color="white">Something went wrong...</Box>
     }

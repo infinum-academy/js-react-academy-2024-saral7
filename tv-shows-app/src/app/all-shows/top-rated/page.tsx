@@ -10,7 +10,7 @@ import { Box, Flex } from "@chakra-ui/react";
 import useSWR from "swr";
 
 export default function TopRatedSection() {
-   const {data, error, isLoading} = useSWR(swrKeys.shows('top_rated'), authFetcher<IAllShows>);
+   const {data, error, isLoading} = useSWR(swrKeys.shows('/top_rated'), authFetcher<IAllShows>);
 
    if (error) {
       return <Box color="white">Something went wrong...</Box>;

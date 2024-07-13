@@ -14,7 +14,7 @@ export interface IAllShows {
   shows: Array<IShowCard>
 }
 export default function AllShowsSection () {
-  const {data, error, isLoading} = useSWR(swrKeys.shows(undefined), authFetcher<IAllShows>);
+  const {data, error, isLoading} = useSWR(swrKeys.shows(''), authFetcher<IAllShows>);
 
   if (error) {
     return <Box color="white">Something went wrong...</Box>;
