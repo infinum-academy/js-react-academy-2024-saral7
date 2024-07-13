@@ -1,18 +1,24 @@
 'use client'
 
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Box, Flex, Tag } from "@chakra-ui/react";
 
 import NextLink from "next/link";
 import { usePathname, useRouter } from "next/navigation";
+import useSWR, { mutate, useSWRConfig } from "swr";
+import useSWRMutation from "swr/mutation";
+
 
 
 export default function SidebarNavigation() {
    const route = usePathname();
    const to = useRouter();
-   
+   const {mutate} = useSWR(swrKeys.me);
+
    const logOut = () => {
       localStorage.setItem('loginInfo', '');
-      to.push('/login');
+      mutate(null, {revalidate: false});
+      to.push('/');
    }
    return <Flex direction="column" justifyContent="space-between">
       <Flex direction="column" position="fixed">

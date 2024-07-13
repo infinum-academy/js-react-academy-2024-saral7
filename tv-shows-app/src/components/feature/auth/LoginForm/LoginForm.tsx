@@ -6,7 +6,8 @@ import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 import { Button, chakra, Flex, FormControl, FormHelperText, Input, InputGroup, InputLeftElement, Link } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { mutate } from "swr";
+import useSWR, { mutate } from "swr";
+import { cache } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 
 interface ILoginForm {
@@ -17,7 +18,8 @@ interface ILoginForm {
 export default function LoginForm() {
    const [loggedIn, setLoggedIn] = useState(false);
    const {register, handleSubmit} = useForm<ILoginForm>();
-
+   const {mutate} = useSWR(swrKeys.me);
+   
    const {trigger} = useSWRMutation(swrKeys.login, mutator, {
       onSuccess: (data) => {
          const loginInfo = {
@@ -26,7 +28,9 @@ export default function LoginForm() {
             'token': data.token
          }
          localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+         console.log(cache);
          mutate(data, {revalidate: false});
+         console.log(cache);
          setLoggedIn(true);
       }
    });
