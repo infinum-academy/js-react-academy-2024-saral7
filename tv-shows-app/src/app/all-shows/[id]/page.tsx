@@ -1,17 +1,14 @@
 'use client'
 
-import ShowCard from "@/components/shared/ShowCard/ShowCard";
-import { mockList } from "../page";
-import { IShow, IShowCard } from "@/typings/show";
 import { useParams } from "next/navigation";
 import { Box, Flex } from "@chakra-ui/react";
 import ShowDetails from "@/components/feature/shows/ShowDetails/ShowDetails";
-import { useState } from "react";
 import ShowReviewSection from "@/components/feature/shows/ShowReviewSection/ShowReviewSection";
 import useSWR from "swr";
-import { getShow } from "@/fetchers/shows";
-import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import AuthRedirect from "@/components/shared/AuthRedirect/AuthRedirect";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { authFetcher } from "@/fetchers/fetcher";
+import { IShowCardProps } from "@/components/shared/ShowCard/ShowCard";
 
 
 
@@ -20,8 +17,7 @@ export default function ShowDetailsSection() {
 
    let id = params.id as string;
 
-   const {data, error, isLoading} = useSWR(`all-shows/${id}`, () => {return getShow(id)});
-
+   const {data, error, isLoading} = useSWR(swrKeys.shows(id), authFetcher<IShowCardProps>);
    if (error) {
       return <Box color="white">Something went wrong...</Box>
     }
@@ -29,33 +25,17 @@ export default function ShowDetailsSection() {
       return <Box color="white">Loading...</Box>
     }
 
-   let show = data;
-   //const [show, setShow] = useState(showData);
-
    const updateAverage = (avg : number) => {
-      const newShow : IShowCard = {
-         id: show.title,
-         title: show.title,
-         description: show.description,
-         image_url: show.image_url,
-         average_rating: parseFloat((avg).toFixed(1)) 
-      }
-      //setShow(newShow);
+      // TODO
    }
 
-   // ShowDetails prima objekt tipa IShow
-   const showDetails : IShow = {
-      title: show.title,
-      description: show.description,
-      averageRating: show.average_rating,
-      imageUrl: show.image_url
-   }
+   const show = data.show;
 
    return (
       <>
          <AuthRedirect to='/login' condition="isLoggedOut" />
          <Flex direction={'column'}>
-            <ShowDetails show={showDetails}/>  
+            <ShowDetails show={show}/>  
             <ShowReviewSection index={id} updateAverage={updateAverage} />
          </Flex>
       </>

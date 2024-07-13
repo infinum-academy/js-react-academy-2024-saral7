@@ -1,4 +1,4 @@
-import { IShow, IShowCard } from "@/typings/show";
+import { IShowCard } from "@/typings/show";
 import { Box, Flex } from "@chakra-ui/react";
 import ShowCard from "../ShowCard/ShowCard";
 

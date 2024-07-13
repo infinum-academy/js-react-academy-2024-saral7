@@ -3,12 +3,14 @@
 import AuthRedirect from "@/components/shared/AuthRedirect/AuthRedirect";
 import ShowList from "@/components/shared/ShowList/ShowList";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
-import { getTopShows } from "@/fetchers/shows";
+import { authFetcher } from "@/fetchers/fetcher";
+import { getTopShows, IAllShows } from "@/fetchers/shows";
+import { swrKeys } from "@/fetchers/swrKeys";
 import { Box, Flex } from "@chakra-ui/react";
 import useSWR from "swr";
 
 export default function TopRatedSection() {
-   const {data, error, isLoading} = useSWR(`/all-shows`, () => {return getTopShows();});
+   const {data, error, isLoading} = useSWR(swrKeys.shows('top_rated'), authFetcher<IAllShows>);
 
    if (error) {
       return <Box color="white">Something went wrong...</Box>;
