@@ -12,17 +12,17 @@ import useSWR from "swr";
 export default function TopRatedSection() {
    const {data, error, isLoading} = useSWR(swrKeys.shows('/top_rated'), authFetcher<IAllShows>);
 
-   if (error) {
+   /*if (error) {
       return <Box color="white">Something went wrong...</Box>;
-   }
-   if (isLoading || !data) {
+   }*/
+   if (isLoading) {
       return <Box color="white">Loading...</Box>;
    }
 
    return (
          <>
-            <AuthRedirect to='/login' condition="isLoggedOut" />
-            <ShowList showList={data.shows}/>
+            {<AuthRedirect to='/login' condition="isLoggedOut" />}
+            {data && <ShowList showList={data.shows}/>}
          </> 
     );
 }

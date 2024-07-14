@@ -18,8 +18,8 @@ export async function fetcher <T> (input: string | URL | globalThis.Request, ini
 export async function authFetcher <T> (input: string | URL | globalThis.Request, init?: RequestInit) : Promise<T> {
    try {
       const value = localStorage.getItem('loginInfo');
-      const authInfo = value ? JSON.parse(value) : null;
-      
+      const authInfo = value ? JSON.parse(value) : {};
+      console.log(authInfo.client)
       const response = await fetch(input, {
          ...init,
          headers: {
@@ -28,6 +28,7 @@ export async function authFetcher <T> (input: string | URL | globalThis.Request,
             'Uid': authInfo.uid
          }
       });
+      console.log(response);
       if (!response.ok) {
          throw new Error(`Response status: ${response.status}`);
       }

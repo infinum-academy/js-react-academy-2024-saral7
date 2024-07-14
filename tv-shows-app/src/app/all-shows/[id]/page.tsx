@@ -18,10 +18,10 @@ export default function ShowDetailsSection() {
    let id = params.id as string;
 
    const {data, error, isLoading} = useSWR(swrKeys.shows(`/${id}`), authFetcher<IShowCardProps>);
-   if (error) {
+   /*if (error) {
       return <Box color="white">Something went wrong...</Box>
-    }
-    if (isLoading || !data) {
+    }*/
+    if (isLoading) {
       return <Box color="white">Loading...</Box>
     }
 
@@ -29,15 +29,13 @@ export default function ShowDetailsSection() {
       // TODO
    }
 
-   const show = data.show;
-
    return (
       <>
          <AuthRedirect to='/login' condition="isLoggedOut" />
-         <Flex direction={'column'}>
-            <ShowDetails show={show}/>  
+         {data && <Flex direction={'column'}>
+            <ShowDetails show={data.show}/>  
             <ShowReviewSection index={id} updateAverage={updateAverage} />
-         </Flex>
+         </Flex>}
       </>
       
    );

@@ -14,7 +14,6 @@ export default function PasswordInput({registerProps, errors} : IPasswordInputPr
    const onClickHandler = () => {
       setIsClicked(!isClicked);
    }
-   console.log(registerProps);
    return (
       <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
          <InputLeftElement>
