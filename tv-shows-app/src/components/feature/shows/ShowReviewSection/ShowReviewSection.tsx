@@ -9,10 +9,11 @@ import ReviewList from "../../review/ReviewList/ReviewList";
 let mockReviewList = [] as IReview[]; // implicitni cast
 
 export interface ShowReviewSectionProps {
+   index: string,
    updateAverage: (avg : number) => void;
 }
 
-export default function ShowReviewSection({updateAverage} : ShowReviewSectionProps) {
+export default function ShowReviewSection({index, updateAverage} : ShowReviewSectionProps) {
 
    // pitanje: je li ova komponenta ispravno mjesto za logiku s localStorageom?
    // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
@@ -23,7 +24,7 @@ export default function ShowReviewSection({updateAverage} : ShowReviewSectionPro
    
 
    const loadFromLocalStorage =  () => {
-      const listString = localStorage.getItem('reviewList');
+      const listString = localStorage.getItem(`reviewList-${index}`);
       if (!listString) {
          setReviewList(mockReviewList);
          return;
@@ -35,7 +36,7 @@ export default function ShowReviewSection({updateAverage} : ShowReviewSectionPro
 
 
    const storeToLocalStorage = () => {
-      localStorage.setItem('reviewList', JSON.stringify(reviewList));
+      localStorage.setItem(`reviewList-${index}`, JSON.stringify(reviewList));
    }
    const [firstRender, setFirstRender] = useState(true); 
    useEffect(
@@ -48,6 +49,8 @@ export default function ShowReviewSection({updateAverage} : ShowReviewSectionPro
 
    // VAZNO: prouciti hookove!
 
+   useEffect(() => {updateAverage(reviewList.reduce((acc, b) => {return acc + b.rating;}, 0) / reviewList.length); }, [reviewList]);
+      
    const addToReviewList = (newReview : IReview) => {
       const newList = [... reviewList, newReview];
       setReviewList(newList);
@@ -58,9 +61,8 @@ export default function ShowReviewSection({updateAverage} : ShowReviewSectionPro
       setReviewList(newList);
    }
 
-   typeof(reviewList);
-   return <Flex direction={'column'} width={'60vw'}>
+   return <Flex direction={'column'} width={'80%'} margin={'auto'}>
       <ReviewForm addShowReview={addToReviewList}/>
-      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList} updateAverage={updateAverage}/>
+      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList}/>
    </Flex>
 }

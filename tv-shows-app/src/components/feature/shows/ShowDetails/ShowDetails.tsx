@@ -10,8 +10,7 @@ export interface IShowItem {
 
 
 export default function ShowDetails({show}: IShowItem) {
-   return <Flex width='60vw' marginTop={2}>
-      <Card borderTopRadius='20px' borderBottomRadius={0}>
+   return <Card borderTopRadius='20px' borderBottomRadius={0} marginTop={2} margin="auto" width="60%">
          <Image borderTopRadius='20px' src = {show.imageUrl ? show.imageUrl : '/images/placeholder.png'} />
             
          <CardBody color={'darkblue'}>
@@ -21,5 +20,4 @@ export default function ShowDetails({show}: IShowItem) {
          </CardBody>
         
       </Card>
-   </Flex>
 };
