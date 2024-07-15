@@ -12,12 +12,12 @@ import useSWR from "swr";
 export default function TopRatedSection() {
    const {data, error, isLoading} = useSWR(swrKeys.shows('/top_rated'), authFetcher<IAllShows>);
 
-   /*if (error) {
-      return <Box color="white">Something went wrong...</Box>;
-   }*/
-   if (isLoading) {
+   if (error) {
+      if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
+    }
+    if (isLoading) {
       return <Box color="white">Loading...</Box>;
-   }
+    }
 
    return (
          <>

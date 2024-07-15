@@ -18,12 +18,12 @@ export default function ShowDetailsSection() {
    let id = params.id as string;
 
    const {data, error, isLoading} = useSWR(swrKeys.shows(`/${id}`), authFetcher<IShowCardProps>);
-   /*if (error) {
-      return <Box color="white">Something went wrong...</Box>
-    }*/
-    if (isLoading) {
-      return <Box color="white">Loading...</Box>
-    }
+   if (error) {
+      if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
+   }
+   if (isLoading) {
+   return <Box color="white">Loading...</Box>;
+   }
 
    const updateAverage = (avg : number) => {
       // TODO

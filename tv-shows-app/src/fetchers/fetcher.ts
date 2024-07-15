@@ -28,14 +28,12 @@ export async function authFetcher <T> (input: string | URL | globalThis.Request,
             'Uid': authInfo.uid
          }
       });
-      console.log(response);
       if (!response.ok) {
-         throw new Error(`Response status: ${response.status}`);
+         throw response;
       }
       return await response.json();
    } catch (error) {
-      
-      throw new Error(`Response status: ${error}`)
+      throw error;
    }
     
 }

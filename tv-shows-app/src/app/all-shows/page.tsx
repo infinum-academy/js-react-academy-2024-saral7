@@ -16,15 +16,13 @@ export interface IAllShows {
 export default function AllShowsSection () {
   const {data, error, isLoading} = useSWR(swrKeys.shows(''), authFetcher<IAllShows>);
 
-  /*if (error) {
-    console.log(error);
-    return <Box color="white">Something went wrong...</Box>;
-  }*/
+  if (error) {
+    if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
+  }
   if (isLoading) {
     return <Box color="white">Loading...</Box>;
   }
-  console.log(data);
-   return (
+  return (
         <>
           {<AuthRedirect to='/login' condition="isLoggedOut" />}
           {data && <ShowList showList={data.shows}/>}
