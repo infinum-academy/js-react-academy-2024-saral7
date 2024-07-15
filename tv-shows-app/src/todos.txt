@@ -1,0 +1,15 @@
+- plava pozadina (jako spori render kad stavim, zasto?)
+
+- da bude 1.0 umjesto 1 ako cjelobrojno
+
+- renaming da se moze
+
+- media queries
+
+- prebaciti dodavanje i brisanje na pravo mjesto (updateAverage?)
+
+- prouciti hookove, hydration?
+
+- koje funkcionalnosti direktno sadrzi komponenta, a sto se salje u nju
+
+- hover
