@@ -62,22 +62,32 @@ export default function RegisterForm() {
    {registered && (router.push("/login"))}
    {!registered && (
       <Flex margin="auto" direction="column" padding={2} alignItems="center">
-         <chakra.form width="80%" onSubmit={handleSubmit(onRegister)}>
-            <FormControl as='fieldset' disabled={isSubmitting} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
-               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
+         <chakra.form width="80%" onSubmit={handleSubmit(onRegister)} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
+            <FormControl isInvalid={Boolean(errors.email)} isDisabled={isSubmitting} marginBottom={2} >
+               <InputGroup>
                   <InputLeftElement>
                      <EmailIcon color="white" />
                   </InputLeftElement>
                   <Input {...register("email", emailRequirements)} type="email" color="white" placeholder="Email"/>
-                  {errors.email && <FormHelperText margin={0} textAlign="left" color="white">{errors.email.message}</FormHelperText>} {/*mozda napraviti komponentu za ovo?*/}
                </InputGroup>
+               <FormErrorMessage margin={0} textAlign="left">{errors?.email?.message}</FormErrorMessage>
+            </FormControl>
 
+            <FormControl isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} marginBottom={2} >
                <PasswordInput registerProps={{...register("password", passwordRequirements)}} errors={errors.password} />
-               
+               <FormErrorMessage margin={0} textAlign="left">{errors?.password?.message}</FormErrorMessage>
+            </FormControl>
+
+            <FormControl isInvalid={Boolean(errors.password_confirmation)} isDisabled={isSubmitting} marginBottom={2} >
                <PasswordInput registerProps={{...register("password_confirmation", passwordConfirmationRequirements)}} errors={errors.password_confirmation} />
+               <FormErrorMessage margin={0} textAlign="left">{errors?.password_confirmation?.message}</FormErrorMessage>
+            </FormControl>
 
+            <FormControl display="flex" justifyContent="space-around">
                <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">SIGN UP</Button>
+            </FormControl>
 
+            <FormControl>
                <FormHelperText textAlign="center" color="white">Already have an account? <Link fontWeight="bold" href="/login">Login</Link></FormHelperText>
             </FormControl>
          </chakra.form>

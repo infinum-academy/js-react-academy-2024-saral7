@@ -49,21 +49,30 @@ export default function LoginForm() {
 
    return (
       <Flex margin="auto" direction="column" padding={2} alignItems="center">
-         <chakra.form width="80%" onSubmit={handleSubmit(onLogin)}>
-            <FormControl as='fieldset' isDisabled={isSubmitting} display="flex" flexDirection="column" backgroundColor="lightblue" padding={2} borderRadius="20px">
-               <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
+         <chakra.form width="80%" onSubmit={handleSubmit(onLogin)} display="flex" flexDirection="column" alignContent="center" backgroundColor="lightblue" padding={2} borderRadius="20px">
+            <FormControl isInvalid={Boolean(errors.email)} isDisabled={isSubmitting} marginBottom={2}>
+               <InputGroup >
                   <InputLeftElement>
                      <EmailIcon color="white" />
                   </InputLeftElement>
                   <Input {...register("email", {required: 'Email is required'})} type="email" color="white" placeholder="Email"/>
-                  {errors.email && <FormHelperText margin={0} textAlign="left" color="white">{errors.email.message}</FormHelperText>}
                </InputGroup>
+               <FormErrorMessage margin={0} textAlign="left">{errors?.email?.message}</FormErrorMessage>
+            </FormControl>
 
+            <FormControl isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} marginBottom={2}>
                <PasswordInput registerProps={{...register("password", {required: 'Password is required'})}} errors={errors} />
+               <FormErrorMessage margin={0} textAlign="left">{errors?.password?.message}</FormErrorMessage>
+            </FormControl>
+            
+            <FormControl marginBottom={2} display="flex" justifyContent="space-around">
                <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">LOGIN</Button>
+            </FormControl>
 
+            <FormControl>
                <FormHelperText textAlign="center" color="white">Don't have an account? <Link fontWeight="bold" href="/register">Register</Link></FormHelperText>
             </FormControl>
+            
          </chakra.form>
       </Flex>
    )

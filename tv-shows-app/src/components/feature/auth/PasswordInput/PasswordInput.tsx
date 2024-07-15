@@ -15,7 +15,7 @@ export default function PasswordInput({registerProps, errors} : IPasswordInputPr
       setIsClicked(!isClicked);
    }
    return (
-      <InputGroup marginBottom={2} display="flex" flexDirection="column" alignContent="left">
+      <InputGroup display="flex" flexDirection="column" alignContent="left">
          <InputLeftElement>
             <LockIcon color="white" />
          </InputLeftElement>
@@ -24,7 +24,6 @@ export default function PasswordInput({registerProps, errors} : IPasswordInputPr
             {isClicked ? <ViewIcon color="white" onClick={onClickHandler}/>
                      : <ViewOffIcon color="white" onClick={onClickHandler}/>}
          </InputRightElement>
-         {errors && <FormHelperText margin={0} textAlign="left" color="white">{errors.message}</FormHelperText>}
       </InputGroup>
    );
 }
