@@ -20,12 +20,10 @@ interface IReviewFormInputProps {
    text: string
 }
 
-export default function ReviewForm({addShowReview, index} : IOnPostFunction) { 
+export default function ReviewForm({index, addShowReview} : IOnPostFunction) { 
    const {data} = useSWR<{user: IUser}>(swrKeys.me, authFetcher);
    const {register, handleSubmit, reset, formState: {isSubmitting}} = useForm<IReviewFormInputProps>();
    const [starsClicked, setStarsClicked] = useState(1);
-
-   const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview);
 
    // pitanje: bi li i broj kliknutih zvjezdica trebao biti dio form inputa, ili je okej ostaviti ovako sa stateom pa rucno?
    const addNewReview = async ({text} : IReviewFormInputProps) => {
@@ -35,7 +33,7 @@ export default function ReviewForm({addShowReview, index} : IOnPostFunction) {
          comment: text,
          rating: starsClicked
       }
-      await trigger(newReview);
+      addShowReview(newReview);
 
       setStarsClicked(1);
       reset();
