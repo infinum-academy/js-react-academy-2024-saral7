@@ -5,6 +5,8 @@ import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { deleteReview } from "@/fetchers/mutators";
+import { authFetcher } from "@/fetchers/fetcher";
+import { IUser } from "@/typings/user";
 
 export interface IReviewItemProps {
    review: IReview,
@@ -12,9 +14,11 @@ export interface IReviewItemProps {
 }
 
 export default function ReviewItem({review, onDelete} : IReviewItemProps) {
+   const {data} = useSWR(swrKeys.me, authFetcher<{user: IUser}>);
+
    const { trigger } = useSWRMutation(swrKeys.reviews(`/${review.id}`), deleteReview, {
       onSuccess: () => {
-         mutate(swrKeys.getReviews)
+         mutate(swrKeys.getReviews(review.show_id))
       }
    });
 
@@ -23,7 +27,7 @@ export default function ReviewItem({review, onDelete} : IReviewItemProps) {
          await trigger();
       }
       catch(error) {}
-   } 
+   }
 
    return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
       <Flex direction={'column'} gap = {1}>
@@ -39,7 +43,7 @@ export default function ReviewItem({review, onDelete} : IReviewItemProps) {
          <Show below='767px'>     
             <Button width={'40%'} onClick={() => {onDelete(review)}}>Remove</Button>
          </Show>*/} 
-         <Button width={'30%'} onClick={() => {removeReview()}}>Remove</Button>
+         {data?.user.email === review.user?.email && <Button width={'30%'} onClick={() => {removeReview()}}>Remove</Button>}
       </Flex>
    </Card>
 }
