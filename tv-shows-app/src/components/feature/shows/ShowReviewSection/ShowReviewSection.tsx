@@ -12,19 +12,24 @@ import useSWRMutation from "swr/mutation";
 import { createReview } from "@/fetchers/mutators";
 
 export interface ShowReviewSectionProps {
-   index: number,
-   updateAverage: (avg : number) => void;
+   index: number
 }
 
-export default function ShowReviewSection({index, updateAverage} : ShowReviewSectionProps) {
+export default function ShowReviewSection({index} : ShowReviewSectionProps) {
    const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
-   const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview);
    
+   const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview, {
+      onSuccess: () => {
+         mutate(swrKeys.getReviews(index));
+      }
+   });
+
    const addToReviewList = async (newReview : IReview) => {
       await trigger(newReview);
-      mutate(swrKeys.getReviews(index));
    };
-   const removeFromReviewList = (review : IReview) => {}
+   const removeFromReviewList = (review : IReview) => {
+
+   }
 
 
    if (error) {
@@ -33,8 +38,7 @@ export default function ShowReviewSection({index, updateAverage} : ShowReviewSec
    if (isLoading || !data) {
       return <Box color="white">Loading...</Box>;
    }
-   console.log(data);
-   console.log(data.reviews)
+
    return <Flex direction={'column'} width={'80%'} margin={'auto'}>
       <ReviewForm addShowReview={addToReviewList} index={index}/>
       <ReviewList reviewList={data.reviews} onDelete={removeFromReviewList}/>
