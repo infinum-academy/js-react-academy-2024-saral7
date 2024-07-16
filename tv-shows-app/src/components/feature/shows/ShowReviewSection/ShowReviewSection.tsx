@@ -5,7 +5,7 @@ import ReviewForm from "../../review/ReviewForm/ReviewForm";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IReview, IReviewItem, IReviewList } from "@/typings/review";
 import ReviewList from "../../review/ReviewList/ReviewList";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { authFetcher } from "@/fetchers/fetcher";
 import useSWRMutation from "swr/mutation";
@@ -17,15 +17,15 @@ export interface ShowReviewSectionProps {
 }
 
 export default function ShowReviewSection({index, updateAverage} : ShowReviewSectionProps) {
-   
+   const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
    const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview);
    
    const addToReviewList = async (newReview : IReview) => {
       await trigger(newReview);
+      mutate(swrKeys.getReviews(index));
    };
    const removeFromReviewList = (review : IReview) => {}
 
-   const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
 
    if (error) {
       if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
