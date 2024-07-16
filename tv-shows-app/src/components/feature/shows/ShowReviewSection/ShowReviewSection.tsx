@@ -17,7 +17,7 @@ export interface ShowReviewSectionProps {
 
 export default function ShowReviewSection({index} : ShowReviewSectionProps) {
    const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
-   
+
    const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview, {
       onSuccess: () => {
          mutate(swrKeys.getReviews(index));
@@ -27,10 +27,6 @@ export default function ShowReviewSection({index} : ShowReviewSectionProps) {
    const addToReviewList = async (newReview : IReview) => {
       await trigger(newReview);
    };
-   const removeFromReviewList = (review : IReview) => {
-
-   }
-
 
    if (error) {
       if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
@@ -40,7 +36,7 @@ export default function ShowReviewSection({index} : ShowReviewSectionProps) {
    }
 
    return <Flex direction={'column'} width={'80%'} margin={'auto'}>
-      <ReviewForm addShowReview={addToReviewList} index={index}/>
-      <ReviewList reviewList={data.reviews} onDelete={removeFromReviewList}/>
+      <ReviewForm label="Reviews" addShowReview={addToReviewList} index={index}/>
+      <ReviewList reviewList={data.reviews}/>
    </Flex>
 }

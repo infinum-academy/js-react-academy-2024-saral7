@@ -7,13 +7,13 @@ import { swrKeys } from "@/fetchers/swrKeys";
 import { deleteReview } from "@/fetchers/mutators";
 import { authFetcher } from "@/fetchers/fetcher";
 import { IUser } from "@/typings/user";
+import ReviewUpdate from "../ReviewUpdate/ReviewUpdate";
 
 export interface IReviewItemProps {
-   review: IReview,
-   onDelete: (review: IReview) => void;
+   review: IReview
 }
 
-export default function ReviewItem({review, onDelete} : IReviewItemProps) {
+export default function ReviewItem({review} : IReviewItemProps) {
    const {data} = useSWR(swrKeys.me, authFetcher<{user: IUser}>);
 
    const { trigger } = useSWRMutation(swrKeys.reviews(`/${review.id}`), deleteReview, {
@@ -31,18 +31,15 @@ export default function ReviewItem({review, onDelete} : IReviewItemProps) {
 
    return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
       <Flex direction={'column'} gap = {1}>
-         <Flex alignItems="center">
-            <Avatar height="32px" width="32px" name={review.user?.email} marginRight={1}/>
-            <Text fontWeight="bold">{review.user?.email}</Text>
+         <Flex justifyContent="space-between">
+            <Flex alignItems="center">
+               <Avatar height="32px" width="32px" name={review.user?.email} marginRight={1}/>
+               <Text fontWeight="bold">{review.user?.email}</Text>
+            </Flex>
+            {data?.user.email === review.user?.email && <ReviewUpdate updatingReview={review} />}
          </Flex>
          <Text data-testid="text">{review.comment}</Text>
          <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {return;}}></ReviewStarsInput>
-         {/*<Show above='768px'>     
-            <Button width={'30%'} onClick={() => {onDelete(review)}}>Remove</Button>
-         </Show>
-         <Show below='767px'>     
-            <Button width={'40%'} onClick={() => {onDelete(review)}}>Remove</Button>
-         </Show>*/} 
          {data?.user.email === review.user?.email && <Button width={'30%'} onClick={() => {removeReview()}}>Remove</Button>}
       </Flex>
    </Card>

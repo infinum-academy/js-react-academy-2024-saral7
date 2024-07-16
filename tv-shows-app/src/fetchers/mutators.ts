@@ -36,3 +36,14 @@ export async function deleteReview(url : string) {
       method: 'DELETE'
     });
 }
+
+export async function updateReview(url : string, { arg }: { arg: IReview }) {
+  const data = {
+    rating: arg.rating,
+    comment: arg.comment
+  }
+  return authFetcher<IReview>(url, {
+    method: 'PATCH',
+    body: JSON.stringify(data)
+  });
+}
