@@ -1,3 +1,6 @@
+import { IReview } from "@/typings/review";
+import { authFetcher } from "./fetcher";
+
 export async function mutator<T>(url : string, { arg }: { arg: T }) {
    const response = await fetch(url, {
      method: 'POST',
@@ -20,3 +23,10 @@ export async function mutator<T>(url : string, { arg }: { arg: T }) {
       'token': response.headers.get('access-token')
     }
  }
+
+export async function createReview(url : string, { arg }: { arg: IReview }) {
+    return authFetcher<IReview>(url, {
+      method: 'POST',
+      body: JSON.stringify(arg)
+    });
+}

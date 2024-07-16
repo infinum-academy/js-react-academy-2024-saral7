@@ -11,10 +11,10 @@ export default function ReviewItem({review, onDelete} : IReviewItemProps) {
    return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
       <Flex direction={'column'} gap = {1}>
          <Flex alignItems="center">
-            <Avatar height="32px" width="32px" name={review.email} marginRight={1}/>
-            <Text fontWeight="bold">{review.email}</Text>
+            <Avatar height="32px" width="32px" name={review.user?.email} marginRight={1}/>
+            <Text fontWeight="bold">{review.user?.email}</Text>
          </Flex>
-         <Text data-testid="text">{review.text}</Text>
+         <Text data-testid="text">{review.comment}</Text>
          <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {return;}}></ReviewStarsInput>
          {/*<Show above='768px'>     
             <Button width={'30%'} onClick={() => {onDelete(review)}}>Remove</Button>

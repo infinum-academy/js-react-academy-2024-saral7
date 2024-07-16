@@ -1,28 +1,23 @@
 'use client'
 
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import ReviewForm from "../../review/ReviewForm/ReviewForm";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IReview, IReviewItem, IReviewList } from "@/typings/review";
 import ReviewList from "../../review/ReviewList/ReviewList";
-
-let mockReviewList = [] as IReview[]; // implicitni cast
+import useSWR from "swr";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { authFetcher } from "@/fetchers/fetcher";
 
 export interface ShowReviewSectionProps {
-   index: string,
+   index: number,
    updateAverage: (avg : number) => void;
 }
 
 export default function ShowReviewSection({index, updateAverage} : ShowReviewSectionProps) {
-
-   // pitanje: je li ova komponenta ispravno mjesto za logiku s localStorageom?
-   // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
-   // ali ne znam bi li bilo semanticki bolje da bude u npr. ReviewForm (jedino ne znam kako exportati reviewList onda)
-   // update: sve vise mi se cini da je ovdje okej jer se podaci komponentama salju preko zajednickog parenta
+   /*const [reviewList, setReviewList] = useState(mockReviewList); 
    
-   const [reviewList, setReviewList] = useState(mockReviewList); 
    
-
    const loadFromLocalStorage =  () => {
       const listString = localStorage.getItem(`reviewList-${index}`);
       if (!listString) {
@@ -59,10 +54,23 @@ export default function ShowReviewSection({index, updateAverage} : ShowReviewSec
    const removeFromReviewList = (review : IReview) => {
       const newList = reviewList.filter((x) => {return x !== review});
       setReviewList(newList);
-   }
+   }*/
 
+   const addToReviewList = (newReview : IReview) => {};
+   const removeFromReviewList = (review : IReview) => {}
+
+   const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
+
+   if (error) {
+      if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
+   }
+   if (isLoading || !data) {
+      return <Box color="white">Loading...</Box>;
+   }
+   console.log(data);
+   console.log(data.reviews)
    return <Flex direction={'column'} width={'80%'} margin={'auto'}>
-      <ReviewForm addShowReview={addToReviewList}/>
-      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList}/>
+      <ReviewForm addShowReview={addToReviewList} index={index}/>
+      <ReviewList reviewList={data.reviews} onDelete={removeFromReviewList}/>
    </Flex>
 }

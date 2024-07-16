@@ -3,12 +3,16 @@ import { Button, chakra, Flex, FormControl, Input, NumberInput, Text, Textarea, 
 import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
 import { useState } from "react";
 import { Form, useForm } from "react-hook-form";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { authFetcher } from "@/fetchers/fetcher";
 import { waitFor } from "@testing-library/react";
+import { IUser } from "@/typings/user";
+import useSWRMutation from "swr/mutation";
+import { createReview } from "@/fetchers/mutators";
 
 export interface IOnPostFunction {
+   index: number,
    addShowReview: (review : IReview) => void;
 }
 
@@ -16,26 +20,29 @@ interface IReviewFormInputProps {
    text: string
 }
 
-export default function ReviewForm({addShowReview} : IOnPostFunction) { 
-   const {data} = useSWR<{user: {email: string}}>(swrKeys.me, authFetcher);
+export default function ReviewForm({addShowReview, index} : IOnPostFunction) { 
+   const {data} = useSWR<{user: IUser}>(swrKeys.me, authFetcher);
    const {register, handleSubmit, reset, formState: {isSubmitting}} = useForm<IReviewFormInputProps>();
    const [starsClicked, setStarsClicked] = useState(1);
+
+   const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview);
 
    // pitanje: bi li i broj kliknutih zvjezdica trebao biti dio form inputa, ili je okej ostaviti ovako sa stateom pa rucno?
    const addNewReview = async ({text} : IReviewFormInputProps) => {
       if (!data) return;
       const newReview : IReview = {
-         text: text,
-         rating: starsClicked,
-         email: data.user.email
+         show_id: index,
+         comment: text,
+         rating: starsClicked
       }
-      addShowReview(newReview);
+      await trigger(newReview);
+
       setStarsClicked(1);
       reset();
    }
 
-   const onStarClick = (index : number) => {
-      setStarsClicked(index);
+   const onStarClick = (starIndex : number) => {
+      setStarsClicked(starIndex);
    }
 
 

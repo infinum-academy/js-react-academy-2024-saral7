@@ -25,7 +25,8 @@ export async function authFetcher <T> (input: string | URL | globalThis.Request,
          headers: {
             'Client': authInfo.client,
             'Access-token': authInfo.token,
-            'Uid': authInfo.uid
+            'Uid': authInfo.uid,
+            'Content-Type': 'application/json'
          }
       });
       if (!response.ok) {
