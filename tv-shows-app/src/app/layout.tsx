@@ -22,11 +22,7 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className} style={{ backgroundColor: '#0D065E' }}>
 				<Providers>
-					<Header />
-					<Flex justifyContent="space-between">
-						<SidebarNavigation />
-						<Box width="80vw">{children}</Box>
-					</Flex>
+					{children}
 				</Providers>
 			</body>
 		</html>

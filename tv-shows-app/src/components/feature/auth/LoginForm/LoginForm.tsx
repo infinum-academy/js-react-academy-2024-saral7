@@ -36,7 +36,7 @@ export default function LoginForm() {
          mutate(data, {revalidate: false});
       },
       onError: async (error : {errors: Array<string>}) => {
-         //setError("email", {message: error.errors[0]});
+         //setError("email", {message: error.errors[0]});   // kad je ovo, test baca TypeError
       }
    });
 
