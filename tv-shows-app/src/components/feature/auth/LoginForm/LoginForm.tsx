@@ -11,7 +11,7 @@ import { cache } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 import PasswordInput from "../PasswordInput/PasswordInput";
 
-interface ILoginForm {
+export interface ILoginForm {
    email: string,
    password: string
 }
@@ -35,8 +35,8 @@ export default function LoginForm() {
          localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
          mutate(data, {revalidate: false});
       },
-      onError: async (error) => {
-         setError("email", {message: error.errors[0]});
+      onError: async (error : {errors: Array<string>}) => {
+         //setError("email", {message: error.errors[0]});
       }
    });
 
@@ -57,16 +57,16 @@ export default function LoginForm() {
                   </InputLeftElement>
                   <Input {...register("email", {required: 'Email is required'})} type="email" color="white" placeholder="Email"/>
                </InputGroup>
-               <FormErrorMessage margin={0} textAlign="left">{errors?.email?.message}</FormErrorMessage>
+               <FormErrorMessage margin={0} textAlign="left" data-testid="email-error-message">{errors?.email?.message}</FormErrorMessage>
             </FormControl>
 
             <FormControl isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} marginBottom={2}>
                <PasswordInput registerProps={{...register("password", {required: 'Password is required'})}} errors={errors} />
-               <FormErrorMessage margin={0} textAlign="left">{errors?.password?.message}</FormErrorMessage>
+               <FormErrorMessage margin={0} textAlign="left" data-testid="password-error-message">{errors?.password?.message}</FormErrorMessage>
             </FormControl>
             
             <FormControl marginBottom={2} display="flex" justifyContent="space-around">
-               <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto">LOGIN</Button>
+               <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto" data-testid="submit-button">LOGIN</Button>
             </FormControl>
 
             <FormControl>
