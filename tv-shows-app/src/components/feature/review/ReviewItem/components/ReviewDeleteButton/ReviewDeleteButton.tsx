@@ -9,7 +9,7 @@ interface IReviewDeleteButtonProps {
    review : IReview
 }
 
-export default function ReviewDeleteButton({review} : IReviewDeleteButtonProps) {
+export function ReviewDeleteButton({review} : IReviewDeleteButtonProps) {
    const { trigger } = useSWRMutation(swrKeys.reviews(`/${review.id}`), deleteReview, {
       onSuccess: () => {
          mutate(swrKeys.getReviews(review.show_id))
@@ -24,6 +24,6 @@ export default function ReviewDeleteButton({review} : IReviewDeleteButtonProps) 
    }
 
    return <>
-      <Button width={'30%'} onClick={() => {removeReview()}} data-testid="remove-button">Remove</Button>
+      <Button width={'30%'} onClick={() => {removeReview()}}>Remove</Button>
    </>
 }

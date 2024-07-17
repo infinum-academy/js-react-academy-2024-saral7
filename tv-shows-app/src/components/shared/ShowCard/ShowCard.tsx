@@ -6,7 +6,7 @@ export interface IShowCardProps {
    show: IShowCard
 }
 
-export default function ShowCard({show}: IShowCardProps) {
+export function ShowCard({show}: IShowCardProps) {
    return <Card borderRadius="20px" overflow="hidden" marginTop={2} margin="auto">
          <Image src = {show.image_url ? show.image_url : '/images/placeholder.png'} data-testid = "image" />
             

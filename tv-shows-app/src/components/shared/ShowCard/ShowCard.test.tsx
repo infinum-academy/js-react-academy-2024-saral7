@@ -5,7 +5,7 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import ShowCard from './ShowCard';
+import {ShowCard} from './ShowCard';
 import { IShowCard } from '@/typings/show';
 
 
