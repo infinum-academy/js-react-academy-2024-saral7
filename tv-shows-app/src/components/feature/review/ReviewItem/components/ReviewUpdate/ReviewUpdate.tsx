@@ -1,6 +1,6 @@
 import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import { IconButton, Modal, ModalBody, useDisclosure, Text, ModalContent, ModalOverlay, ModalHeader, CloseButton, ModalCloseButton } from "@chakra-ui/react";
-import ReviewForm from "../ReviewForm/ReviewForm";
+import ReviewForm from "../../../ReviewForm/ReviewForm";
 import { IReview } from "@/typings/review";
 import useSWRMutation from "swr/mutation";
 import { swrKeys } from "@/fetchers/swrKeys";
