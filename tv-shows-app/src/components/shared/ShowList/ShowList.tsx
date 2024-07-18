@@ -1,4 +1,4 @@
-import { IShow, IShowCard } from "@/typings/show";
+import { IShowCard } from "@/typings/show";
 import { Box, Flex } from "@chakra-ui/react";
 import ShowCard from "../ShowCard/ShowCard";
 
@@ -9,13 +9,13 @@ export interface IShowList {
 }
 
 export default function ShowList({showList} : IShowList) {
-   return <Flex gap="5%" wrap="wrap" marginTop={2} data-testid="show-list">
+   return <Flex gap="5%" wrap="wrap" marginTop={2} data-testid="show-list" flex="0 0 auto">
       {showList.map((x, index) => {
-         return <Flex key={index} maxW="20%" width="20%" marginBottom={2}>
+         return <Box key={index} width="20%" marginBottom={2} >
                   <NextLink href={`/all-shows/${x.id}`}>
                      <ShowCard show={x} />
                   </NextLink>
-               </Flex>
+               </Box>
          })
       }
    </Flex>
