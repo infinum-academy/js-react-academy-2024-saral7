@@ -37,7 +37,7 @@ export default function ShowReviewSection({index} : ShowReviewSectionProps) {
       return <Box color="white">Loading...</Box>;
    }
 
-   return <Flex direction="column" width="1054px" margin="auto">
+   return <Flex direction="column" width={["auto","1054px"]} margin="auto">
       <ReviewForm style={formStyle} label="Reviews" addShowReview={addToReviewList} index={index}/>
       <ReviewList reviewList={data.reviews}/>
    </Flex>

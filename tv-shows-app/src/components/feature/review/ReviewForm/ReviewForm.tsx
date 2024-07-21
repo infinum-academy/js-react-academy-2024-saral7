@@ -46,10 +46,10 @@ export default function ReviewForm({label, index, addShowReview, style} : IOnPos
    }
 
    return (
-      <chakra.form __css={style} onSubmit={handleSubmit(addNewReview)}>
-         <Text fontSize={2} color="white" marginBottom={1} marginRight="100px">{label}</Text>
+      <chakra.form __css={style} width={["90%", "100%"]} flexDirection={["column", "row"]} onSubmit={handleSubmit(addNewReview)}>
+         <Text fontSize={2} color="white" marginBottom={1} marginRight={["0", "100px"]}>{label}</Text>
 
-         <Flex direction="column" width="90%">
+         <Flex direction="column" width={["100%", "90%"]}>
             <FormControl isInvalid={Boolean(errors.text)} isDisabled={isSubmitting} height="80px" width="100%" marginBottom={2}>
                <Textarea {...register("text", {required: 'Please write a comment'})} backgroundColor="white" placeholder="Add review" width="100%" padding={1} />
                <FormErrorMessage marginTop={0} marginBottom={1}>{errors.text?.message}</FormErrorMessage>

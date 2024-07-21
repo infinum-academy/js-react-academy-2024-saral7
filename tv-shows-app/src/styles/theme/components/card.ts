@@ -10,7 +10,7 @@ export const Card = defineMultiStyleConfig({
             backgroundColor: "white",
             borderRadius: "20px",
             overflow: "hidden",
-            height: "375px",
+            //height: "375px",
             width: "240px"
          },
          body: {
@@ -25,7 +25,6 @@ export const Card = defineMultiStyleConfig({
             marginTop: 2,
             borderRadius: "20px",
             overflow: "hidden",
-            height: "610px",
             width: "1054px"
          },
          body: {

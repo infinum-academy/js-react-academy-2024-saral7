@@ -62,7 +62,7 @@ export default function RegisterForm() {
    return <>
    {registered && (router.push("/login"))}
    {!registered && (
-         <chakra.form __css={style} top={["0", "100px"]} borderRadius={["0", "30px"]} width={["100vw", "500px"]} height={["100vh", "500px"]} onSubmit={handleSubmit(onRegister)}>
+         <chakra.form __css={style} top={["0", "100px"]} borderRadius={["0", "30px"]} width={["100vw", "500px"]} height={["100vh", "550px"]} onSubmit={handleSubmit(onRegister)}>
             <Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">TV SHOWS APP</Text>
             <FormControl position="absolute" top="140px" height="56px" width={["300px", "388px"]} isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
                <InputGroup>

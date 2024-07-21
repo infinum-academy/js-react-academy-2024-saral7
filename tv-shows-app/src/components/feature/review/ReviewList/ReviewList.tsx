@@ -11,7 +11,7 @@ export interface IReviewListProps {
 
 export default function ReviewList({ reviewList }: IReviewListProps) {
 	return (
-		<Flex direction={'column'} alignItems="end" gap={1} marginBottom={1}>
+		<Flex direction={'column'} alignItems={["center", "end"]} gap={1} marginBottom={1}>
 			{reviewList.map((review, index) => {
 				return <ReviewItem key={index} review={review} />;
 			})}
