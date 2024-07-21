@@ -12,22 +12,24 @@ import useSWRMutation from "swr/mutation";
 
 export default function SidebarNavigation() {
    const route = usePathname();
-   const to = useRouter();
+   const router = useRouter();
    const {mutate} = useSWR(swrKeys.me);
 
    const logOut = () => {
       localStorage.setItem('loginInfo', '');
       mutate(null, {revalidate: false});
-      to.push('/');
+      router.push('/');
    }
-   return <Flex direction="column" justifyContent="space-between" >
-      <Flex direction="column" position="fixed" gap={1}>
+
+   console.log("route ", route);
+   return <Flex direction="column" justifyContent="space-between" alignItems="center" height="90vh" paddingTop={2} paddingBottom={2}>
+      <Flex direction="column" gap={1}>
          <Tag fontSize={2} as={NextLink} href={"/all-shows"} color="white" background={route == "/all-shows" ? "lightblue" : "transparent"}>All shows</Tag>
          
          <Tag fontSize={2} as={NextLink} href={"/all-shows/top-rated"} color="white" background={route == "/all-shows/top-rated" ? "lightblue" : "transparent"}>Top rated</Tag>
          <Tag fontSize={2} color="white" background="transparent">My profile</Tag>
       </Flex>
-      <Tag visibility="hidden">_________</Tag> {/* ovo mi je bezveze, ali ne znam kako da zadrzim ovakav fixed scrollbar u flowu inače bez da je neki dio static" */}
-      <Tag fontSize={2} position="fixed" bottom="5vh" color="white" background="transparent" onClick={logOut}>Log out</Tag>
+      {/*<Tag visibility="hidden">_________</Tag> {/* ovo mi je bezveze, ali ne znam kako da zadrzim ovakav fixed scrollbar u flowu inače bez da je neki dio static" */}
+      <Tag fontSize={2} color="white" background="transparent" onClick={logOut}>Log out</Tag>
    </Flex>
 }
