@@ -33,7 +33,7 @@ export default function ReviewUpdate({updatingReview} : IReviewUpdateProps) {
    }
 
    return <>
-      <IconButton variant="edit" icon={<EditIcon boxSize="40px" />} aria-label="edit-review" onClick={onOpening}/>
+      <Text color="darkblue" onClick={onOpening}>Edit</Text>
       <Modal isOpen={isOpen} onClose={onClose}>
          <ModalOverlay />
          <ModalContent backgroundColor="darkblue">

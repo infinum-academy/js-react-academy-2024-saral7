@@ -1,7 +1,7 @@
 import { deleteReview } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { IReview } from "@/typings/review";
-import { Button } from "@chakra-ui/react";
+import { Text } from "@chakra-ui/react";
 import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
 
@@ -24,6 +24,6 @@ export function ReviewDeleteButton({review} : IReviewDeleteButtonProps) {
    }
 
    return <>
-      <Button width={'30%'} onClick={() => {removeReview()}}>Remove</Button>
+      <Text color="darkblue" onClick={() => {removeReview()}}>Remove</Text>
    </>
 }
