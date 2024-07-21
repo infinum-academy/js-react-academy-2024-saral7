@@ -7,14 +7,14 @@ export interface IShowCardProps {
 }
 
 export function ShowCard({show}: IShowCardProps) {
-   return <Card borderRadius="20px" overflow="hidden" marginTop={2} margin="auto">
-         <Image src = {show.image_url ? show.image_url : '/images/placeholder.png'} data-testid = "image" />
+   return <Card variant="showCard">
+         <Image height="300px" width="240px" src = {show.image_url ? show.image_url : '/images/placeholder.png'} data-testid = "image" />
             
-         <CardBody color="darkblue">
-            <Text fontWeight="bold" fontSize={1.5} marginBottom={1} data-testid = "title"> {show.title} </Text>
+         <CardBody>
+            <Text fontWeight="bold" fontSize={3} data-testid = "title"> {show.title} </Text>
             <Flex alignContent="center" alignItems="center">
                <StarIcon alignContent="center" color="darkblue" marginRight="8px" />
-               <Text flexGrow={1} data-testid="rating">{show.average_rating ? `${show.average_rating} / 5` : 'No ratings'}</Text>
+               <Text fontSize={5} flexGrow={1} data-testid="rating">{show.average_rating ? `${show.average_rating} / 5` : 'No ratings'}</Text>
             </Flex>
          </CardBody>
         

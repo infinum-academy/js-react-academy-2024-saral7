@@ -1,5 +1,5 @@
 import { IReview } from "@/typings/review";
-import { Avatar, AvatarGroup, Button, Card, Flex, Text } from "@chakra-ui/react";
+import { Avatar, AvatarGroup, Button, Card, Flex, Text, useStyleConfig } from "@chakra-ui/react";
 import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
 import useSWR, { mutate } from "swr";
 import useSWRMutation from "swr/mutation";
@@ -17,18 +17,21 @@ export interface IReviewItemProps {
 export function ReviewItem({review} : IReviewItemProps) {
    const {data} = useSWR(swrKeys.me, authFetcher<{user: IUser}>);
 
-   return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
-      <Flex direction={'column'} gap = {1}>
-         <Flex justifyContent="space-between">
-            <Flex alignItems="center">
-               <Avatar height="32px" width="32px" name={review.user?.email} marginRight={1}/>
-               <Text fontWeight="bold">{review.user?.email}</Text>
+   const style = useStyleConfig('ReviewItem');
+   return <Flex __css={style}>
+            <Flex direction="row" alignItems="center" marginLeft={1} marginRight={2} width="300px">
+               <Avatar boxSize="40px" name={review.user?.email} marginRight={1}/>
+               <Flex direction="column" alignItems="start">
+                  <Text fontWeight="bold">{review.user?.email}</Text>
+                  <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
+               </Flex>
             </Flex>
-            {data?.user.email === review.user?.email && <ReviewUpdate updatingReview={review} />}
-         </Flex>
-         <Text data-testid="text">{review.comment}</Text>
-         <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
-         {data?.user.email === review.user?.email && <ReviewDeleteButton review={review}/>}
+            <Text data-testid="text" flexGrow={1}>{review.comment}</Text>
+            {data?.user.email === review.user?.email &&
+               <Flex direction="column" height="100%" justifyContent="space-around" alignItems="end" marginRight={1}>
+                  <ReviewUpdate updatingReview={review} />
+                  <ReviewDeleteButton review={review}/>
+               </Flex>
+            }
       </Flex>
-   </Card>
 }

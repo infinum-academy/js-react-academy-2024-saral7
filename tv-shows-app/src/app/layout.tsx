@@ -6,7 +6,6 @@ import { Box, Flex } from '@chakra-ui/react';
 import Header from '../components/shared/Header/Header';
 import SidebarNavigation from '@/components/shared/SidebarNavigation/SidebarNavigation';
 
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
 	title: 'Create Next App',
@@ -20,7 +19,7 @@ export default function RootLayout({
 }>) {
 	return (
 		<html lang="en">
-			<body className={inter.className} style={{ backgroundColor: '#0D065E' }}>
+			<body style={{ backgroundColor: "#1B004C" }}>
 				<Providers>
 					{children}
 				</Providers>

@@ -1,6 +1,6 @@
 'use client'
 
-import { Box, Flex } from "@chakra-ui/react";
+import { Box, Flex, useStyleConfig } from "@chakra-ui/react";
 import ReviewForm from "../../review/ReviewForm/ReviewForm";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IReview, IReviewItem, IReviewList } from "@/typings/review";
@@ -17,6 +17,8 @@ export interface ShowReviewSectionProps {
 
 export default function ShowReviewSection({index} : ShowReviewSectionProps) {
    const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
+
+   let formStyle = useStyleConfig('ReviewForm'); 
 
    const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview, {
       onSuccess: () => {
@@ -35,8 +37,8 @@ export default function ShowReviewSection({index} : ShowReviewSectionProps) {
       return <Box color="white">Loading...</Box>;
    }
 
-   return <Flex direction={'column'} width={'80%'} margin={'auto'}>
-      <ReviewForm label="Reviews" addShowReview={addToReviewList} index={index}/>
+   return <Flex direction="column" width="1054px" margin="auto">
+      <ReviewForm style={formStyle} label="Reviews" addShowReview={addToReviewList} index={index}/>
       <ReviewList reviewList={data.reviews}/>
    </Flex>
 }

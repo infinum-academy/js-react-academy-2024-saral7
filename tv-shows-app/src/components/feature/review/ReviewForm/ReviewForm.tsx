@@ -1,5 +1,5 @@
 import { IReview, IReviewItem } from "@/typings/review";
-import { Button, chakra, Flex, FormControl, FormErrorMessage, Input, NumberInput, Text, Textarea, useMediaQuery } from "@chakra-ui/react";
+import { Button, chakra, Flex, FormControl, FormErrorMessage, Input, NumberInput, Text, Textarea, useMediaQuery, useStyleConfig } from "@chakra-ui/react";
 import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
 import { useState } from "react";
 import { Form, useForm } from "react-hook-form";
@@ -14,14 +14,15 @@ import { createReview } from "@/fetchers/mutators";
 export interface IOnPostFunction {
    label: string,
    index: number,
-   addShowReview: (review : IReview) => void;
+   addShowReview: (review : IReview) => void,
+   style: any
 }
 
 interface IReviewFormInputProps {
    text: string
 }
 
-export default function ReviewForm({label, index, addShowReview} : IOnPostFunction) { 
+export default function ReviewForm({label, index, addShowReview, style} : IOnPostFunction) { 
    const {data} = useSWR<{user: IUser}>(swrKeys.me, authFetcher);
    const {register, handleSubmit, reset, formState: {isSubmitting, errors}} = useForm<IReviewFormInputProps>();
    const [starsClicked, setStarsClicked] = useState(1);
@@ -44,23 +45,28 @@ export default function ReviewForm({label, index, addShowReview} : IOnPostFuncti
       setStarsClicked(starIndex);
    }
 
-
    return (
-      <chakra.form display="flex" marginTop={2} marginBottom={2} flexDirection="column" width="100%" onSubmit={handleSubmit(addNewReview)}>
-         <Text fontWeight="bold" color="white" marginBottom={1}>{label}</Text>
+      <chakra.form __css={style} onSubmit={handleSubmit(addNewReview)}>
+         <Text fontSize={2} color="white" marginBottom={1} marginRight="100px">{label}</Text>
 
-         <FormControl isInvalid={Boolean(errors.text)} isDisabled={isSubmitting}>
-            <Textarea {...register("text", {required: 'Please write a comment'})} backgroundColor="white"placeholder="Add review" width="100%" marginBottom={1} paddingTop={1} />
-            <FormErrorMessage marginTop={0} marginBottom={1}>{errors.text?.message}</FormErrorMessage>
-         </FormControl>
+         <Flex direction="column" width="90%">
+            <FormControl isInvalid={Boolean(errors.text)} isDisabled={isSubmitting} height="80px" width="100%" marginBottom={2}>
+               <Textarea {...register("text", {required: 'Please write a comment'})} backgroundColor="white" placeholder="Add review" width="100%" padding={1} />
+               <FormErrorMessage marginTop={0} marginBottom={1}>{errors.text?.message}</FormErrorMessage>
+            </FormControl>
 
-         <Flex alignItems="center" marginBottom={1} data-testid="stars-input"> {/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
-            <ReviewStarsInput label = "Rating" value={starsClicked} onChange = {isSubmitting ? () => {} : onStarClick} />
+            <Flex direction="row" justifyContent="space-between">
+               <Flex alignItems="center" marginBottom={1} data-testid="stars-input"> {/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
+                  <ReviewStarsInput label = "Rating" value={starsClicked} onChange = {isSubmitting ? () => {} : onStarClick} />
+               </Flex>
+
+               <FormControl isDisabled={isSubmitting} width="160px">
+                  <Button isDisabled={Boolean(errors.text)} isLoading={isSubmitting} type="submit">Post</Button>
+               </FormControl>
+            </Flex>
+            
          </Flex>
-
-         <FormControl isDisabled={isSubmitting}>
-            <Button isLoading={isSubmitting} type="submit" width="30%" borderRadius="10px">Post</Button>
-         </FormControl>
+         
       </chakra.form> 
    )
 }

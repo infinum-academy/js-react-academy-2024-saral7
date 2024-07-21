@@ -3,7 +3,7 @@
 import { mutator } from "@/fetchers/mutators";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
-import { Button, chakra, Flex, FormControl, FormErrorMessage, FormHelperText, Input, InputGroup, InputLeftElement, Link, Text } from "@chakra-ui/react";
+import { Button, chakra, createStylesContext, Flex, FormControl, FormErrorMessage, FormHelperText, Input, InputGroup, InputLeftElement, Link, Text, useInputGroupStyles, useMultiStyleConfig, useStyleConfig } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
@@ -36,7 +36,7 @@ export default function LoginForm() {
          mutate(data, {revalidate: false});
       },
       onError: async (error : {errors: Array<string>}) => {
-         //setError("email", {message: error.errors[0]});   // kad je ovo, test baca TypeError
+         setError("email", {message: error.errors[0]});   // kad je ovo, test baca TypeError
       }
    });
 
@@ -47,33 +47,33 @@ export default function LoginForm() {
       catch(error) {}
    }
 
+   const styles = useStyleConfig('LoginForm');
    return (
-      <Flex margin="auto" direction="column" padding={2} alignItems="center">
-         <chakra.form width="80%" onSubmit={handleSubmit(onLogin)} display="flex" flexDirection="column" alignContent="center" backgroundColor="lightblue" padding={2} borderRadius="20px">
-            <FormControl isInvalid={Boolean(errors.email)} isDisabled={isSubmitting} marginBottom={2}>
+         <chakra.form __css={styles} onSubmit={handleSubmit(onLogin)}>
+            <Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">TV SHOWS APP</Text>
+            <FormControl position="absolute" top="145px" height="56px" width="388px" isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
                <InputGroup >
                   <InputLeftElement>
                      <EmailIcon color="white" />
                   </InputLeftElement>
                   <Input {...register("email", {required: 'Email is required'})} type="email" color="white" placeholder="Email"/>
                </InputGroup>
-               <FormErrorMessage margin={0} textAlign="left" data-testid="email-error-message">{errors?.email?.message}</FormErrorMessage>
+               <FormErrorMessage margin={0} data-testid="email-error-message">{errors?.email?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} marginBottom={2}>
+            <FormControl position="absolute" top="240px" height="56px" width="388px" isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} >
                <PasswordInput registerProps={{...register("password", {required: 'Password is required'})}} errors={errors} />
-               <FormErrorMessage margin={0} textAlign="left" data-testid="password-error-message">{errors?.password?.message}</FormErrorMessage>
+               <FormErrorMessage margin={0} data-testid="password-error-message">{errors?.password?.message}</FormErrorMessage>
             </FormControl>
             
-            <FormControl marginBottom={2} display="flex" justifyContent="space-around">
-               <Button isLoading={isSubmitting} width="60%" type="submit" color="darkblue" margin="auto" data-testid="submit-button">LOGIN</Button>
+            <FormControl position="absolute" top="350px" display="flex" justifyContent="space-around">
+               <Button isLoading={isSubmitting} type="submit" data-testid="submit-button">LOGIN</Button>
             </FormControl>
 
-            <FormControl>
-               <FormHelperText textAlign="center" color="white">Don't have an account? <Link fontWeight="bold" href="/register">Register</Link></FormHelperText>
+            <FormControl position="absolute" top="430px">
+               <FormHelperText margin={0} textAlign="center" color="white">Don't have an account? <Link fontWeight="bold" href="/register">Register</Link></FormHelperText>
             </FormControl>
             
          </chakra.form>
-      </Flex>
    )
 }

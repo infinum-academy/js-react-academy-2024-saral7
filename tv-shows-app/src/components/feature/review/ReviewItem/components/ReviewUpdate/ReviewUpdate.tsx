@@ -33,13 +33,13 @@ export default function ReviewUpdate({updatingReview} : IReviewUpdateProps) {
    }
 
    return <>
-      <IconButton icon={<EditIcon />} aria-label="edit-review" onClick={onOpening}/>
+      <IconButton variant="edit" icon={<EditIcon boxSize="40px" />} aria-label="edit-review" onClick={onOpening}/>
       <Modal isOpen={isOpen} onClose={onClose}>
          <ModalOverlay />
          <ModalContent backgroundColor="darkblue">
                <ModalCloseButton margin={0} color="white"><CloseIcon /></ModalCloseButton>
             <ModalBody>
-               <ReviewForm label="Edit your review" index={updatingReview.show_id} addShowReview={onUpdate}/>
+               <ReviewForm style={{}} label="Edit your review" index={updatingReview.show_id} addShowReview={onUpdate}/>
             </ModalBody>
          </ModalContent>
       </Modal>

@@ -1,4 +1,5 @@
 import { IShowCard } from "@/typings/show";
+import { StarIcon } from "@chakra-ui/icons";
 import { Card, CardBody, Flex, Image, Text } from "@chakra-ui/react";
 
 // dodala sam "wrapper" za IShow, da se moze direktno objekt tipa IShow proslijedivati
@@ -8,13 +9,18 @@ export interface IShowItem {
 
 
 export default function ShowDetails({show}: IShowItem) {
-   return <Card borderTopRadius='20px' borderBottomRadius={0} marginTop={2} margin="auto" width="60%">
-         <Image borderTopRadius='20px' src = {show.image_url ? show.image_url : '/images/placeholder.png'} />
+   return <Card variant="showDetails">
+         <Image height="440" width="1054" src = {show.image_url ? show.image_url : '/images/placeholder.png'} />
             
-         <CardBody color={'darkblue'}>
-            <Text fontWeight={'bold'} fontSize={1.5} marginBottom={1}> {show.title} </Text>
-            <Text marginBottom={1}> {show.description} </Text>
-            <Text> {show.average_rating ? `${show.average_rating} / 5` : 'No ratings'}</Text>
+         <CardBody>
+            <Flex direction="column">
+               <Text fontWeight="bold" fontSize={1} > {show.title} </Text>
+               <Flex alignContent="center" alignItems="center">
+                  <StarIcon alignContent="center" marginRight="8px" />
+                  <Text fontSize={2}> {show.average_rating ? `${show.average_rating} / 5` : 'No ratings'}</Text>
+               </Flex>
+            </Flex>
+            <Text width="50%" fontSize={3}> {show.description} </Text>
          </CardBody>
         
       </Card>
