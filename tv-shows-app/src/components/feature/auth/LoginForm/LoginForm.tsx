@@ -49,9 +49,9 @@ export default function LoginForm() {
 
    const styles = useStyleConfig('LoginForm');
    return (
-         <chakra.form __css={styles} onSubmit={handleSubmit(onLogin)}>
+         <chakra.form __css={styles} top={["0", "100px"]} borderRadius={["0", "30px"]} width={["100vw", "500px"]} height={["100vh", "500px"]} onSubmit={handleSubmit(onLogin)}>
             <Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">TV SHOWS APP</Text>
-            <FormControl position="absolute" top="145px" height="56px" width="388px" isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
+            <FormControl position="absolute" top="145px" height="56px" width={["300px", "388px"]} isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
                <InputGroup >
                   <InputLeftElement>
                      <EmailIcon color="white" />
@@ -61,7 +61,7 @@ export default function LoginForm() {
                <FormErrorMessage margin={0} data-testid="email-error-message">{errors?.email?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl position="absolute" top="240px" height="56px" width="388px" isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} >
+            <FormControl position="absolute" top="240px" height="56px" width={["300px", "388px"]} isInvalid={Boolean(errors.password)} isDisabled={isSubmitting} >
                <PasswordInput registerProps={{...register("password", {required: 'Password is required'})}} errors={errors} />
                <FormErrorMessage margin={0} data-testid="password-error-message">{errors?.password?.message}</FormErrorMessage>
             </FormControl>

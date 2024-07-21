@@ -10,7 +10,7 @@ export interface IShowItem {
 
 export default function ShowDetails({show}: IShowItem) {
    return <Card variant="showDetails">
-         <Image height="440" width="1054" src = {show.image_url ? show.image_url : '/images/placeholder.png'} />
+         <Image objectFit="cover" height="440" width="1054" src = {show.image_url ? show.image_url : '/images/placeholder.png'} />
             
          <CardBody>
             <Flex direction="column">

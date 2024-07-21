@@ -13,5 +13,12 @@ export const LoginForm = defineStyleConfig({
       top: "50px",
       width: "500px",
       height: "500px"
-   } 
+   },
+   sizes: { 
+      /* kako napraviti da se ovo applyja automatski :( */
+      sm: {
+         height: "400px",
+         width: "300px"
+      }
+   }
 })

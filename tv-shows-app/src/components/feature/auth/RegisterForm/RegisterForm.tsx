@@ -62,9 +62,9 @@ export default function RegisterForm() {
    return <>
    {registered && (router.push("/login"))}
    {!registered && (
-         <chakra.form __css={style} onSubmit={handleSubmit(onRegister)}>
+         <chakra.form __css={style} top={["0", "100px"]} borderRadius={["0", "30px"]} width={["100vw", "500px"]} height={["100vh", "500px"]} onSubmit={handleSubmit(onRegister)}>
             <Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">TV SHOWS APP</Text>
-            <FormControl position="absolute" top="140px" height="56px" width="388px" isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
+            <FormControl position="absolute" top="140px" height="56px" width={["300px", "388px"]} isInvalid={Boolean(errors.email)} isDisabled={isSubmitting}>
                <InputGroup>
                   <InputLeftElement>
                      <EmailIcon color="white" />
@@ -74,12 +74,12 @@ export default function RegisterForm() {
                <FormErrorMessage margin={0} textAlign="left">{errors?.email?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl position="absolute" top="230px" height="56px" width="388px" isInvalid={Boolean(errors.password)} isDisabled={isSubmitting}  >
+            <FormControl position="absolute" top="230px" height="56px"width={["300px", "388px"]} isInvalid={Boolean(errors.password)} isDisabled={isSubmitting}  >
                <PasswordInput registerProps={{...register("password", passwordRequirements)}} errors={errors.password} />
                <FormErrorMessage margin={0} textAlign="left">{errors?.password?.message}</FormErrorMessage>
             </FormControl>
 
-            <FormControl position="absolute" top="320px" height="56px" width="388px" isInvalid={Boolean(errors.password_confirmation)} isDisabled={isSubmitting}  >
+            <FormControl position="absolute" top="320px" height="56px" width={["300px", "388px"]} isInvalid={Boolean(errors.password_confirmation)} isDisabled={isSubmitting}  >
                <PasswordInput registerProps={{...register("password_confirmation", passwordConfirmationRequirements)}} errors={errors.password_confirmation} />
                <FormErrorMessage margin={0} textAlign="left">{errors?.password_confirmation?.message}</FormErrorMessage>
             </FormControl>
