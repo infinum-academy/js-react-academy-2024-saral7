@@ -1,75 +1,73 @@
-import { mutator } from "@/fetchers/mutators"
-import LoginForm, { ILoginForm } from "./LoginForm";
-import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { swrKeys } from "@/fetchers/swrKeys";
+import { mutator } from '@/fetchers/mutators';
+import LoginForm, { ILoginForm } from './LoginForm';
+import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { swrKeys } from '@/fetchers/swrKeys';
 
-jest.mock("@/fetchers/mutators", () => {
-   return {
-      mutator: jest.fn().mockResolvedValue(null)
-   }
+jest.mock('@/fetchers/mutators', () => {
+	return {
+		mutator: jest.fn().mockResolvedValue(null),
+	};
 });
 
-
-
 describe('LoginForm', () => {
-   const params : ILoginForm = {
-      password: "12345678",
-      email: "name.surmane@gmail.com"
-   }
+	const params: ILoginForm = {
+		password: '12345678',
+		email: 'name.surmane@gmail.com',
+	};
 
-   it('should call mutator on submit with appropriate props', async () => {
-      render(<LoginForm />)
+	it('should call mutator on submit with appropriate props', async () => {
+		render(<LoginForm />);
 
-      const emailInput = screen.getByPlaceholderText('Email') as HTMLInputElement;
-      fireEvent.change(emailInput, {target: {value: params.email}})
-      
-      const passwordInput = screen.getByPlaceholderText('Password') as HTMLInputElement;
-      fireEvent.change(passwordInput, {target: {value: params.password}});
+		const emailInput = screen.getByPlaceholderText('Email') as HTMLInputElement;
+		fireEvent.change(emailInput, { target: { value: params.email } });
 
-      const submitButton = screen.getByTestId('submit-button');
-      act(() => {
-         submitButton.click();
-      });
+		const passwordInput = screen.getByPlaceholderText('Password') as HTMLInputElement;
+		fireEvent.change(passwordInput, { target: { value: params.password } });
 
-      await waitFor(() => {
-         expect(mutator).toHaveBeenCalledWith(swrKeys.login, { arg: params });
-      });
-   });
-      
-   it('should render error message is email is not given', async () => {
-      render(<LoginForm />);
+		const submitButton = screen.getByTestId('submit-button');
+		act(() => {
+			submitButton.click();
+		});
 
-      const emailInput = screen.getByPlaceholderText('Email') as HTMLInputElement;
+		await waitFor(() => {
+			expect(mutator).toHaveBeenCalledWith(swrKeys.login, { arg: params });
+		});
+	});
 
-      const submitButton = screen.getByTestId('submit-button');
-      act(() => {
-         submitButton.click();
-      });
-      const emailError =  await screen.findByTestId('email-error-message');
-      
-      await waitFor(() => {
-         expect(emailError).toBeInTheDocument();
-      });
-   })
+	it('should render error message is email is not given', async () => {
+		render(<LoginForm />);
 
-   it('should render error message is password is not given', async () => {
-      render(<LoginForm />);
+		const emailInput = screen.getByPlaceholderText('Email') as HTMLInputElement;
 
-      const passwordInput = screen.getByPlaceholderText('Password') as HTMLInputElement;
+		const submitButton = screen.getByTestId('submit-button');
+		act(() => {
+			submitButton.click();
+		});
+		const emailError = await screen.findByTestId('email-error-message');
 
-      const submitButton = screen.getByTestId('submit-button');
-      act(() => {
-         submitButton.click();
-      });
-      const passwordError =  await screen.findByTestId('password-error-message');
-      
-      await waitFor(() => {
-         expect(passwordError).toBeInTheDocument();
-      });
-   })
+		await waitFor(() => {
+			expect(emailError).toBeInTheDocument();
+		});
+	});
 
-   // kako da vidjeti da se nesto asinkrono ne dogodi
-   /*
+	it('should render error message is password is not given', async () => {
+		render(<LoginForm />);
+
+		const passwordInput = screen.getByPlaceholderText('Password') as HTMLInputElement;
+
+		const submitButton = screen.getByTestId('submit-button');
+		act(() => {
+			submitButton.click();
+		});
+		const passwordError = await screen.findByTestId('password-error-message');
+
+		await waitFor(() => {
+			expect(passwordError).toBeInTheDocument();
+		});
+	});
+
+	// kako da vidjeti da se nesto asinkrono ne dogodi
+	/*
    it('should not render error message is email is given', async () => {
       render(<LoginForm />);
 
@@ -87,5 +85,4 @@ describe('LoginForm', () => {
       });
    })
    */
-   
-})
+});

@@ -9,20 +9,20 @@ export default function AuthLayout({
 }: Readonly<{
 	children: React.ReactNode;
 }>) {
-	return ( <>	
-		<Header />
-		<Show below='sm'>
-			<Box>{children}</Box>
-		</Show>
-		<Show above='sm'>
-			<Flex justifyContent="space-between">
-				<Box width="15%">
-					<SidebarNavigation />
-				</Box>
-				<Box width="80%">{children}</Box>
-			</Flex>
-		</Show>
-	</>
-					
+	return (
+		<>
+			<Header />
+			<Show below="sm">
+				<Box>{children}</Box>
+			</Show>
+			<Show above="sm">
+				<Flex justifyContent="space-between">
+					<Box width="15%">
+						<SidebarNavigation />
+					</Box>
+					<Box width="80%">{children}</Box>
+				</Flex>
+			</Show>
+		</>
 	);
 }

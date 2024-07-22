@@ -1,7 +1,7 @@
-import { border } from "@chakra-ui/react";
-import { color } from "framer-motion";
+import { border } from '@chakra-ui/react';
+import { color } from 'framer-motion';
 
 export const FormErrorMessage = {
-   color: "pink",
-   "border-color": "pink"
-}
+	color: 'pink',
+	'border-color': 'pink',
+};
