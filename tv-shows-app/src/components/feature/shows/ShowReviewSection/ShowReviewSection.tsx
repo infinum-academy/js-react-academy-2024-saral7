@@ -18,8 +18,6 @@ export interface ShowReviewSectionProps {
 export default function ShowReviewSection({ index }: ShowReviewSectionProps) {
 	const { data, error, isLoading } = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
 
-	let formStyle = useStyleConfig('ReviewForm');
-
 	const { trigger } = useSWRMutation(swrKeys.reviews(''), createReview, {
 		onSuccess: () => {
 			mutate(swrKeys.getReviews(index));
@@ -38,8 +36,8 @@ export default function ShowReviewSection({ index }: ShowReviewSectionProps) {
 	}
 
 	return (
-		<Flex direction="column" width={['auto', '1054px']} margin="auto">
-			<ReviewForm style={formStyle} label="Reviews" addShowReview={addToReviewList} index={index} />
+		<Flex direction="column" width="80%" margin="auto">
+			<ReviewForm label="Reviews" addShowReview={addToReviewList} index={index} />
 			<ReviewList reviewList={data.reviews} />
 		</Flex>
 	);

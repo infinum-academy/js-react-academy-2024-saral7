@@ -9,11 +9,11 @@ export interface IShowItem {
 
 export default function ShowDetails({ show }: IShowItem) {
 	return (
-		<Card variant="showDetails" width={['340px', '1054px']}>
+		<Card variant="showDetails" width="80%">
 			<Image
 				objectFit="cover"
-				height="440"
-				width={['340px', '1054px']}
+				height="440px"
+				width={"100%"}
 				src={show.image_url ? show.image_url : '/images/placeholder.png'}
 			/>
 

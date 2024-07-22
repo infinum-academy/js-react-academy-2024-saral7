@@ -12,10 +12,10 @@ export default function AuthLayout({
 	return (
 		<>
 			<Header />
-			<Show below="sm">
+			<Show below='xl'>
 				<Box>{children}</Box>
 			</Show>
-			<Show above="sm">
+			<Show above='xl'>
 				<Flex justifyContent="space-between">
 					<Box width="15%">
 						<SidebarNavigation />

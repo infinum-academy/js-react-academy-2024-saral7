@@ -13,7 +13,7 @@ export default function ReviewStarsInput({ label, value, onChange }: IReviewStar
 
 	return (
 		<Flex alignItems={'center'}>
-			<Text fontSize={3} color={'white'} marginRight="8px">
+			<Text fontSize={{ base: 5, sm: 3}} color={'white'} marginRight="8px">
 				{label}
 			</Text>
 			{Array(5)
@@ -22,7 +22,8 @@ export default function ReviewStarsInput({ label, value, onChange }: IReviewStar
 					return (
 						<StarIcon
 							key={index}
-							__css={index < value ? clicked : unclicked}
+							boxSize={{ base: "16px", sm: "24px"}}
+							color={index < value ? "white" : "lightblue"}
 							onClick={() => {
 								onChange(index + 1);
 							}}

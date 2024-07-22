@@ -6,11 +6,11 @@ import { SidebarDrawer } from './components/Drawer/SidebarDrawer';
 
 export default function Header() {
 	return (
-		<Flex justifyContent="space-around" alignItems="center">
+		<Flex width="80%" justifyContent="space-between" margin="auto" alignItems="center">
 			<Heading color="white" fontSize={1}>
 				TV shows App
 			</Heading>
-			<Hide above="sm">
+			<Hide above='xl'>
 				<SidebarDrawer />
 			</Hide>
 		</Flex>

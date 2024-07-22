@@ -11,6 +11,7 @@ import { Input } from './components/input';
 import { Card } from './components/card';
 import { StarIcon } from './components/starIcon';
 import { radii } from './foundations/border-radii';
+import { breakpoints } from './foundations/breakpoints';
 
 export const customTheme = extendTheme({
 	components: {
@@ -25,4 +26,5 @@ export const customTheme = extendTheme({
 	fontWeights,
 	space,
 	radii,
+   breakpoints
 });

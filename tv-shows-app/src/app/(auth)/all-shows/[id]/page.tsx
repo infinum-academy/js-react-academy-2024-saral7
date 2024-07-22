@@ -27,7 +27,7 @@ export default function ShowDetailsSection() {
 		<>
 			<AuthRedirect to="/login" condition="isLoggedOut" />
 			{data && (
-				<Flex direction={'column'}>
+				<Flex direction="column" width="100%" margin="auto">
 					<ShowDetails show={data.show} />
 					<ShowReviewSection index={parseInt(id)} />
 				</Flex>

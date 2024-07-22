@@ -29,48 +29,52 @@ export interface IReviewItemProps {
 	review: IReview;
 }
 
+const MenuComponent = ({review} : IReviewItemProps) => {
+   return <>
+      <Menu>
+         <MenuButton>⋮</MenuButton>
+         <MenuList minW={0} width="100px" fontSize={4} padding={1}>
+            <MenuItem padding="0">
+               <ReviewUpdate updatingReview={review} />
+            </MenuItem>
+            <MenuItem padding="0">
+               <ReviewDeleteButton review={review} />
+            </MenuItem>
+         </MenuList>
+      </Menu>
+   </>
+};
+
 export function ReviewItem({ review }: IReviewItemProps) {
 	const { data } = useSWR(swrKeys.me, authFetcher<{ user: IUser }>);
 
 	const style = useStyleConfig('ReviewItem');
 
-	const MenuComponent = (
-		<>
-			<Menu>
-				<MenuButton marginLeft={1}>⋮</MenuButton>
-				<MenuList minW={0} width="100px" fontSize={4} padding={1}>
-					<MenuItem padding="0">
-						<ReviewUpdate updatingReview={review} />
-					</MenuItem>
-					<MenuItem padding="0">
-						<ReviewDeleteButton review={review} />
-					</MenuItem>
-				</MenuList>
-			</Menu>
-		</>
-	);
+	
 
 	return (
 		<Flex
 			{...ReviewItemStyle}
-			flexDirection={['column', 'row']}
-			alignItems={['left', 'center']}
-			width={['340px', '870px']}
+			flexDirection="row"
+			alignItems="left"
+			width="100%"
 		>
-			<Flex direction="row" alignItems="center" marginLeft={[0, 1]} width={['90%', '300px']}>
-				<Avatar boxSize="40px" name={review.user?.email} marginRight={1} />
-				<Flex direction="column" alignItems="start">
-					<Text fontWeight="bold" fontSize={[4, 3]}>
-						{review.user?.email}
-					</Text>
-					<ReviewStarsInput label={`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
-				</Flex>
-				{data?.user.email === review.user?.email && window.outerWidth < 480 && MenuComponent}
+			<Flex direction={{base: "column", lg: "row"}} justifyContent="space-between">
+            <Flex direction="row" alignItems="start" marginRight={{ lg: "80px"}}>
+               <Avatar boxSize={{base: "32px", sm: "40px"}} name={review.user?.email} marginRight={1} />
+               <Flex direction="column" alignItems="start">
+                  <Text fontWeight="bold" fontSize={{ base: 5, sm: 3}}>
+                     {review.user?.email}
+                  </Text>
+                  <ReviewStarsInput label={`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
+               </Flex>
+            </Flex>
+            <Text data-testid="text" fontSize={[4, 3]} flexGrow={1}>
+               {review.comment}
+            </Text>
 			</Flex>
-			<Text data-testid="text" fontSize={[4, 3]} flexGrow={1}>
-				{review.comment}
-			</Text>
-			{data?.user.email === review.user?.email && window.outerWidth >= 480 && MenuComponent}
+			{data?.user.email === review.user?.email && <MenuComponent review={review}/>}
+			
 		</Flex>
 	);
 }

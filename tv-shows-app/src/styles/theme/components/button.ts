@@ -4,14 +4,7 @@ export const Button = defineStyleConfig({
 	baseStyle: {
 		borderRadius: 'full',
 		width: '144px',
-		height: '52px',
-	},
-
-	sizes: {
-		md: {
-			width: '144px',
-			height: '52px',
-		},
+		height: '52px'
 	},
 
 	variants: {
@@ -23,6 +16,7 @@ export const Button = defineStyleConfig({
 			},
 			width: '144px',
 			height: '52px',
+			padding: 0
 		},
 		edit: {
 			color: 'white',
@@ -33,10 +27,7 @@ export const Button = defineStyleConfig({
 			borderColor: 'white',
 			width: '60px',
 			height: '60px',
+			padding: 0
 		},
-	},
-	defaultProps: {
-		variant: 'default',
-		size: 'md',
-	},
+	}
 });

@@ -4,12 +4,11 @@ export const ReviewItemStyle = {
 	display: 'flex',
 	flexDirection: 'row',
 	gap: 1,
-	width: '870px',
 	fontSize: 3,
 	backgroundColor: 'lightblue',
 	justifyContent: 'space-between',
 	alignItems: 'center',
-	borderRadius: '20px',
+	borderRadius: 1,
 	color: 'white',
 	padding: 1,
 };

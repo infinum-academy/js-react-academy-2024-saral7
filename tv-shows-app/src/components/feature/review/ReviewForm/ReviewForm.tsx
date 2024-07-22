@@ -22,19 +22,20 @@ import { waitFor } from '@testing-library/react';
 import { IUser } from '@/typings/user';
 import useSWRMutation from 'swr/mutation';
 import { createReview } from '@/fetchers/mutators';
+import { ReviewItemStyle } from '@/styles/theme/components/reviewItem';
+import { ReviewFormStyle } from '@/styles/theme/components/reviewForm';
 
 export interface IOnPostFunction {
 	label: string;
 	index: number;
-	addShowReview: (review: IReview) => void;
-	style: any;
+	addShowReview: (review: IReview) => void
 }
 
 interface IReviewFormInputProps {
 	text: string;
 }
 
-export default function ReviewForm({ label, index, addShowReview, style }: IOnPostFunction) {
+export default function ReviewForm({ label, index, addShowReview }: IOnPostFunction) {
 	const { data } = useSWR<{ user: IUser }>(swrKeys.me, authFetcher);
 	const {
 		register,
@@ -64,16 +65,16 @@ export default function ReviewForm({ label, index, addShowReview, style }: IOnPo
 
 	return (
 		<chakra.form
-			__css={style}
-			width={['90%', '100%']}
-			flexDirection={['column', 'row']}
+			{...ReviewFormStyle}
+			width="100%"
+			flexDirection={{base: "column", lg: "row"}}
 			onSubmit={handleSubmit(addNewReview)}
 		>
 			<Text fontSize={2} color="white" marginBottom={1} marginRight={['0', '100px']}>
 				{label}
 			</Text>
 
-			<Flex direction="column" width={['100%', '90%']}>
+			<Flex direction="column" width="100%">
 				<FormControl
 					isInvalid={Boolean(errors.text)}
 					isDisabled={isSubmitting}
@@ -95,13 +96,12 @@ export default function ReviewForm({ label, index, addShowReview, style }: IOnPo
 
 				<Flex direction="row" justifyContent="space-between">
 					<Flex alignItems="center" marginBottom={1} data-testid="stars-input">
-						{' '}
 						{/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
 						<ReviewStarsInput label="Rating" value={starsClicked} onChange={isSubmitting ? () => {} : onStarClick} />
 					</Flex>
 
-					<FormControl isDisabled={isSubmitting} width="160px">
-						<Button isDisabled={Boolean(errors.text)} isLoading={isSubmitting} type="submit">
+					<FormControl isDisabled={isSubmitting} maxWidth="144px">
+						<Button variant="default" isDisabled={Boolean(errors.text)} isLoading={isSubmitting} type="submit">
 							Post
 						</Button>
 					</FormControl>

@@ -49,12 +49,12 @@ export default function ReviewUpdate({ updatingReview }: IReviewUpdateProps) {
 			</Text>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent backgroundColor="darkblue">
+				<ModalContent backgroundColor="darkblue" maxWidth={{ base: "80vw", md: "60vw"}}>
 					<ModalCloseButton margin={0} color="white">
 						<CloseIcon />
 					</ModalCloseButton>
 					<ModalBody>
-						<ReviewForm style={{}} label="Edit your review" index={updatingReview.show_id} addShowReview={onUpdate} />
+						<ReviewForm label="Edit your review" index={updatingReview.show_id} addShowReview={onUpdate} />
 					</ModalBody>
 				</ModalContent>
 			</Modal>

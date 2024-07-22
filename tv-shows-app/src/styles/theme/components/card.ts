@@ -8,29 +8,22 @@ export const Card = defineMultiStyleConfig({
 		showCard: {
 			container: {
 				backgroundColor: 'white',
-				borderRadius: '20px',
+				borderRadius: 1,
 				overflow: 'hidden',
-				//height: "375px",
-				width: '240px',
 			},
 			body: {
 				color: 'lightblue',
-				padding: '10px',
-				paddingLeft: '15px',
 			},
 		},
 		showDetails: {
 			container: {
 				margin: 'auto',
 				marginTop: 2,
-				borderRadius: '20px',
+				borderRadius: 1,
 				overflow: 'hidden',
-				width: '1054px',
 			},
 			body: {
 				color: 'lightblue',
-				padding: '10px',
-				paddingLeft: '15px',
 				display: 'flex',
 				flexDirection: 'row',
 				justifyContent: 'space-around',
