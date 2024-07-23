@@ -26,6 +26,7 @@ import useSWR, { mutate } from 'swr';
 import { cache } from 'swr/_internal';
 import useSWRMutation from 'swr/mutation';
 import PasswordInput from '../PasswordInput/PasswordInput';
+import { LoginFormStyles } from '@/styles/theme/components/loginForm';
 
 export interface ILoginForm {
 	email: string;
@@ -67,14 +68,18 @@ export default function LoginForm() {
 		} catch (error) {}
 	};
 
-	const styles = useStyleConfig('LoginForm');
 	return (
 		<chakra.form
-			__css={styles}
-			top={['0', '100px']}
-			borderRadius={['0', '30px']}
-			width={['100vw', '500px']}
-			height={['100vh', '500px']}
+			display='flex'
+			flexDirection='column'
+			alignItems='center'
+			backgroundColor="lightblue"
+			margin="auto"
+			position="relative"
+			top={{ base: 0, md: '70px'}}
+			borderRadius={{ base: 0, md: 2}}
+			width={{base: '100vw', md: '500px'}}
+			height={{base: '100vh', md: '500px'}}
 			onSubmit={handleSubmit(onLogin)}
 		>
 			<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">

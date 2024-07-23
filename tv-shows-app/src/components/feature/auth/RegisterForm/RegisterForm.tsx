@@ -87,11 +87,16 @@ export default function RegisterForm() {
 			{registered && router.push('/login')}
 			{!registered && (
 				<chakra.form
-					__css={style}
-					top={['0', '100px']}
-					borderRadius={['0', '30px']}
-					width={['100vw', '500px']}
-					height={['100vh', '550px']}
+					display='flex'
+					flexDirection='column'
+					alignItems='center'
+					backgroundColor="lightblue"
+					margin="auto"
+					position="relative"
+					top={{ base: 0, md: '50px'}}
+					borderRadius={{ base: 0, md: 2}}
+					width={{base: '100vw', md: '500px'}}
+					height={{base: '100vh', md: '550px'}}
 					onSubmit={handleSubmit(onRegister)}
 				>
 					<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">
