@@ -6,7 +6,7 @@
 	"arrowParens": "always",
 	"quoteProps": "as-needed",
 	"bracketSpacing": true,
-	"singleQuote": true,
+	"singleQuote": false,
 	"semi": true,
 	"trailingComma": "es5"
 }

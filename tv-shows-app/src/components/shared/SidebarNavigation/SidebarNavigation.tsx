@@ -1,5 +1,6 @@
 'use client';
 
+import { Picker } from '@/components/feature/picker/Picker/Picker';
 import { swrKeys } from '@/fetchers/swrKeys';
 import { Box, Flex, Tag } from '@chakra-ui/react';
 
@@ -52,6 +53,9 @@ export default function SidebarNavigation() {
 				<Tag fontSize={2} color="white" background="transparent">
 					My profile
 				</Tag>
+
+				
+				<Picker />
 			</Flex>
 			{/*<Tag visibility="hidden">_________</Tag> {/* ovo mi je bezveze, ali ne znam kako da zadrzim ovakav fixed scrollbar u flowu inače bez da je neki dio static" */}
 			<Tag fontSize={2} color="white" background="transparent" onClick={logOut}>
