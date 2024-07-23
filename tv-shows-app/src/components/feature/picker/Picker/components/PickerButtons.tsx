@@ -3,22 +3,32 @@ import { PickerContext } from "./PickerContextProvider";
 import { Button, Flex } from "@chakra-ui/react";
 
 export function PickerButtons() {
-	const { shows, currentStep, setCurrentStep, showingAtOnce, lastStep } = useContext(PickerContext);
+	const { selected, setSelected, winners, setWinners, active, setActive } = useContext(PickerContext);
 	return (
 		<Flex margin="auto" width="100%" justifyContent="space-between" alignItems="center" gap={1}>
-			<Button
+			{/*<Button
 				variant={{ base: "small", md: "default" }}
 				onClick={() => setCurrentStep(currentStep - 1)}
 				visibility={currentStep == 0 ? "hidden" : "visible"}
 			>
 				Prev
-			</Button>
+			</Button>*/}
 			<Button
 				variant={{ base: "small", md: "default" }}
-				onClick={() => setCurrentStep(currentStep + 1)}
-				visibility={currentStep > lastStep ? "hidden" : "visible"}
+				isDisabled={selected.showList.length == 0}
+				onClick={() => {
+					if (active.showList.length >= 2) {
+						setActive({ showList: active.showList.slice(2, active.showList.length) });
+						setWinners({ showList: [...winners.showList, ...selected.showList] });
+						setSelected({ showList: [] });
+					} else {
+						setActive({ showList: [...winners.showList, ...active.showList] });
+						setWinners({ showList: [] });
+						setSelected({ showList: [] });
+					}
+				}}
 			>
-				{currentStep == lastStep ? "Selected" : "Next"}
+				Next
 			</Button>
 		</Flex>
 	);

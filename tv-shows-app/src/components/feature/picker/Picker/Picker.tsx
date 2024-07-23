@@ -19,23 +19,29 @@ import { PickerResults } from "./components/PickerResults";
 export function Picker() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
-	const { shows, currentStep, showingAtOnce, lastStep } = useContext(PickerContext);
+	const { winners, active } = useContext(PickerContext);
 
-	console.log(shows);
+	const isOver = winners.showList.length == 1 && active.showList.length == 0;
 	return (
 		<>
 			<Button onClick={onOpen}> What to watch? </Button>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalContent maxWidth="50vw">
-					{currentStep > lastStep && <ModalCloseButton color="white" />}
+					{isOver && <ModalCloseButton color="white" />}
 
 					<ModalHeader border={0} backgroundColor="darkblue" padding={2}>
-						<Heading color="white"> {currentStep > lastStep ? "Tonight on repertoire..." : "Choose one..."}</Heading>
+						<Heading color="white"> {isOver ? "Tonight on repertoire..." : "Choose one..."}</Heading>
 					</ModalHeader>
 
 					<ModalBody backgroundColor="darkblue" display="flex" flexWrap="wrap" justifyContent="space-around" gap={1}>
-						{currentStep > lastStep ? <PickerResults /> : <PickerStep />}
-						<PickerButtons />
+						{isOver ? (
+							<PickerResults />
+						) : (
+							<>
+								<PickerStep />
+								<PickerButtons />
+							</>
+						)}
 					</ModalBody>
 				</ModalContent>
 			</Modal>

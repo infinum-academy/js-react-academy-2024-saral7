@@ -5,9 +5,28 @@ import { ShowCard } from "@/components/shared/ShowCard/ShowCard";
 import ShowList from "@/components/shared/ShowList/ShowList";
 
 export function PickerStep() {
-	const { shows, selected, setSelected, currentStep, setCurrentStep, showingAtOnce } = useContext(PickerContext);
+	const { selected, setSelected, winners, setWinners, active, setActive } = useContext(PickerContext);
 
 	console.log(selected.showList.map((show) => show.title));
+	console.log(
+		"winners: ",
+		winners.showList.map((show) => show.title)
+	);
+	console.log(
+		"active",
+		active.showList.map((show) => show.title)
+	);
+	console.log(
+		"selected",
+		selected.showList.map((show) => show.title)
+	);
+
+	if (active.showList.length < 2) {
+		console.log("skippao ", active.showList);
+		setActive({ showList: [...winners.showList, ...active.showList] });
+		setWinners({ showList: [] });
+		setSelected({ showList: [] });
+	}
 	return (
 		<Flex
 			direction={{ base: "column", md: "row" }}
@@ -17,9 +36,9 @@ export function PickerStep() {
 			gap={1}
 			width="100%"
 		>
-			{shows.showList
+			{active.showList
 				.filter((show, index) => {
-					return currentStep * showingAtOnce <= index && index < (currentStep + 1) * showingAtOnce;
+					return index < 2;
 				})
 				.map((show, index) => {
 					const isSelected = selected.showList.find((value) => value === show);
@@ -32,20 +51,10 @@ export function PickerStep() {
 							onClick={() => {
 								isSelected
 									? setSelected({
-											showList: selected.showList.filter((value) => {
-												return value !== show;
-											}),
+											showList: [],
 										})
 									: setSelected({
-											showList: [
-												...shows.showList.filter((value, index) => {
-													return (
-														!(currentStep * showingAtOnce <= index && index < (currentStep + 1) * showingAtOnce) &&
-														selected.showList.find((x) => x == value)
-													);
-												}),
-												show,
-											],
+											showList: [show],
 										});
 							}}
 						>

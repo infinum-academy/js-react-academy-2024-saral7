@@ -3,7 +3,7 @@ import { authFetcher, fetcher } from "@/fetchers/fetcher";
 import { IAllShows } from "@/fetchers/shows";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { IShowCard } from "@/typings/show";
-import { createContext, ReactNode, useState } from "react";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import useSWR from "swr";
 
 interface IPickerContextProvider {
@@ -11,13 +11,12 @@ interface IPickerContextProvider {
 }
 
 interface IPickerContext {
-	shows: IShowList;
 	selected: IShowList;
 	setSelected: (showList: IShowList) => void;
-	currentStep: number;
-	setCurrentStep: (step: number) => void;
-	showingAtOnce: number;
-	lastStep: number;
+	active: IShowList;
+	setActive: (showList: IShowList) => void;
+	winners: IShowList;
+	setWinners: (showList: IShowList) => void;
 }
 
 export const PickerContext = createContext<IPickerContext>({} as IPickerContext);
@@ -25,8 +24,16 @@ export const PickerContext = createContext<IPickerContext>({} as IPickerContext)
 export function PickerContextProvider({ children }: IPickerContextProvider) {
 	const { data, isLoading, error } = useSWR(swrKeys.shows(""), authFetcher<IAllShows>);
 	const [selected, setSelected] = useState<IShowList>({ showList: [] });
-	const [currentStep, setCurrentStep] = useState<number>(0);
-	const atOnce = 4;
+	const atOnce = 2;
+
+	const [winners, setWinners] = useState<IShowList>({ showList: [] });
+	const [active, setActive] = useState<IShowList>({ showList: [] });
+
+	useEffect(() => {
+		if (data) {
+			setActive({ showList: data.shows.slice(0, 5) });
+		}
+	}, [data]);
 
 	if (error) {
 		return <div color="white">Something went wrong...</div>;
@@ -38,13 +45,12 @@ export function PickerContextProvider({ children }: IPickerContextProvider) {
 	return (
 		<PickerContext.Provider
 			value={{
-				shows: { showList: data.shows },
 				selected: selected,
 				setSelected: setSelected,
-				currentStep: currentStep,
-				setCurrentStep: setCurrentStep,
-				showingAtOnce: atOnce,
-				lastStep: data.shows.length / atOnce - (data.shows.length % atOnce == 0 ? 1 : 0),
+				active: active,
+				setActive: setActive,
+				winners: winners,
+				setWinners: setWinners,
 			}}
 		>
 			{children}

@@ -2,19 +2,13 @@ import { Box, Flex, Heading, List, ListIcon, ListItem, Text } from "@chakra-ui/r
 import { useContext } from "react";
 import { PickerContext } from "./PickerContextProvider";
 import { CheckCircleIcon, QuestionIcon } from "@chakra-ui/icons";
+import { ShowCard } from "@/components/shared/ShowCard/ShowCard";
 
 export function PickerResults() {
-	const { selected } = useContext(PickerContext);
+	const { winners } = useContext(PickerContext);
 	return (
-		<Flex width="100%" flexDirection="column" justifyContent="space-between">
-			{selected.showList.map((show, index) => {
-				return (
-					<Flex key={index} width="90%" color="white" fontSize={2} alignItems="center">
-						<CheckCircleIcon marginRight={1} />
-						<Text>{show.title}</Text>
-					</Flex>
-				);
-			})}
+		<Flex flexDirection="column" justifyContent="space-between" margin="auto">
+			<ShowCard show={winners.showList[0]} />;
 		</Flex>
 	);
 }
