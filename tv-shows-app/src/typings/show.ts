@@ -1,10 +1,3 @@
-export interface IShow {
-   title: string,
-   description: string,
-   averageRating?: number,
-   imageUrl?: string
-};
-
 export interface IShowCard {
    id: string,
    title: string,

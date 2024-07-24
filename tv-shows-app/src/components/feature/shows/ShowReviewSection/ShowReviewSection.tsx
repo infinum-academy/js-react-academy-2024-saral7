@@ -1,68 +1,42 @@
 'use client'
 
-import { Flex } from "@chakra-ui/react";
+import { Box, Flex } from "@chakra-ui/react";
 import ReviewForm from "../../review/ReviewForm/ReviewForm";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { IReview, IReviewItem, IReviewList } from "@/typings/review";
 import ReviewList from "../../review/ReviewList/ReviewList";
-
-let mockReviewList = [] as IReview[]; // implicitni cast
+import useSWR, { mutate } from "swr";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { authFetcher } from "@/fetchers/fetcher";
+import useSWRMutation from "swr/mutation";
+import { createReview } from "@/fetchers/mutators";
 
 export interface ShowReviewSectionProps {
-   index: string,
-   updateAverage: (avg : number) => void;
+   index: number
 }
 
-export default function ShowReviewSection({index, updateAverage} : ShowReviewSectionProps) {
+export default function ShowReviewSection({index} : ShowReviewSectionProps) {
+   const {data, error, isLoading} = useSWR(swrKeys.getReviews(index), authFetcher<IReviewList>);
 
-   // pitanje: je li ova komponenta ispravno mjesto za logiku s localStorageom?
-   // ima mi nekog smisla da je, obzirom da trebamo odavdje slati stanje reviewList prema ReviewList komponenti, 
-   // ali ne znam bi li bilo semanticki bolje da bude u npr. ReviewForm (jedino ne znam kako exportati reviewList onda)
-   // update: sve vise mi se cini da je ovdje okej jer se podaci komponentama salju preko zajednickog parenta
-   
-   const [reviewList, setReviewList] = useState(mockReviewList); 
-   
-
-   const loadFromLocalStorage =  () => {
-      const listString = localStorage.getItem(`reviewList-${index}`);
-      if (!listString) {
-         setReviewList(mockReviewList);
-         return;
+   const {trigger} = useSWRMutation(swrKeys.reviews(''), createReview, {
+      onSuccess: () => {
+         mutate(swrKeys.getReviews(index));
       }
-      setReviewList(JSON.parse(listString));
-      //console.log(reviewList);    // vazno: seteri iz useStatea su asinkroni pa se ovo ne ispisuje tocno
+   });
+
+   const addToReviewList = async (newReview : IReview) => {
+      await trigger(newReview);
+   };
+
+   if (error) {
+      if (error.status !== 401) return <Box color="white">Something went wrong...</Box>;
    }
-   useEffect(loadFromLocalStorage, []);
-
-
-   const storeToLocalStorage = () => {
-      localStorage.setItem(`reviewList-${index}`, JSON.stringify(reviewList));
-   }
-   const [firstRender, setFirstRender] = useState(true); 
-   useEffect(
-      () => {        // da se ne storea na prvi render, jer onda pregazi prave vrijednosti i stavi prazno
-         if (firstRender) setFirstRender(false);
-         else storeToLocalStorage();
-      }, 
-      [reviewList]   // nek se storea novo na svaku promjenu reviewList
-   );
-
-   // VAZNO: prouciti hookove!
-
-   useEffect(() => {updateAverage(reviewList.reduce((acc, b) => {return acc + b.rating;}, 0) / reviewList.length); }, [reviewList]);
-      
-   const addToReviewList = (newReview : IReview) => {
-      const newList = [... reviewList, newReview];
-      setReviewList(newList);
-   }
-
-   const removeFromReviewList = (review : IReview) => {
-      const newList = reviewList.filter((x) => {return x !== review});
-      setReviewList(newList);
+   if (isLoading || !data) {
+      return <Box color="white">Loading...</Box>;
    }
 
    return <Flex direction={'column'} width={'80%'} margin={'auto'}>
-      <ReviewForm addShowReview={addToReviewList}/>
-      <ReviewList reviewList={reviewList} onDelete={removeFromReviewList}/>
+      <ReviewForm label="Reviews" addShowReview={addToReviewList} index={index}/>
+      <ReviewList reviewList={data.reviews}/>
    </Flex>
 }

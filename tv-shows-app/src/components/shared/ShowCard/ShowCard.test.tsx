@@ -5,8 +5,8 @@
  */
 
 import { render, screen } from '@testing-library/react';
-import ShowCard from './ShowCard';
-import { IShow, IShowCard } from '@/typings/show';
+import {ShowCard} from './ShowCard';
+import { IShowCard } from '@/typings/show';
 
 
 describe('ShowCard', () => {

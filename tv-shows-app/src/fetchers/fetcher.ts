@@ -14,3 +14,31 @@ export async function fetcher <T> (input: string | URL | globalThis.Request, ini
    }
     
 }
+
+export async function authFetcher <T> (input: string | URL | globalThis.Request, init?: RequestInit) : Promise<T> {
+   let data;
+   try {
+      const value = localStorage.getItem('loginInfo');
+      const authInfo = value ? JSON.parse(value) : {};
+      console.log(authInfo.client)
+      const response = await fetch(input, {
+         ...init,
+         headers: {
+            'Client': authInfo.client,
+            'Access-token': authInfo.token,
+            'Uid': authInfo.uid,
+            'Content-Type': 'application/json'
+         }
+      });
+      if (!response.ok) {
+         throw response;
+      }
+      if (response.status !== 204) {
+         data = await response.json();
+      }
+   } catch (error) {
+      throw error;
+   }
+   return data;
+    
+}
