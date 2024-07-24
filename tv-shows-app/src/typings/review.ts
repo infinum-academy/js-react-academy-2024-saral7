@@ -1,8 +1,11 @@
+import { IUser } from "./user"
+
 export interface IReview {
-   email?: string,
-   avatar?: string,
+   id?: string,
+   comment: string,
    rating: number,
-   text: string
+   show_id: number,
+   user?: IUser
 }
 
 export interface IReviewItem {
@@ -10,5 +13,6 @@ export interface IReviewItem {
 }
 
 export interface IReviewList {
-   reviewList: Array<IReview>
+   reviews: Array<IReview>,
+   meta: any
 }

@@ -25,16 +25,12 @@ export default function ShowDetailsSection() {
    return <Box color="white">Loading...</Box>;
    }
 
-   const updateAverage = (avg : number) => {
-      // TODO
-   }
-
    return (
       <>
          <AuthRedirect to='/login' condition="isLoggedOut" />
          {data && <Flex direction={'column'}>
             <ShowDetails show={data.show}/>  
-            <ShowReviewSection index={id} updateAverage={updateAverage} />
+            <ShowReviewSection index={parseInt(id)} />
          </Flex>}
       </>
       
