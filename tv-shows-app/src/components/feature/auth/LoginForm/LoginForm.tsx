@@ -116,12 +116,7 @@ export default function LoginForm() {
 				isInvalid={Boolean(errors.password)}
 				isDisabled={isSubmitting}
 			>
-				<PasswordInput
-					registerProps={{
-						...register("password", { required: "Password is required" }),
-					}}
-					errors={errors}
-				/>
+				<PasswordInput {...register("password", { required: "Password is required" })} />
 				<FormErrorMessage margin={0} data-testid="password-error-message">
 					{errors?.password?.message}
 				</FormErrorMessage>

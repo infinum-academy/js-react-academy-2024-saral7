@@ -1,14 +1,8 @@
-import { LockIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
-import { FormHelperText, Input, InputGroup, InputLeftElement, InputRightElement } from '@chakra-ui/react';
-import { useState } from 'react';
+import { LockIcon, ViewIcon, ViewOffIcon } from "@chakra-ui/icons";
+import { FormHelperText, Input, InputGroup, InputLeftElement, InputProps, InputRightElement } from "@chakra-ui/react";
+import { forwardRef, useState } from "react";
 
-interface IPasswordInputProps {
-	registerProps: any;
-	errors: any;
-	validationFunction?: any;
-}
-
-export default function PasswordInput({ registerProps, errors }: IPasswordInputProps) {
+export default forwardRef(function PasswordInput({ ...rest }: InputProps, ref) {
 	const [isClicked, setIsClicked] = useState(false);
 
 	const onClickHandler = () => {
@@ -19,7 +13,7 @@ export default function PasswordInput({ registerProps, errors }: IPasswordInputP
 			<InputLeftElement>
 				<LockIcon color="white" />
 			</InputLeftElement>
-			<Input {...registerProps} type={isClicked ? 'text' : 'password'} color="white" placeholder="Password" />
+			<Input ref={ref} {...rest} type={isClicked ? "text" : "password"} color="white" placeholder="Password" />
 			<InputRightElement>
 				{isClicked ? (
 					<ViewIcon color="white" onClick={onClickHandler} />
@@ -29,4 +23,4 @@ export default function PasswordInput({ registerProps, errors }: IPasswordInputP
 			</InputRightElement>
 		</InputGroup>
 	);
-}
+});

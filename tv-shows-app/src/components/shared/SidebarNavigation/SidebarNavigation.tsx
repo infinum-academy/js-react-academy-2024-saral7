@@ -57,7 +57,7 @@ export default function SidebarNavigation() {
 
 				<Picker />
 			</Flex>
-			<Tag fontSize={2} color="white" background="transparent" onClick={logOut}>
+			<Tag fontSize={2} color="white" background="transparent" onClick={logOut} cursor="pointer">
 				Log out
 			</Tag>
 		</Flex>
