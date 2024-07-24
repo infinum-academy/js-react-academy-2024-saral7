@@ -7,7 +7,6 @@ import ShowList from "@/components/shared/ShowList/ShowList";
 export function PickerStep() {
 	const { selected, setSelected, winners, setWinners, active, setActive } = useContext(PickerContext);
 
-	console.log(selected.showList.map((show) => show.title));
 	console.log(
 		"winners: ",
 		winners.showList.map((show) => show.title)
@@ -35,6 +34,7 @@ export function PickerStep() {
 			alignContent="space-around"
 			gap={1}
 			width="100%"
+			height="100%"
 		>
 			{active.showList
 				.filter((show, index) => {
@@ -57,6 +57,7 @@ export function PickerStep() {
 											showList: [show],
 										});
 							}}
+							height="100%"
 						>
 							<Card height="100%" border={isSelected ? "2px" : 0} borderColor={isSelected ? "green" : "transparent"}>
 								<Image display={{ base: "none", md: "block" }} height="80%" src={show.image_url} objectFit="cover" />

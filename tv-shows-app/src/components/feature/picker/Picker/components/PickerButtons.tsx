@@ -3,7 +3,8 @@ import { PickerContext } from "./PickerContextProvider";
 import { Button, Flex } from "@chakra-ui/react";
 
 export function PickerButtons() {
-	const { selected, setSelected, winners, setWinners, active, setActive } = useContext(PickerContext);
+	const { selected, setSelected, winners, setWinners, active, setActive, currentStep, setCurrentStep } =
+		useContext(PickerContext);
 	return (
 		<Flex margin="auto" width="100%" justifyContent="space-between" alignItems="center" gap={1}>
 			{/*<Button
@@ -26,6 +27,7 @@ export function PickerButtons() {
 						setWinners({ showList: [] });
 						setSelected({ showList: [] });
 					}
+					setCurrentStep(currentStep + 1);
 				}}
 			>
 				Next

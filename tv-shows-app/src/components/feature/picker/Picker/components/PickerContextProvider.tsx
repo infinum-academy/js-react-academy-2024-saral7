@@ -11,12 +11,16 @@ interface IPickerContextProvider {
 }
 
 interface IPickerContext {
+	shows: IShowList;
 	selected: IShowList;
 	setSelected: (showList: IShowList) => void;
 	active: IShowList;
 	setActive: (showList: IShowList) => void;
 	winners: IShowList;
 	setWinners: (showList: IShowList) => void;
+	currentStep: number;
+	setCurrentStep: (step: number) => void;
+	totalSteps: number;
 }
 
 export const PickerContext = createContext<IPickerContext>({} as IPickerContext);
@@ -24,14 +28,26 @@ export const PickerContext = createContext<IPickerContext>({} as IPickerContext)
 export function PickerContextProvider({ children }: IPickerContextProvider) {
 	const { data, isLoading, error } = useSWR(swrKeys.shows(""), authFetcher<IAllShows>);
 	const [selected, setSelected] = useState<IShowList>({ showList: [] });
-	const atOnce = 2;
+	const [currentStep, setCurrentStep] = useState(1);
+	const [totalSteps, setTotalSteps] = useState(0);
 
 	const [winners, setWinners] = useState<IShowList>({ showList: [] });
 	const [active, setActive] = useState<IShowList>({ showList: [] });
 
 	useEffect(() => {
 		if (data) {
-			setActive({ showList: data.shows.slice(0, 5) });
+			setActive({ showList: data.shows });
+			setWinners({ showList: [] });
+			setWinners({ showList: [] });
+			setCurrentStep(1);
+
+			let remaining = data.shows.length;
+			let steps = 0;
+			while (remaining > 1) {
+				steps += (remaining - (remaining % 2)) / 2;
+				remaining = (remaining + (remaining % 2)) / 2;
+			}
+			setTotalSteps(steps);
 		}
 	}, [data]);
 
@@ -45,12 +61,16 @@ export function PickerContextProvider({ children }: IPickerContextProvider) {
 	return (
 		<PickerContext.Provider
 			value={{
+				shows: { showList: data.shows },
 				selected: selected,
 				setSelected: setSelected,
 				active: active,
 				setActive: setActive,
 				winners: winners,
 				setWinners: setWinners,
+				totalSteps: totalSteps,
+				currentStep: currentStep,
+				setCurrentStep: setCurrentStep,
 			}}
 		>
 			{children}
