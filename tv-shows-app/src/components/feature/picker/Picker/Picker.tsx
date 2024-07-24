@@ -30,7 +30,18 @@ export function Picker() {
 		if (!isOpen) return;
 		setWinners({ showList: [] });
 		setSelected({ showList: [] });
-		setActive(shows);
+		setActive({
+			showList: shows.showList
+				.map((show) => {
+					return { show, num: Math.random() };
+				})
+				.sort((a, b) => {
+					return a.num - b.num;
+				})
+				.map((obj) => {
+					return obj.show;
+				}),
+		});
 		setCurrentStep(1);
 	}, [isOpen]);
 	return (

@@ -39,7 +39,18 @@ export function PickerContextProvider({ children }: IPickerContextProvider) {
 
 	useEffect(() => {
 		if (data) {
-			setActive({ showList: data.shows });
+			setActive({
+				showList: data.shows
+					.map((show) => {
+						return { show, num: Math.random() };
+					})
+					.sort((a, b) => {
+						return a.num - b.num;
+					})
+					.map((obj) => {
+						return obj.show;
+					}),
+			});
 			setWinners({ showList: [] });
 			setWinners({ showList: [] });
 			setCurrentStep(1);
