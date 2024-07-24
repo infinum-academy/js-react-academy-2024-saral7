@@ -1,8 +1,8 @@
-'use client';
+"use client";
 
-import { mutator } from '@/fetchers/mutators';
-import { swrKeys } from '@/fetchers/swrKeys';
-import { EmailIcon, LockIcon } from '@chakra-ui/icons';
+import { mutator } from "@/fetchers/mutators";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 import {
 	Button,
 	chakra,
@@ -19,14 +19,14 @@ import {
 	useInputGroupStyles,
 	useMultiStyleConfig,
 	useStyleConfig,
-} from '@chakra-ui/react';
-import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import useSWR, { mutate } from 'swr';
-import { cache } from 'swr/_internal';
-import useSWRMutation from 'swr/mutation';
-import PasswordInput from '../PasswordInput/PasswordInput';
-import { LoginFormStyles } from '@/styles/theme/components/loginForm';
+} from "@chakra-ui/react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+import useSWR, { mutate } from "swr";
+import { cache } from "swr/_internal";
+import useSWRMutation from "swr/mutation";
+import PasswordInput from "../PasswordInput/PasswordInput";
+import { LoginFormStyles } from "@/styles/theme/components/loginForm";
 
 export interface ILoginForm {
 	email: string;
@@ -46,7 +46,6 @@ export default function LoginForm() {
 		formState: { isSubmitting, errors },
 	} = useForm<ILoginForm>();
 	const { mutate } = useSWR(swrKeys.me);
-
 	const { trigger } = useSWRMutation(swrKeys.login, mutator, {
 		onSuccess: (data) => {
 			const loginInfo = {
@@ -54,11 +53,11 @@ export default function LoginForm() {
 				client: data.client,
 				token: data.token,
 			};
-			localStorage.setItem('loginInfo', JSON.stringify(loginInfo));
+			localStorage.setItem("loginInfo", JSON.stringify(loginInfo));
 			mutate(data, { revalidate: false });
 		},
 		onError: async (error: { errors: Array<string> }) => {
-			setError('email', { message: error.errors[0] }); // kad je ovo, test baca TypeError
+			setError("email", { message: error.errors[0] }); // kad je ovo, test baca TypeError
 		},
 	});
 
@@ -70,16 +69,16 @@ export default function LoginForm() {
 
 	return (
 		<chakra.form
-			display='flex'
-			flexDirection='column'
-			alignItems='center'
+			display="flex"
+			flexDirection="column"
+			alignItems="center"
 			backgroundColor="lightblue"
 			margin="auto"
 			position="relative"
-			top={{ base: 0, md: '70px'}}
-			borderRadius={{ base: 0, md: 2}}
-			width={{base: '100vw', md: '500px'}}
-			height={{base: '100vh', md: '500px'}}
+			top={{ base: 0, md: "70px" }}
+			borderRadius={{ base: 0, md: 2 }}
+			width={{ base: "100vw", md: "500px" }}
+			height={{ base: "100vh", md: "500px" }}
 			onSubmit={handleSubmit(onLogin)}
 		>
 			<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">
@@ -89,7 +88,7 @@ export default function LoginForm() {
 				position="absolute"
 				top="145px"
 				height="56px"
-				width={['300px', '388px']}
+				width={["300px", "388px"]}
 				isInvalid={Boolean(errors.email)}
 				isDisabled={isSubmitting}
 			>
@@ -98,7 +97,7 @@ export default function LoginForm() {
 						<EmailIcon color="white" />
 					</InputLeftElement>
 					<Input
-						{...register('email', { required: 'Email is required' })}
+						{...register("email", { required: "Email is required" })}
 						type="email"
 						color="white"
 						placeholder="Email"
@@ -113,13 +112,13 @@ export default function LoginForm() {
 				position="absolute"
 				top="240px"
 				height="56px"
-				width={['300px', '388px']}
+				width={["300px", "388px"]}
 				isInvalid={Boolean(errors.password)}
 				isDisabled={isSubmitting}
 			>
 				<PasswordInput
 					registerProps={{
-						...register('password', { required: 'Password is required' }),
+						...register("password", { required: "Password is required" }),
 					}}
 					errors={errors}
 				/>
@@ -136,7 +135,7 @@ export default function LoginForm() {
 
 			<FormControl position="absolute" top="430px">
 				<FormHelperText margin={0} textAlign="center" color="white">
-					Don't have an account?{' '}
+					Don't have an account?{" "}
 					<Link fontWeight="bold" href="/register">
 						Register
 					</Link>
