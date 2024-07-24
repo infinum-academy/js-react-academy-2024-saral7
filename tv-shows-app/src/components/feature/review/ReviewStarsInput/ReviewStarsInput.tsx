@@ -1,5 +1,5 @@
-import { StarIcon } from '@chakra-ui/icons';
-import { Flex, Text, useStyleConfig } from '@chakra-ui/react';
+import { StarIcon } from "@chakra-ui/icons";
+import { Flex, Text, useStyleConfig } from "@chakra-ui/react";
 
 export interface IReviewStarsInputProps {
 	label: string;
@@ -8,12 +8,9 @@ export interface IReviewStarsInputProps {
 }
 
 export default function ReviewStarsInput({ label, value, onChange }: IReviewStarsInputProps) {
-	const clicked = useStyleConfig('StarIcon', { variant: 'clicked' });
-	const unclicked = useStyleConfig('StarIcon', { variant: 'unclicked' });
-
 	return (
-		<Flex alignItems={'center'}>
-			<Text fontSize={{ base: 5, sm: 3}} color={'white'} marginRight="8px">
+		<Flex alignItems={"center"}>
+			<Text fontSize={{ base: 5, sm: 3 }} color={"white"} marginRight="8px">
 				{label}
 			</Text>
 			{Array(5)
@@ -22,7 +19,7 @@ export default function ReviewStarsInput({ label, value, onChange }: IReviewStar
 					return (
 						<StarIcon
 							key={index}
-							boxSize={{ base: "16px", sm: "24px"}}
+							boxSize={{ base: "16px", sm: "24px" }}
 							color={index < value ? "white" : "lightblue"}
 							onClick={() => {
 								onChange(index + 1);
