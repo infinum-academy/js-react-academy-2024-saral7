@@ -31,7 +31,7 @@ interface IPickerContext {
 export const PickerContext = createContext<IPickerContext>({} as IPickerContext);
 
 export function PickerContextProvider({ children }: IPickerContextProvider) {
-	const { data, isLoading, error } = useSWR(swrKeys.shows(""), authFetcher<IAllShows>);
+	const { data, isLoading, error } = useSWR(swrKeys.shows(""), authFetcher<IAllShows>, { revalidateOnFocus: false });
 	const [selected, setSelected] = useState<IShowList>({ showList: [] });
 	const [currentStep, setCurrentStep] = useState(1);
 	const [totalSteps, setTotalSteps] = useState(0);

@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { PickerContext } from "./PickerContextProvider";
 import { background, border, Box, Card, CardFooter, Flex, Image, Text } from "@chakra-ui/react";
 import { ShowCard } from "@/components/shared/ShowCard/ShowCard";
@@ -7,25 +7,14 @@ import ShowList from "@/components/shared/ShowList/ShowList";
 export function PickerStep() {
 	const { selected, setSelected, winners, setWinners, active, setActive } = useContext(PickerContext);
 
-	console.log(
-		"winners: ",
-		winners.showList.map((show) => show.title)
-	);
-	console.log(
-		"active",
-		active.showList.map((show) => show.title)
-	);
-	console.log(
-		"selected",
-		selected.showList.map((show) => show.title)
-	);
+	useEffect(() => {
+		if (active.showList.length < 2) {
+			setActive({ showList: [...winners.showList, ...active.showList] });
+			setWinners({ showList: [] });
+			setSelected({ showList: [] });
+		}
+	}, [active]);
 
-	if (active.showList.length < 2) {
-		console.log("skippao ", active.showList);
-		setActive({ showList: [...winners.showList, ...active.showList] });
-		setWinners({ showList: [] });
-		setSelected({ showList: [] });
-	}
 	return (
 		<Flex
 			direction={{ base: "column", md: "row" }}

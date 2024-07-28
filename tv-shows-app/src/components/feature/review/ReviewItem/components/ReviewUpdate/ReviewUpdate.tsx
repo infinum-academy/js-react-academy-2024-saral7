@@ -25,7 +25,6 @@ export interface IReviewUpdateProps {
 export default function ReviewUpdate({ updatingReview }: IReviewUpdateProps) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const onOpening = () => {
-		console.log("clicked");
 		onOpen();
 	};
 

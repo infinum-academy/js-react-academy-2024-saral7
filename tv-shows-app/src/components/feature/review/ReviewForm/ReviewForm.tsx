@@ -49,7 +49,6 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 	// pitanje: bi li i broj kliknutih zvjezdica trebao biti dio form inputa, ili je okej ostaviti ovako sa stateom pa rucno?
 	const addNewReview = async ({ text, rating }: IReviewFormInputProps) => {
 		if (!data) return;
-		console.log(text, rating);
 		const newReview: IReview = {
 			show_id: index,
 			comment: text,
@@ -97,8 +96,6 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 							control={control}
 							name="rating"
 							render={({ field: { onChange, value } }) => {
-								console.log(value);
-								console.log(onChange);
 								return <ReviewStarsInput label="Rating" value={value} onChange={onChange} />;
 							}}
 						></Controller>

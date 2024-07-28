@@ -55,7 +55,6 @@ export default function RegisterForm() {
 	});
 
 	const onRegister = async (data: IRegisterForm) => {
-		console.log(errors);
 		try {
 			await trigger(data);
 		} catch (error) {}

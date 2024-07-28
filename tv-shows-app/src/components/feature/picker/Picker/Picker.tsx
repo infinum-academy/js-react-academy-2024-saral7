@@ -40,7 +40,6 @@ export function Picker() {
 
 	const isOver = winners.showList.length == 1 && active.showList.length == 0;
 	useEffect(() => {
-		console.log("is open?", isOpen);
 		if (!isOpen) return;
 		setWinners({ showList: [] });
 		setSelected({ showList: [] });

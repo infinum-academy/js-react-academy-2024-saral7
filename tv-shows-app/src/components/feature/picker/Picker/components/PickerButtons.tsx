@@ -7,13 +7,6 @@ export function PickerButtons() {
 		useContext(PickerContext);
 	return (
 		<Flex margin="auto" width="100%" justifyContent="space-between" alignItems="center" gap={1}>
-			{/*<Button
-				variant={{ base: "small", md: "default" }}
-				onClick={() => setCurrentStep(currentStep - 1)}
-				visibility={currentStep == 0 ? "hidden" : "visible"}
-			>
-				Prev
-			</Button>*/}
 			<Button
 				variant={{ base: "small", md: "default" }}
 				isDisabled={selected.showList.length == 0}

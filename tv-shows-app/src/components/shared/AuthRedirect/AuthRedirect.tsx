@@ -14,10 +14,8 @@ interface IAuthRedirect {
 export default function AuthRedirect({ to, condition }: IAuthRedirect) {
 	const route = useRouter();
 	const { data, isLoading, error } = useSWR(swrKeys.me, authFetcher);
-	console.log("auth redirect");
 	useEffect(() => {
 		if (isLoading) return;
-		console.log(data, condition);
 		if (!data && condition == "isLoggedOut") {
 			route.push(to);
 		}

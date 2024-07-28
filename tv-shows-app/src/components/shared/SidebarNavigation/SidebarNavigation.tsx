@@ -16,7 +16,6 @@ interface ISidebarNavigationProps {
 export default function SidebarNavigation({ onClose }: ISidebarNavigationProps) {
 	const route = usePathname();
 	const router = useRouter();
-	console.log("vbdsjkvanl");
 	const { mutate } = useSWR(swrKeys.me);
 
 	const logOut = () => {
@@ -25,7 +24,6 @@ export default function SidebarNavigation({ onClose }: ISidebarNavigationProps) 
 		router.push("/");
 	};
 
-	console.log("route ", route);
 	return (
 		<Flex
 			direction="column"
