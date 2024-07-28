@@ -2,7 +2,7 @@
 
 import { IReview, IReviewList } from '@/typings/review';
 import { Flex } from '@chakra-ui/react';
-import {ReviewItem} from '../ReviewItem/ReviewItem';
+import { ReviewItem } from '../ReviewItem/ReviewItem';
 import { useEffect } from 'react';
 
 export interface IReviewListProps {
@@ -11,7 +11,7 @@ export interface IReviewListProps {
 
 export default function ReviewList({ reviewList }: IReviewListProps) {
 	return (
-		<Flex direction={'column'} gap={1} marginBottom={1}>
+		<Flex direction={'column'} alignItems={['center', 'end']} gap={1} marginBottom={1}>
 			{reviewList.map((review, index) => {
 				return <ReviewItem key={index} review={review} />;
 			})}

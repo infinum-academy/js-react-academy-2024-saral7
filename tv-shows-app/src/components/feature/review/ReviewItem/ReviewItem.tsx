@@ -1,34 +1,80 @@
-import { IReview } from "@/typings/review";
-import { Avatar, AvatarGroup, Button, Card, Flex, Text } from "@chakra-ui/react";
-import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
-import useSWR, { mutate } from "swr";
-import useSWRMutation from "swr/mutation";
-import { swrKeys } from "@/fetchers/swrKeys";
-import { deleteReview } from "@/fetchers/mutators";
-import { authFetcher } from "@/fetchers/fetcher";
-import { IUser } from "@/typings/user";
-import ReviewUpdate from "./components/ReviewUpdate/ReviewUpdate";
-import {ReviewDeleteButton} from "./components/ReviewDeleteButton/ReviewDeleteButton";
+import { IReview } from '@/typings/review';
+import {
+	Avatar,
+	AvatarGroup,
+	Button,
+	Card,
+	Flex,
+	Menu,
+	MenuButton,
+	MenuIcon,
+	MenuItem,
+	MenuList,
+	Text,
+	useStyleConfig,
+} from '@chakra-ui/react';
+import ReviewStarsInput from '../ReviewStarsInput/ReviewStarsInput';
+import useSWR, { mutate } from 'swr';
+import useSWRMutation from 'swr/mutation';
+import { swrKeys } from '@/fetchers/swrKeys';
+import { deleteReview } from '@/fetchers/mutators';
+import { authFetcher } from '@/fetchers/fetcher';
+import { IUser } from '@/typings/user';
+import ReviewUpdate from './components/ReviewUpdate/ReviewUpdate';
+import { ReviewDeleteButton } from './components/ReviewDeleteButton/ReviewDeleteButton';
+import { HamburgerIcon, InfoIcon } from '@chakra-ui/icons';
+import { ReviewItemStyle } from '@/styles/theme/components/reviewItem';
 
 export interface IReviewItemProps {
-   review: IReview
+	review: IReview;
 }
 
-export function ReviewItem({review} : IReviewItemProps) {
-   const {data} = useSWR(swrKeys.me, authFetcher<{user: IUser}>);
+const MenuComponent = ({review} : IReviewItemProps) => {
+   return <>
+      <Menu>
+         <MenuButton>⋮</MenuButton>
+         <MenuList minW={0} width="100px" fontSize={4} padding={1}>
+            <MenuItem padding="0">
+               <ReviewUpdate updatingReview={review} />
+            </MenuItem>
+            <MenuItem padding="0">
+               <ReviewDeleteButton review={review} />
+            </MenuItem>
+         </MenuList>
+      </Menu>
+   </>
+};
 
-   return <Card padding={1} backgroundColor={'lightblue'} color={'white'}>
-      <Flex direction={'column'} gap = {1}>
-         <Flex justifyContent="space-between">
-            <Flex alignItems="center">
-               <Avatar height="32px" width="32px" name={review.user?.email} marginRight={1}/>
-               <Text fontWeight="bold">{review.user?.email}</Text>
+export function ReviewItem({ review }: IReviewItemProps) {
+	const { data } = useSWR(swrKeys.me, authFetcher<{ user: IUser }>);
+
+	const style = useStyleConfig('ReviewItem');
+
+	
+
+	return (
+		<Flex
+			{...ReviewItemStyle}
+			flexDirection="row"
+			alignItems="left"
+			width="100%"
+		>
+			<Flex direction={{base: "column", lg: "row"}} justifyContent="space-between">
+            <Flex direction="row" alignItems="start" marginRight={{ lg: "80px"}}>
+               <Avatar boxSize={{base: "32px", sm: "40px"}} name={review.user?.email} marginRight={1} />
+               <Flex direction="column" alignItems="start">
+                  <Text fontWeight="bold" fontSize={{ base: 5, sm: 3}}>
+                     {review.user?.email}
+                  </Text>
+                  <ReviewStarsInput label={`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
+               </Flex>
             </Flex>
-            {data?.user.email === review.user?.email && <ReviewUpdate updatingReview={review} />}
-         </Flex>
-         <Text data-testid="text">{review.comment}</Text>
-         <ReviewStarsInput label = {`${review.rating} / 5`} value={review.rating} onChange={() => {}} />
-         {data?.user.email === review.user?.email && <ReviewDeleteButton review={review}/>}
-      </Flex>
-   </Card>
+            <Text data-testid="text" fontSize={[4, 3]} flexGrow={1}>
+               {review.comment}
+            </Text>
+			</Flex>
+			{data?.user.email === review.user?.email && <MenuComponent review={review}/>}
+			
+		</Flex>
+	);
 }

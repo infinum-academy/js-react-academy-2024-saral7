@@ -21,3 +21,6 @@
 - error handling
 - alertovi da su lijepi
 - da bude pass barem 8
+- logout ne radi odmah
+
+- PROSJEK
