@@ -1,25 +1,27 @@
-'use client';
+"use client";
 
-import { swrKeys } from '@/fetchers/swrKeys';
-import { Box, Flex, Tag } from '@chakra-ui/react';
+import { Picker } from "@/components/feature/picker/Picker/Picker";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { Box, Flex, Tag } from "@chakra-ui/react";
 
-import NextLink from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
-import useSWR, { mutate, useSWRConfig } from 'swr';
-import useSWRMutation from 'swr/mutation';
+import NextLink from "next/link";
+import { usePathname, useRouter } from "next/navigation";
+import useSWR, { mutate, useSWRConfig } from "swr";
+import useSWRMutation from "swr/mutation";
 
 export default function SidebarNavigation() {
 	const route = usePathname();
 	const router = useRouter();
+	console.log("vbdsjkvanl");
 	const { mutate } = useSWR(swrKeys.me);
 
 	const logOut = () => {
-		localStorage.setItem('loginInfo', '');
+		localStorage.setItem("loginInfo", "");
 		mutate(null, { revalidate: false });
-		router.push('/');
+		router.push("/");
 	};
 
-	console.log('route ', route);
+	console.log("route ", route);
 	return (
 		<Flex
 			direction="column"
@@ -33,9 +35,9 @@ export default function SidebarNavigation() {
 				<Tag
 					fontSize={2}
 					as={NextLink}
-					href={'/all-shows'}
+					href={"/all-shows"}
 					color="white"
-					background={route == '/all-shows' ? 'lightblue' : 'transparent'}
+					background={route == "/all-shows" ? "lightblue" : "transparent"}
 				>
 					All shows
 				</Tag>
@@ -43,18 +45,19 @@ export default function SidebarNavigation() {
 				<Tag
 					fontSize={2}
 					as={NextLink}
-					href={'/all-shows/top-rated'}
+					href={"/all-shows/top-rated"}
 					color="white"
-					background={route == '/all-shows/top-rated' ? 'lightblue' : 'transparent'}
+					background={route == "/all-shows/top-rated" ? "lightblue" : "transparent"}
 				>
 					Top rated
 				</Tag>
 				<Tag fontSize={2} color="white" background="transparent">
 					My profile
 				</Tag>
+
+				<Picker />
 			</Flex>
-			{/*<Tag visibility="hidden">_________</Tag> {/* ovo mi je bezveze, ali ne znam kako da zadrzim ovakav fixed scrollbar u flowu inače bez da je neki dio static" */}
-			<Tag fontSize={2} color="white" background="transparent" onClick={logOut}>
+			<Tag fontSize={2} color="white" background="transparent" onClick={logOut} cursor="pointer">
 				Log out
 			</Tag>
 		</Flex>

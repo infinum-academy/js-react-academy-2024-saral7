@@ -29,6 +29,8 @@ export async function authFetcher<T>(input: string | URL | globalThis.Request, i
 			},
 		});
 		if (!response.ok) {
+			console.log("nije dobroo", response);
+			if (response.status == 401) {};
 			throw response;
 		}
 		if (response.status !== 204) {

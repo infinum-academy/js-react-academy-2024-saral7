@@ -29,5 +29,17 @@ export const Button = defineStyleConfig({
 			height: '60px',
 			padding: 0
 		},
+		small: {
+			color: 'lightblue',
+			backgroundColor: 'white',
+			_loading: {
+				backgroundColor: 'black',
+			},
+			borderColor: 'white',
+			width: '95px',
+			borderRadius: "8px",
+			height: '40px',
+			padding: 0
+		},
 	}
 });

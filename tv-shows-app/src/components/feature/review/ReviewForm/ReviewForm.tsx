@@ -1,4 +1,4 @@
-import { IReview, IReviewItem } from '@/typings/review';
+import { IReview, IReviewItem } from "@/typings/review";
 import {
 	Button,
 	chakra,
@@ -11,66 +11,62 @@ import {
 	Textarea,
 	useMediaQuery,
 	useStyleConfig,
-} from '@chakra-ui/react';
-import ReviewStarsInput from '../ReviewStarsInput/ReviewStarsInput';
-import { useState } from 'react';
-import { Form, useForm } from 'react-hook-form';
-import useSWR, { mutate } from 'swr';
-import { swrKeys } from '@/fetchers/swrKeys';
-import { authFetcher } from '@/fetchers/fetcher';
-import { waitFor } from '@testing-library/react';
-import { IUser } from '@/typings/user';
-import useSWRMutation from 'swr/mutation';
-import { createReview } from '@/fetchers/mutators';
-import { ReviewItemStyle } from '@/styles/theme/components/reviewItem';
-import { ReviewFormStyle } from '@/styles/theme/components/reviewForm';
+} from "@chakra-ui/react";
+import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
+import { useState } from "react";
+import { Controller, Form, useForm } from "react-hook-form";
+import useSWR, { mutate } from "swr";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { authFetcher } from "@/fetchers/fetcher";
+import { waitFor } from "@testing-library/react";
+import { IUser } from "@/typings/user";
+import useSWRMutation from "swr/mutation";
+import { createReview } from "@/fetchers/mutators";
+import { ReviewItemStyle } from "@/styles/theme/components/reviewItem";
+import { ReviewFormStyle } from "@/styles/theme/components/reviewForm";
 
 export interface IOnPostFunction {
 	label: string;
 	index: number;
-	addShowReview: (review: IReview) => void
+	addShowReview: (review: IReview) => void;
 }
 
 interface IReviewFormInputProps {
 	text: string;
+	rating: number;
 }
 
 export default function ReviewForm({ label, index, addShowReview }: IOnPostFunction) {
 	const { data } = useSWR<{ user: IUser }>(swrKeys.me, authFetcher);
 	const {
+		control,
 		register,
 		handleSubmit,
 		reset,
 		formState: { isSubmitting, errors },
-	} = useForm<IReviewFormInputProps>();
-	const [starsClicked, setStarsClicked] = useState(1);
+	} = useForm<IReviewFormInputProps>({ defaultValues: { rating: 1 } });
 
 	// pitanje: bi li i broj kliknutih zvjezdica trebao biti dio form inputa, ili je okej ostaviti ovako sa stateom pa rucno?
-	const addNewReview = async ({ text }: IReviewFormInputProps) => {
+	const addNewReview = async ({ text, rating }: IReviewFormInputProps) => {
 		if (!data) return;
+		console.log(text, rating);
 		const newReview: IReview = {
 			show_id: index,
 			comment: text,
-			rating: starsClicked,
+			rating: rating,
 		};
 		addShowReview(newReview);
-
-		setStarsClicked(1);
 		reset();
-	};
-
-	const onStarClick = (starIndex: number) => {
-		setStarsClicked(starIndex);
 	};
 
 	return (
 		<chakra.form
 			{...ReviewFormStyle}
 			width="100%"
-			flexDirection={{base: "column", lg: "row"}}
+			flexDirection={{ base: "column", lg: "row" }}
 			onSubmit={handleSubmit(addNewReview)}
 		>
-			<Text fontSize={2} color="white" marginBottom={1} marginRight={['0', '100px']}>
+			<Text fontSize={2} color="white" marginBottom={1} marginRight={["0", "100px"]}>
 				{label}
 			</Text>
 
@@ -83,7 +79,7 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 					marginBottom={2}
 				>
 					<Textarea
-						{...register('text', { required: 'Please write a comment' })}
+						{...register("text", { required: "Please write a comment" })}
 						backgroundColor="white"
 						placeholder="Add review"
 						width="100%"
@@ -97,7 +93,15 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 				<Flex direction="row" justifyContent="space-between">
 					<Flex alignItems="center" marginBottom={1} data-testid="stars-input">
 						{/* test nije pronalazio ovaj data-testid kada je on bio u ReviewStarsInput komponenti zapisan */}
-						<ReviewStarsInput label="Rating" value={starsClicked} onChange={isSubmitting ? () => {} : onStarClick} />
+						<Controller
+							control={control}
+							name="rating"
+							render={({ field: { onChange, value } }) => {
+								console.log(value);
+								console.log(onChange);
+								return <ReviewStarsInput label="Rating" value={value} onChange={onChange} />;
+							}}
+						></Controller>
 					</Flex>
 
 					<FormControl isDisabled={isSubmitting} maxWidth="144px">
