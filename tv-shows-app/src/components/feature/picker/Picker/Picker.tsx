@@ -20,6 +20,19 @@ import { PickerButtons } from "./components/PickerButtons";
 import { PickerResults } from "./components/PickerResults";
 import { PickerProgress } from "./components/PickerProgress";
 
+export function arrayShuffle(arr: any[]) {
+	return arr
+		.map((show) => {
+			return { show, num: Math.random() };
+		})
+		.sort((a, b) => {
+			return a.num - b.num;
+		})
+		.map((obj) => {
+			return obj.show;
+		});
+}
+
 export function Picker() {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -31,16 +44,7 @@ export function Picker() {
 		setWinners({ showList: [] });
 		setSelected({ showList: [] });
 		setActive({
-			showList: shows.showList
-				.map((show) => {
-					return { show, num: Math.random() };
-				})
-				.sort((a, b) => {
-					return a.num - b.num;
-				})
-				.map((obj) => {
-					return obj.show;
-				}),
+			showList: arrayShuffle(shows.showList),
 		});
 		setCurrentStep(1);
 	}, [isOpen]);

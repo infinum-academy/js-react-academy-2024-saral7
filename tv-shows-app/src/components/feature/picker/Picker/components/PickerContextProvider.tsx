@@ -9,6 +9,7 @@ import { IShowCard } from "@/typings/show";
 import { Box } from "@chakra-ui/react";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import useSWR from "swr";
+import { arrayShuffle } from "../Picker";
 
 interface IPickerContextProvider {
 	children: ReactNode;
@@ -40,16 +41,7 @@ export function PickerContextProvider({ children }: IPickerContextProvider) {
 	useEffect(() => {
 		if (data) {
 			setActive({
-				showList: data.shows
-					.map((show) => {
-						return { show, num: Math.random() };
-					})
-					.sort((a, b) => {
-						return a.num - b.num;
-					})
-					.map((obj) => {
-						return obj.show;
-					}),
+				showList: arrayShuffle(data.shows),
 			});
 			setWinners({ showList: [] });
 			setWinners({ showList: [] });
