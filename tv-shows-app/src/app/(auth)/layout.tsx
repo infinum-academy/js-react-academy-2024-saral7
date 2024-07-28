@@ -13,13 +13,14 @@ export default function AuthLayout({
 	return (
 		<>
 			<PickerContextProvider>
-				<Header />
 				<Show below="xl">
+					<Header />
 					<Box>{children}</Box>
 				</Show>
 				<Show above="xl">
 					<Flex justifyContent="space-between">
-						<Box width="15%">
+						<Box width="20%">
+							<Header />
 							<SidebarNavigation />
 						</Box>
 						<Box width="80%">{children}</Box>

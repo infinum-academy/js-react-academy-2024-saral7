@@ -78,7 +78,7 @@ export default function LoginForm() {
 			top={{ base: 0, md: "70px" }}
 			borderRadius={{ base: 0, md: 2 }}
 			width={{ base: "100vw", md: "500px" }}
-			height={{ base: "100vh", md: "500px" }}
+			height={{ base: "100%", md: "500px" }}
 			onSubmit={handleSubmit(onLogin)}
 		>
 			<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">

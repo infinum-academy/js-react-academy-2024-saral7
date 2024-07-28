@@ -105,3 +105,11 @@ a {
     color-scheme: dark;
   }
 }*/
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+}
