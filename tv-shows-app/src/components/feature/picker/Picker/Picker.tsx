@@ -71,9 +71,7 @@ export function Picker() {
 						{isOver ? <PickerResults /> : <PickerStep />}
 					</ModalBody>
 					<ModalFooter padding={1} backgroundColor="darkblue">
-						{isOver ? (
-							<></>
-						) : (
+						{!isOver && (
 							<Flex direction="column" width="100%">
 								<PickerProgress />
 								<PickerButtons />
