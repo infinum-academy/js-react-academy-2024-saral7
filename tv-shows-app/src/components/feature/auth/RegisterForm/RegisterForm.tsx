@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form";
 import useSWRMutation from "swr/mutation";
 import { useRouter } from "next/navigation";
 import PasswordInput from "../PasswordInput/PasswordInput";
+import { RegisterFormWrapper } from "./RegisterForm.elements";
 
 interface IRegisterForm {
 	email: string;
@@ -85,19 +86,7 @@ export default function RegisterForm() {
 		<>
 			{registered && router.push("/login")}
 			{!registered && (
-				<chakra.form
-					display="flex"
-					flexDirection="column"
-					alignItems="center"
-					backgroundColor="lightblue"
-					margin="auto"
-					position="relative"
-					top={{ base: 0, md: "50px" }}
-					borderRadius={{ base: 0, md: 2 }}
-					width={{ base: "100vw", md: "500px" }}
-					height={{ base: "100vh", md: "550px" }}
-					onSubmit={handleSubmit(onRegister)}
-				>
+				<RegisterFormWrapper onSubmit={handleSubmit(onRegister)}>
 					<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">
 						TV SHOWS APP
 					</Text>
@@ -162,7 +151,7 @@ export default function RegisterForm() {
 							</Link>
 						</FormHelperText>
 					</FormControl>
-				</chakra.form>
+				</RegisterFormWrapper>
 			)}
 		</>
 	);

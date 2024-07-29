@@ -1,29 +1,12 @@
 import { IReview, IReviewItem } from "@/typings/review";
-import {
-	Button,
-	chakra,
-	Flex,
-	FormControl,
-	FormErrorMessage,
-	Input,
-	NumberInput,
-	Text,
-	Textarea,
-	useMediaQuery,
-	useStyleConfig,
-} from "@chakra-ui/react";
+import { Button, Flex, FormControl, FormErrorMessage, Text, Textarea } from "@chakra-ui/react";
 import ReviewStarsInput from "../ReviewStarsInput/ReviewStarsInput";
-import { useState } from "react";
 import { Controller, Form, useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
 import { swrKeys } from "@/fetchers/swrKeys";
 import { authFetcher } from "@/fetchers/fetcher";
-import { waitFor } from "@testing-library/react";
 import { IUser } from "@/typings/user";
-import useSWRMutation from "swr/mutation";
-import { createReview } from "@/fetchers/mutators";
-import { ReviewItemStyle } from "@/styles/theme/components/reviewItem";
-import { ReviewFormStyle } from "@/styles/theme/components/reviewForm";
+import { ReviewFormWrapper } from "./ReviewForm.elements";
 
 export interface IOnPostFunction {
 	label: string;
@@ -59,12 +42,7 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 	};
 
 	return (
-		<chakra.form
-			{...ReviewFormStyle}
-			width="100%"
-			flexDirection={{ base: "column", lg: "row" }}
-			onSubmit={handleSubmit(addNewReview)}
-		>
+		<ReviewFormWrapper onSubmit={handleSubmit(addNewReview)}>
 			<Text fontSize={2} color="white" marginBottom={1} marginRight={["0", "100px"]}>
 				{label}
 			</Text>
@@ -108,6 +86,6 @@ export default function ReviewForm({ label, index, addShowReview }: IOnPostFunct
 					</FormControl>
 				</Flex>
 			</Flex>
-		</chakra.form>
+		</ReviewFormWrapper>
 	);
 }

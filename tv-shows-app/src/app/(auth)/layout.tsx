@@ -1,8 +1,6 @@
 import { Box, Flex, Hide, Show } from "@chakra-ui/react";
 import SidebarNavigation from "@/components/shared/SidebarNavigation/SidebarNavigation";
 import Header from "@/components/shared/Header/Header";
-import { Providers } from "../providers";
-import { HamburgerIcon } from "@chakra-ui/icons";
 import { PickerContextProvider } from "@/components/feature/picker/Picker/components/PickerContextProvider";
 
 export default function AuthLayout({
