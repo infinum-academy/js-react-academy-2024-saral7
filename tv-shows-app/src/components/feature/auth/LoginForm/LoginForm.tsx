@@ -5,9 +5,6 @@ import { swrKeys } from "@/fetchers/swrKeys";
 import { EmailIcon, LockIcon } from "@chakra-ui/icons";
 import {
 	Button,
-	chakra,
-	createStylesContext,
-	Flex,
 	FormControl,
 	FormErrorMessage,
 	FormHelperText,
@@ -16,17 +13,13 @@ import {
 	InputLeftElement,
 	Link,
 	Text,
-	useInputGroupStyles,
-	useMultiStyleConfig,
-	useStyleConfig,
 } from "@chakra-ui/react";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import useSWR, { mutate } from "swr";
-import { cache } from "swr/_internal";
 import useSWRMutation from "swr/mutation";
 import PasswordInput from "../PasswordInput/PasswordInput";
-import { LoginFormStyles } from "@/styles/theme/components/loginForm";
+import { LoginFormWrapper } from "./LoginForm.elements";
 
 export interface ILoginForm {
 	email: string;
@@ -68,19 +61,7 @@ export default function LoginForm() {
 	};
 
 	return (
-		<chakra.form
-			display="flex"
-			flexDirection="column"
-			alignItems="center"
-			backgroundColor="lightblue"
-			margin="auto"
-			position="relative"
-			top={{ base: 0, md: "70px" }}
-			borderRadius={{ base: 0, md: 2 }}
-			width={{ base: "100vw", md: "500px" }}
-			height={{ base: "100vh", md: "500px" }}
-			onSubmit={handleSubmit(onLogin)}
-		>
+		<LoginFormWrapper onSubmit={handleSubmit(onLogin)}>
 			<Text fontStyle="italic" fontSize={2} position="absolute" top="56px" color="white">
 				TV SHOWS APP
 			</Text>
@@ -136,6 +117,6 @@ export default function LoginForm() {
 					</Link>
 				</FormHelperText>
 			</FormControl>
-		</chakra.form>
+		</LoginFormWrapper>
 	);
 }

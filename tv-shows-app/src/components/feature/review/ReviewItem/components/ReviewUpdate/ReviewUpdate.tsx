@@ -1,4 +1,4 @@
-import { CloseIcon, EditIcon } from '@chakra-ui/icons';
+import { CloseIcon, EditIcon } from "@chakra-ui/icons";
 import {
 	IconButton,
 	Modal,
@@ -10,13 +10,13 @@ import {
 	ModalHeader,
 	CloseButton,
 	ModalCloseButton,
-} from '@chakra-ui/react';
-import ReviewForm from '../../../ReviewForm/ReviewForm';
-import { IReview } from '@/typings/review';
-import useSWRMutation from 'swr/mutation';
-import { swrKeys } from '@/fetchers/swrKeys';
-import { updateReview } from '@/fetchers/mutators';
-import { mutate } from 'swr';
+} from "@chakra-ui/react";
+import ReviewForm from "../../../ReviewForm/ReviewForm";
+import { IReview } from "@/typings/review";
+import useSWRMutation from "swr/mutation";
+import { swrKeys } from "@/fetchers/swrKeys";
+import { updateReview } from "@/fetchers/mutators";
+import { mutate } from "swr";
 
 export interface IReviewUpdateProps {
 	updatingReview: IReview;
@@ -25,13 +25,13 @@ export interface IReviewUpdateProps {
 export default function ReviewUpdate({ updatingReview }: IReviewUpdateProps) {
 	const { isOpen, onOpen, onClose } = useDisclosure();
 	const onOpening = () => {
-		console.log('clicked');
 		onOpen();
 	};
 
 	const { trigger } = useSWRMutation(swrKeys.reviews(`/${updatingReview.id}`), updateReview, {
 		onSuccess: () => {
 			mutate(swrKeys.getReviews(updatingReview.show_id));
+			mutate(swrKeys.shows(`/${updatingReview.show_id}`));
 			onClose();
 		},
 	});
@@ -49,7 +49,7 @@ export default function ReviewUpdate({ updatingReview }: IReviewUpdateProps) {
 			</Text>
 			<Modal isOpen={isOpen} onClose={onClose}>
 				<ModalOverlay />
-				<ModalContent backgroundColor="darkblue" maxWidth={{ base: "80vw", md: "60vw"}}>
+				<ModalContent backgroundColor="darkblue" maxWidth={{ base: "80vw", md: "60vw" }}>
 					<ModalCloseButton margin={0} color="white">
 						<CloseIcon />
 					</ModalCloseButton>

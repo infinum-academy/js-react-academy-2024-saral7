@@ -9,10 +9,13 @@ import { usePathname, useRouter } from "next/navigation";
 import useSWR, { mutate, useSWRConfig } from "swr";
 import useSWRMutation from "swr/mutation";
 
-export default function SidebarNavigation() {
+interface ISidebarNavigationProps {
+	onClose?: () => void;
+}
+
+export default function SidebarNavigation({ onClose }: ISidebarNavigationProps) {
 	const route = usePathname();
 	const router = useRouter();
-	console.log("vbdsjkvanl");
 	const { mutate } = useSWR(swrKeys.me);
 
 	const logOut = () => {
@@ -21,7 +24,6 @@ export default function SidebarNavigation() {
 		router.push("/");
 	};
 
-	console.log("route ", route);
 	return (
 		<Flex
 			direction="column"
@@ -38,6 +40,7 @@ export default function SidebarNavigation() {
 					href={"/all-shows"}
 					color="white"
 					background={route == "/all-shows" ? "lightblue" : "transparent"}
+					onClick={onClose}
 				>
 					All shows
 				</Tag>
@@ -48,6 +51,7 @@ export default function SidebarNavigation() {
 					href={"/all-shows/top-rated"}
 					color="white"
 					background={route == "/all-shows/top-rated" ? "lightblue" : "transparent"}
+					onClick={onClose}
 				>
 					Top rated
 				</Tag>
